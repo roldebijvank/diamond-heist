@@ -26,4 +26,11 @@ jobs:
     - name: Run Checkstyle
       run: |
         java -jar checkstyle.jar -c checkstyle/2IP90_checks.xml ./
-        if [ -f checkstyle-result.xml ] && grep -q "<warning" checkstyle-result.xml; then exit 1; fi
+
+    - name: Check Checkstyle Warnings
+        id: checkstyle_warnings
+        run: echo "::set-output name=warnings::$(grep -c 'WARNING' checkstyle-results.xml || true)"
+
+      - name: Fail Workflow on Warnings
+        if: steps.checkstyle_warnings.outputs.warnings > 0
+        run: exit 1
