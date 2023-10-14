@@ -1,34 +1,14 @@
-name: Checkstyle
-
-on:
-  pull_request:
-    branches:
-      - main
+on: pull_request
 
 jobs:
-  build:
+  checkstyle_job:
     runs-on: ubuntu-latest
-
+    name: Checkstyle job
     steps:
-    - name: Checkout repository
+    - name: Checkout
       uses: actions/checkout@v3
-
-    - name: Set up JDK
-      uses: actions/setup-java@v3
+    - name: Run check style
+      uses: nikitasavinov/checkstyle-action@master
       with:
-        java-version: '17'
-        distribution: 'oracle'
-
-    - name: Download Checkstyle
-      run: |
-        curl -L -o checkstyle.jar https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.12.4/checkstyle-10.12.4-all.jar
-
-    - name: Run Checkstyle
-      run: |
-        java -jar checkstyle.jar -c checkstyle/2IP90_checks.xml ./
-        
-    - name: Run Checkstyle
-        run: java -jar checkstyle.jar -c checkstyle/2IP90_checks.xml ./ > checkstyle-results.xml
-
-      - name: Run Reviewdog
-        run: reviewdog -f=checkstyle -reporter=github-pr-review -level=warning
+        reporter: 'github-pr-check'
+        checkstyle_config: 'checkstyle/2IP90_checks.xml'
