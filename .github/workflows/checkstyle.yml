@@ -23,20 +23,8 @@ jobs:
       run: |
         curl -L -o checkstyle.jar https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.12.4/checkstyle-10.12.4-all.jar
 
-    # - name: Run Checkstyle
-    #   run: |
-    #     java -jar checkstyle.jar -c checkstyle/2IP90_checks.xml ./
-
     - name: Run Checkstyle
-      id: checkstyle
-      uses: checkstyle-action/checkstyle-action@v2.0.0
-      with:
-        config_path: 'checkstyle/2IP90_checks.xml'
-      continue-on-error: true
-      if: always()
-      outputs:
-        warning: ${{ steps.checkstyle.outputs.warning }}
-
-    - name: Warning found, fail the build
+      run: |
+        java -jar checkstyle.jar -c checkstyle/2IP90_checks.xml ./
       if: ${{ steps.checkstyle.outputs.warning == 'true' }}
       run: exit 1
