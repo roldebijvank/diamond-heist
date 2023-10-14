@@ -25,8 +25,7 @@ jobs:
 
     - name: Run Checkstyle
       run: |
-        java -jar checkstyle.jar -c checkstyle/2IP90_checks.xml ./
-        if [ $? -ne 0 ]; then
-          echo "Checkstyle found violations"
+        if java -jar checkstyle.jar -c checkstyle/2IP90_checks.xml ./ | grep -q "ERROR"; then
+          echo "Checkstyle found errors"
           exit 1
         fi
