@@ -11,4 +11,4 @@ jobs:
       uses: nikitasavinov/checkstyle-action@master
       with:
         checkstyle_config: 'checkstyle/2IP90_checks.xml'
-        level: 'warning'
+        fail_on_error: true
