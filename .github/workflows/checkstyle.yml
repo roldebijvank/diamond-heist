@@ -25,4 +25,4 @@ jobs:
 
     - name: Run Checkstyle
       run: |
-        java -jar checkstyle.jar -c ../../checkstyle/2IP90_checks.xml ./
+        java -jar checkstyle.jar -c checkstyle/2IP90_checks.xml ./
