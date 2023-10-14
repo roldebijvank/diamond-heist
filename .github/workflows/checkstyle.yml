@@ -12,3 +12,4 @@ jobs:
       with:
         level: warning
         checkstyle_config: checkstyle/checkstyle.xml
+        reporter: 'github-pr-check'
