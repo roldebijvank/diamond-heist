@@ -1,7 +1,7 @@
 name: Checkstyle
 
 on:
-  push:
+  pull_request:
     branches:
       - main
 
@@ -16,7 +16,7 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v2
       with:
-        java-version: '17'
+        java-version: '11' # Adjust to your desired Java version
 
     - name: Download Checkstyle
       run: |
@@ -24,4 +24,4 @@ jobs:
 
     - name: Run Checkstyle
       run: |
-        java -jar checkstyle.jar -c checkstyle/2IP90_checks.xml src/
+        java -jar checkstyle.jar -c checkstyle/2IP90_checks.xmls src/
