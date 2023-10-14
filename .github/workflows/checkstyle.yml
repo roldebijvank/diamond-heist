@@ -1,3 +1,9 @@
+plugins:
+  checkstyle:
+    enabled: true
+    config:
+      file: "checkstyle.xml"
+      
 name: Checkstyle
 
 on:
