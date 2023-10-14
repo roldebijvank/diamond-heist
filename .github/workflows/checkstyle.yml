@@ -17,6 +17,7 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: '17'
+        distribution: 'adopt'
 
     - name: Download Checkstyle
       run: |
@@ -24,4 +25,4 @@ jobs:
 
     - name: Run Checkstyle
       run: |
-        java -jar checkstyle.jar -c checkstyle/2IP90_checks.xmls src/
+        java -jar checkstyle.jar -c checkstyle/2IP90_checks.xml src/
