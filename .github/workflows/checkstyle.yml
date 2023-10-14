@@ -26,7 +26,4 @@ jobs:
     - name: Run Checkstyle
       run: |
         java -jar checkstyle.jar -c checkstyle/2IP90_checks.xml ./
-
-    - name: Fail Workflow on Warnings
-      if: steps.checkstyle_warnings.outputs.warnings > 0
-      run: exit 1
+        if [ -f checkstyle-result.xml ] && grep -q "<error" checkstyle-result.xml; then exit 1; fi
