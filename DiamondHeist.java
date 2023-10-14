@@ -3,11 +3,26 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+/**
+ * DiamondHeist is the main class of the game. It creates the frame and adds the
+ * rooms to it.
+ * 
+ * @author Rik Olde Bijvank
+ * @author Marta Stepien
+ */
 public class DiamondHeist {
-    public static void main(String[] args) {
+    private static JFrame frame;
+
+    private static void setupFrame() {
         JFrame frame = new JFrame("Diamond Heist");
         frame.setLayout(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(1100, 700);
+        frame.setResizable(false);
+        frame.setVisible(true);
+    }
 
+    private static void setupRooms() {
         Room bottomRoom1 = new Room(300, 233);
         JPanel bottomRoom1Panel = bottomRoom1.createRoom();
         bottomRoom1Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -38,10 +53,10 @@ public class DiamondHeist {
         frame.add(middleRoom1Panel);
         frame.add(middleRoom2Panel);
         frame.add(topRoomPanel);
+    }
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1100, 700);
-        frame.setResizable(false);
-        frame.setVisible(true);
+    public static void main(String[] args) {
+        setupFrame();
+        setupRooms();
     }
 }
