@@ -26,3 +26,6 @@ jobs:
     - name: Run Checkstyle
       run: |
         java -jar checkstyle.jar -c checkstyle/2IP90_checks.xml ./
+        if [ $? -ne 0 ]; then
+        exit 1
+        fi
