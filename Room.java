@@ -17,9 +17,6 @@ public class Room extends JPanel {
         this.height = height;
     }
 
-    /**
-     * Creates a JPanel.
-     */
     public JPanel createRoom() {
         JPanel room = new JPanel();
         return room;
