@@ -26,5 +26,7 @@ jobs:
     - name: Run Checkstyle
       run: |
         java -jar checkstyle.jar -c checkstyle/2IP90_checks.xml ./
+
+    - name: Warning found, fail the build
       if: ${{ steps.checkstyle.outputs.warning == 'true' }}
       run: exit 1
