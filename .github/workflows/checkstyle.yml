@@ -11,3 +11,4 @@ jobs:
       uses: nikitasavinov/checkstyle-action@master
       with:
         level: warning
+        checkstyle_config: checkstyle/checkstyle.xml
