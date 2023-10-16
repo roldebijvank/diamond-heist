@@ -28,6 +28,7 @@ jobs:
         run: |
           if grep "\[WARN\]" checkstyle_report.txt; then
             echo "Checkstyle found warnings."
+            echo grep "\[WARN\]" checkstyle_report.txt
             exit 1
           else
             echo "Checkstyle passed."
