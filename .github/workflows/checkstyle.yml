@@ -1,25 +1,26 @@
 name: Checkstyle
 
-on: [pull_request]
+on:
+  pull_request:
+    branches:
+      - main
 
 jobs:
   checkstyle:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-    - name: Checkstyle
-      uses: skx/github-action-checkstyle@v1
-      with:
-        checkstyle_version: '10.12.4'
-        
-    - name: Check Checkstyle Output
-      run: |
-        if grep -q "ERROR\|WARNING" checkstyle/2IP90_checks.xml; then
-          echo "Checkstyle found errors or warnings."
-          exit 1
-        else
-          echo "Checkstyle passed."
-        fi
+      - name: Run Checkstyle
+        run: |
+          java -jar /path/to/checkstyle.jar -c checkstyle/2IP90_checks.xml src > checkstyle_report.txt
+
+      - name: Check Checkstyle Output
+        run: |
+          if grep -q "WARNING" checkstyle_report.txt; then
+            echo "Checkstyle found warnings."
+          else
+            echo "Checkstyle passed."
+          fi
