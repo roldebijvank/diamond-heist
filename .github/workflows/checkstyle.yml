@@ -13,9 +13,13 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      - name: Download Checkstyle
+        run: |
+          curl -L -o checkstyle.jar https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.12.4/checkstyle-10.12.4-all.jar
+
       - name: Run Checkstyle
         run: |
-          java -jar /path/to/checkstyle.jar -c checkstyle/2IP90_checks.xml src > checkstyle_report.txt
+          java -jar checkstyle.jar -c checkstyle/2IP90_checks.xml src > checkstyle_report.txt
 
       - name: Check Checkstyle Output
         run: |
