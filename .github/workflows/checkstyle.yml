@@ -23,7 +23,7 @@ jobs:
 
       - name: Check Checkstyle Output
         run: |
-          if grep -q "WARNING" checkstyle_report.txt; then
+          if grep -q "WARN" checkstyle_report.txt; then
             echo "Checkstyle found warnings."
           else
             echo "Checkstyle passed."
