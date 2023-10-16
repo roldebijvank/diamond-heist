@@ -21,12 +21,13 @@ jobs:
         run: |
           java -jar checkstyle.jar -c checkstyle/2IP90_checks.xml . > checkstyle_report.txt
 
+      - name: Display Checkstyle Report
+        run: cat checkstyle_report.txt
 
       - name: Check Checkstyle Output
         run: |
           if grep -q "WARN" checkstyle_report.txt; then
             echo "Checkstyle found warnings."
           else
-            cat checkstyle_report.txt
             echo "Checkstyle passed."
           fi
