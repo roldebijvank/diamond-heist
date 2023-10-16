@@ -62,7 +62,7 @@ public class DiamondHeist {
         Thief thief = new Thief(50, 50, new URL("https://www.vecteezy.com/free-vector/thief"));
         JPanel thiefPanel = thief.createThief();
         thiefPanel.setBounds(100, 100, 100, 100);
-        frame.add(thief.getThiefLabel());
+        frame.add(thief);
     }
 
     public static void main(String[] args) throws MalformedURLException {

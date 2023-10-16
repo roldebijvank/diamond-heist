@@ -32,8 +32,10 @@ public class Thief extends JPanel {
         this.x = x;
         this.y = y;
 
-        // ImageIcon icon = new ImageIcon(imageURL);
-        // thiefLabel = new JLabel(icon);
+        ImageIcon icon = new ImageIcon(imageURL);
+        thiefLabel = new JLabel(icon);
+
+        add(thiefLabel);
     }
 
     public void moveRight() {
