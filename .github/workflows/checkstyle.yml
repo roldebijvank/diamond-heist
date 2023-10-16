@@ -1,14 +1,25 @@
-on: pull_request
+name: Checkstyle
+
+on: [pull_request]
 
 jobs:
-  checkstyle_job:
+  checkstyle:
     runs-on: ubuntu-latest
-    name: Checkstyle job
+
     steps:
-    - name: Checkout
+    - name: Checkout Repository
       uses: actions/checkout@v3
-    - name: Run check style
-      uses: nikitasavinov/checkstyle-action@master
+
+    - name: Checkstyle
+      uses: skx/github-action-checkstyle@v1
       with:
-        checkstyle_config: 'checkstyle/2IP90_checks.xml'
-        fail_on_error: true
+        checkstyle_version: '10.12.4'
+        
+    - name: Check Checkstyle Output
+      run: |
+        if grep -q "ERROR\|WARNING" checkstyle/2IP90_checks.xml; then
+          echo "Checkstyle found errors or warnings."
+          exit 1
+        else
+          echo "Checkstyle passed."
+        fi
