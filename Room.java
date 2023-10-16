@@ -1,5 +1,3 @@
-import java.awt.Color;
-import java.awt.Dimension;
 import javax.swing.JPanel;
 
 /**
@@ -17,6 +15,10 @@ public class Room extends JPanel {
         this.height = height;
     }
 
+    /**
+     * Creates a JPanel with a predefined width and height.
+     * @return a JPanel.
+     */
     public JPanel createRoom() {
         JPanel room = new JPanel();
         return room;
