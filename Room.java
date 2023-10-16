@@ -12,7 +12,7 @@ public class Room extends JPanel {
     /**
      * Creates a new Room with a given width and height.
      */
-    public Room(int width, int height) {
+    public Rom(int width, int height) {
         this.width = width;
         this.height = height;
     }
