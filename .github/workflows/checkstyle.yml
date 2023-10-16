@@ -27,6 +27,6 @@ jobs:
           if grep -q "WARN" checkstyle_report.txt; then
             echo "Checkstyle found warnings."
           else
-            echo checkstyle_report.txt
+            cat checkstyle_report.txt
             echo "Checkstyle passed."
           fi
