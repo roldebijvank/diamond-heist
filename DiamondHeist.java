@@ -1,4 +1,7 @@
 import java.awt.Color;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,7 +17,7 @@ public class DiamondHeist {
     private static JFrame frame;
 
     private static void setupFrame() {
-        JFrame frame = new JFrame("Diamond Heist");
+        frame = new JFrame("Diamond Heist");
         frame.setLayout(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1100, 700);
@@ -55,8 +58,16 @@ public class DiamondHeist {
         frame.add(topRoomPanel);
     }
 
-    public static void main(String[] args) {
+    private static void setupThief() throws MalformedURLException {
+        Thief thief = new Thief(50, 50, new URL("https://www.vecteezy.com/free-vector/thief"));
+        JPanel thiefPanel = thief.createThief();
+        thiefPanel.setBounds(100, 100, 100, 100);
+        frame.add(thief.getThiefLabel());
+    }
+
+    public static void main(String[] args) throws MalformedURLException {
         setupFrame();
         setupRooms();
+        setupThief();
     }
 }
