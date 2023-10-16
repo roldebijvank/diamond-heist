@@ -19,7 +19,7 @@ jobs:
 
       - name: Run Checkstyle
         run: |
-          java -jar checkstyle.jar -c checkstyle/2IP90_checks.xml ./ > checkstyle_report.txt
+          java -jar checkstyle.jar -c checkstyle/2IP90_checks.xml ../../ > checkstyle_report.txt
 
       - name: Check Checkstyle Output
         run: |
