@@ -4,23 +4,21 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.Image;
+import java.awt.Color;
 
 /**
  * Creates Thief object. Sets behaviour.
  */
 
-public class Thief extends JPanel {
+public class Thief extends JPanel implements KeyListener {
     private boolean isDetected;
     private ArrayList<String> items;
     private int x;
     private int y;
     private JLabel thiefLabel;
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawRect(50, 50, 100, 50); // Draws a rectangle at (50, 50) with width 100 and height 50
-    }
 
     /**
      * creates an instance of Thief.
@@ -33,9 +31,16 @@ public class Thief extends JPanel {
         this.y = y;
 
         ImageIcon icon = new ImageIcon(imageURL);
-        thiefLabel = new JLabel(icon);
+        Image scaledImage = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        
+        thiefLabel = new JLabel(scaledIcon);
+        this.add(thiefLabel);
 
-        add(thiefLabel);
+        addKeyListener(this);
+        setFocusable(true);
+        setFocusTraversalKeysEnabled(false);
+        
     }
 
     public void moveRight() {
@@ -59,11 +64,29 @@ public class Thief extends JPanel {
     }
 
     public JPanel createThief() {
-        JPanel thiefPanel = new JPanel();
-        return thiefPanel;
+        return this;
     }
 
-    public JLabel getThiefLabel() {
-        return thiefLabel;
+    @Override
+    public void keyTyped(KeyEvent e) {
     }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        if (keyCode == KeyEvent.VK_LEFT) {
+            moveLeft();
+        } else if (keyCode == KeyEvent.VK_RIGHT) {
+            moveRight();
+        } else if (keyCode == KeyEvent.VK_UP) {
+            moveUp();
+        } else if (keyCode == KeyEvent.VK_DOWN) {
+            moveDown();
+        }
+        // Repaint the panel to show the updated position
+        repaint();
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {}
 }
