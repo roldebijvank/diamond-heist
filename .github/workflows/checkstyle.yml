@@ -17,18 +17,29 @@ jobs:
         run: |
           curl -L -o checkstyle.jar https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.12.4/checkstyle-10.12.4-all.jar
 
-      - name: Run Checkstyle
+      - name: Run Checkstyle and Capture Output
+        id: checkstyle
         run: |
-          java -jar checkstyle.jar -c checkstyle/2IP90_checks.xml . > checkstyle_report.txt
+          java -jar checkstyle.jar -c checkstyle/2IP90_checks.xml . > checkstyle_report.txt || true
+          echo "::set-output name=checkstyle_output::$(cat checkstyle_report.txt)"
 
-      - name: Display Checkstyle Report
-        run: cat checkstyle_report.txt
+      - name: Check for Warnings and Annotate PR
+        if: ${{ steps.checkstyle.outputs.checkstyle_output contains '[WARN]' }}
+        run: |
+          echo "$CHECKSTYLE_OUTPUT" | while IFS= read -r line; do
+            if [[ "$line" == *"[WARN]"* ]]; then
+              file=$(echo "$line" | awk '{print $2}')
+              line_number=$(echo "$line" | awk '{print $3}')
+              message=$(echo "$line" | sed 's/\[WARN\]//')
+
+              echo "::warning file=${file},line=${line_number}::Checkstyle Warning: ${message}"
+            fi
+          done
 
       - name: Check Checkstyle Output
         run: |
-          if grep "\[WARN\]" checkstyle_report.txt; then
+          if grep -q "\[WARN\]" checkstyle_report.txt; then
             echo "Checkstyle found warnings."
-            echo grep "\[WARN\]" checkstyle_report.txt
             exit 1
           else
             echo "Checkstyle passed."
