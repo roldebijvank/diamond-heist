@@ -19,6 +19,9 @@ public class Thief extends JPanel implements KeyListener {
     private int x;
     private int y;
     private JLabel thiefLabel;
+    private JPanel currentRoom;
+    private Image image;
+    private ImageIcon icon;
 
     /**
      * creates an instance of Thief.
@@ -26,15 +29,17 @@ public class Thief extends JPanel implements KeyListener {
      * @param y is the y coordinate of the thief
      * @param imageURL is the URL of the image of the thief
      */
-    public Thief(int x, int y, URL imageURL) {
+    public Thief(int x, int y, URL imageURL, JPanel currentRoom) {
         this.x = x;
         this.y = y;
+        this.currentRoom = currentRoom;
 
         ImageIcon icon = new ImageIcon(imageURL);
         Image scaledImage = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        this.image = scaledImage;
+        icon = new ImageIcon(scaledImage);
         
-        thiefLabel = new JLabel(scaledIcon);
+        thiefLabel = new JLabel(icon);
         this.add(thiefLabel);
 
         addKeyListener(this);
@@ -45,22 +50,23 @@ public class Thief extends JPanel implements KeyListener {
 
     public void moveRight() {
         x += 10;
-        thiefLabel.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
+        this.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
     }
 
     public void moveLeft() {
         x -= 10;
-        thiefLabel.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
+        
+        this.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
     }
 
     public void moveUp() {
-        y += 10;
-        thiefLabel.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
+        y -= 10;
+        this.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
     }
 
     public void moveDown() {
-        y -= 10;
-        thiefLabel.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
+        y += 10;
+        this.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
     }
 
     public JPanel createThief() {
@@ -83,10 +89,16 @@ public class Thief extends JPanel implements KeyListener {
         } else if (keyCode == KeyEvent.VK_DOWN) {
             moveDown();
         }
-        // Repaint the panel to show the updated position
-        repaint();
     }
 
     @Override
     public void keyReleased(KeyEvent e) {}
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 }

@@ -4,6 +4,7 @@ import java.net.URL;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.*;
@@ -28,7 +29,8 @@ public class DiamondHeist {
         bottomRoom1Panel = bottomRoom1.createRoom();
         bottomRoom1Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         bottomRoom1Panel.setBounds(0, 467, bottomRoom1.getWidth(), bottomRoom1.getHeight());
-        bottomRoom1Panel.setLayout(new BoxLayout(bottomRoom1Panel, BoxLayout.Y_AXIS));
+        //bottomRoom1Panel.setLayout(new BoxLayout(bottomRoom1Panel, BoxLayout.Y_AXIS));
+        bottomRoom1Panel.setLayout(null);
 
         Room bottomRoom2 = new Room(850, 233);
         bottomRoom2Panel = bottomRoom2.createRoom();
@@ -58,9 +60,11 @@ public class DiamondHeist {
     }
 
     private static void setupThief() throws MalformedURLException {
-        Thief thief = new Thief(50, 50, new URL("https://t4.ftcdn.net/jpg/04/79/15/87/360_F_479158723_yY9DzwsXi9ahEKC1lLNkEeg4qCE2a7f7.jpg"));
+        Thief thief = new Thief(1, 155, new URL("https://t4.ftcdn.net/jpg/04/79/15/87/360_F_479158723_yY9DzwsXi9ahEKC1lLNkEeg4qCE2a7f7.jpg"), bottomRoom1Panel);
         JPanel thiefPanel = thief.createThief();
-        middleRoom1Panel.add(thiefPanel);
+        thiefPanel.setBounds(thief.getX(), thief.getY(), 50, 50);
+
+        bottomRoom1Panel.add(thiefPanel);
 
         thief.setFocusable(true);
         thief.requestFocus();
