@@ -28,7 +28,7 @@ public class DiamondHeist {
         bottomRoom1.setBounds(0, 467, bottomRoom1.getWidth(), bottomRoom1.getHeight());
         bottomRoom1.setLayout(null);
 
-        bottomRoom2 = new Room(850, 233);
+        bottomRoom2 = new Room(800, 233);
         bottomRoom2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         bottomRoom2.setBounds(300, 467, bottomRoom2.getWidth(), bottomRoom2.getHeight());
         bottomRoom2.setLayout(null);
@@ -71,6 +71,19 @@ public class DiamondHeist {
         bottomRoom1.add(doorPanel);
     }
 
+    private static void setupGuards() throws MalformedURLException {
+        URL guardImageUrl = new URL("https://images.rawpixel.com/image_transparent_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA0L2pvYjk2OS0xMjgtcC5wbmc.png");
+
+        Guard guard1 = new Guard(thief, guardImageUrl);
+        guard1.setBounds(0, 49, guard1.getWidth(), guard1.getHeight());
+        bottomRoom2.add(guard1);
+
+
+        Guard guard2 = new Guard(thief, guardImageUrl);
+        guard2.setBounds(0, 82, guard2.getWidth(), guard2.getHeight());
+        middleRoom1.add(guard2);
+    }
+    
     public static void main(String[] args) throws MalformedURLException {
         frame = new JFrame("Diamond Heist");
         frame.setLayout(null);
@@ -78,6 +91,7 @@ public class DiamondHeist {
         setupRooms();
         setupThief();
         setupDoor();
+        setupGuards();
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1100, 700);

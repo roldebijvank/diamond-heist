@@ -1,3 +1,4 @@
+import java.awt.Image;
 import java.net.URL;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
@@ -5,7 +6,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.Image;
 
 /**
  * Creates Thief object. Sets behaviour.
