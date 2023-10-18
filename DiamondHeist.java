@@ -2,12 +2,8 @@ import java.awt.Color;
 import java.net.MalformedURLException;
 import java.net.URL;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.*;
 
 /**
  * DiamondHeist is the main class of the game. It creates the frame and adds the
@@ -18,56 +14,61 @@ import java.awt.*;
  */
 public class DiamondHeist {
     private static JFrame frame;
-    private static JPanel bottomRoom1Panel;
-    private static JPanel bottomRoom2Panel;
-    private static JPanel middleRoom1Panel;
-    private static JPanel middleRoom2Panel;
-    private static JPanel topRoomPanel;
+    private static Room bottomRoom1;
+    private static Room bottomRoom2;
+    private static Room middleRoom1;
+    private static Room middleRoom2;
+    private static Room topRoom;
+
+    private static Thief thief;
 
     private static void setupRooms() {
-        Room bottomRoom1 = new Room(300, 233);
-        bottomRoom1Panel = bottomRoom1.createRoom();
-        bottomRoom1Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        bottomRoom1Panel.setBounds(0, 467, bottomRoom1.getWidth(), bottomRoom1.getHeight());
-        //bottomRoom1Panel.setLayout(new BoxLayout(bottomRoom1Panel, BoxLayout.Y_AXIS));
-        bottomRoom1Panel.setLayout(null);
+        bottomRoom1 = new Room(300, 233);
+        bottomRoom1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        bottomRoom1.setBounds(0, 467, bottomRoom1.getWidth(), bottomRoom1.getHeight());
+        bottomRoom1.setLayout(null);
 
-        Room bottomRoom2 = new Room(850, 233);
-        bottomRoom2Panel = bottomRoom2.createRoom();
-        bottomRoom2Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        bottomRoom2Panel.setBounds(300, 467, bottomRoom2.getWidth(), bottomRoom2.getHeight());
+        bottomRoom2 = new Room(850, 233);
+        bottomRoom2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        bottomRoom2.setBounds(300, 467, bottomRoom2.getWidth(), bottomRoom2.getHeight());
+        bottomRoom2.setLayout(null);
 
-        Room middleRoom1 = new Room(550, 233);
-        middleRoom1Panel = middleRoom1.createRoom();
-        middleRoom1Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        middleRoom1Panel.setBounds(0, 234, middleRoom1.getWidth(), middleRoom1.getHeight());
+        middleRoom1 = new Room(550, 233);
+        middleRoom1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        middleRoom1.setBounds(0, 234, middleRoom1.getWidth(), middleRoom1.getHeight());
+        middleRoom1.setLayout(null);
 
-        Room middleRoom2 = new Room(550, 233);
-        middleRoom2Panel = middleRoom2.createRoom();
-        middleRoom2Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        middleRoom2Panel.setBounds(550, 234, middleRoom2.getWidth(), middleRoom2.getHeight());
+        middleRoom2 = new Room(550, 233);
+        middleRoom2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        middleRoom2.setBounds(550, 234, middleRoom2.getWidth(), middleRoom2.getHeight());
+        middleRoom2.setLayout(null);
         
-        Room topRoom = new Room(1100, 234);
-        topRoomPanel = topRoom.createRoom();
-        topRoomPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        topRoomPanel.setBounds(0, 0, topRoom.getWidth(), topRoom.getHeight());
+        topRoom = new Room(1100, 234);
+        topRoom.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        topRoom.setBounds(0, 0, topRoom.getWidth(), topRoom.getHeight());
+        topRoom.setLayout(null);
 
-        frame.add(bottomRoom1Panel);
-        frame.add(bottomRoom2Panel);
-        frame.add(middleRoom1Panel);
-        frame.add(middleRoom2Panel);
-        frame.add(topRoomPanel);
+        frame.add(bottomRoom1);
+        frame.add(bottomRoom2);
+        frame.add(middleRoom1);
+        frame.add(middleRoom2);
+        frame.add(topRoom);
     }
 
     private static void setupThief() throws MalformedURLException {
-        Thief thief = new Thief(1, 155, new URL("https://t4.ftcdn.net/jpg/04/79/15/87/360_F_479158723_yY9DzwsXi9ahEKC1lLNkEeg4qCE2a7f7.jpg"), bottomRoom1Panel);
-        JPanel thiefPanel = thief.createThief();
-        thiefPanel.setBounds(thief.getX(), thief.getY(), 50, 50);
+        thief = new Thief(1, 155, new URL("https://t4.ftcdn.net/jpg/04/79/15/87/360_F_479158723_yY9DzwsXi9ahEKC1lLNkEeg4qCE2a7f7.jpg"), bottomRoom1);
+        thief.setBounds(thief.getX(), thief.getY(), 50, 50);
 
-        bottomRoom1Panel.add(thiefPanel);
+        bottomRoom1.add(thief);
+    }
 
-        thief.setFocusable(true);
-        thief.requestFocus();
+    private static void setupDoor() throws MalformedURLException {
+        Door door = new Door(150, 133, 50, 50, new URL("https://png.pngtree.com/png-clipart/20190215/ourmid/pngtree-the-door-is-opening-png-image_521423.jpg"), bottomRoom2);
+        door.checkCollision(thief, door);
+        JPanel doorPanel = door.createDoor();
+        doorPanel.setBounds(door.x, door.y, door.width, door.height);
+
+        bottomRoom1.add(doorPanel);
     }
 
     public static void main(String[] args) throws MalformedURLException {
@@ -76,6 +77,7 @@ public class DiamondHeist {
 
         setupRooms();
         setupThief();
+        setupDoor();
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1100, 700);

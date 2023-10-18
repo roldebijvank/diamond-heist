@@ -31,4 +31,8 @@ public class Room extends JPanel {
     public int getHeight() {
         return height;
     }
+
+    public void updateRoom() {
+        repaint();
+    }
 }

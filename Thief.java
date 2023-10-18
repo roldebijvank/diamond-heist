@@ -3,11 +3,9 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.Image;
-import java.awt.Color;
 
 /**
  * Creates Thief object. Sets behaviour.
@@ -19,7 +17,7 @@ public class Thief extends JPanel implements KeyListener {
     private int x;
     private int y;
     private JLabel thiefLabel;
-    private JPanel currentRoom;
+    private Room currentRoom;
     private Image image;
     private ImageIcon icon;
 
@@ -29,7 +27,7 @@ public class Thief extends JPanel implements KeyListener {
      * @param y is the y coordinate of the thief
      * @param imageURL is the URL of the image of the thief
      */
-    public Thief(int x, int y, URL imageURL, JPanel currentRoom) {
+    public Thief(int x, int y, URL imageURL, Room currentRoom) {
         this.x = x;
         this.y = y;
         this.currentRoom = currentRoom;
@@ -100,5 +98,13 @@ public class Thief extends JPanel implements KeyListener {
 
     public int getY() {
         return y;
+    }
+
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(Room currentRoom) {
+        this.currentRoom = currentRoom;
     }
 }
