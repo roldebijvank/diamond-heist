@@ -1,19 +1,19 @@
+import java.awt.Image;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.net.URL;
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.Image;
 
 /**
  * Creates Thief object. Sets behaviour.
  */
 
 public class Thief extends JPanel implements KeyListener {
-    private boolean isDetected;
-    private ArrayList<String> items;
+    // private boolean isDetected;
+    // private ArrayList<String> items;
     public int x;
     public int y;
     private JLabel thiefLabel;
@@ -47,21 +47,33 @@ public class Thief extends JPanel implements KeyListener {
         
     }
 
+    /**
+     * Moves the thief to the right.
+     */
     public void moveRight() {
         x += 10;
         this.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
     }
 
+    /**
+     * Moves the thief to the left.
+     */
     public void moveLeft() {
         x -= 10;
         this.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
     }
 
+    /**
+     * Moves the thief up.
+     */
     public void moveUp() {
         y -= 1;
         this.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
     }
 
+    /**
+     * Moves the thief down.
+     */
     public void moveDown() {
         y += 1;
         this.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
