@@ -18,8 +18,10 @@ public class Thief extends JPanel implements KeyListener {
     private int y;
     private JLabel thiefLabel;
     private Room currentRoom;
-    private Image image;
-    private ImageIcon icon;
+    public boolean onDoor = false;
+    public boolean onLadder = false;
+    public boolean up = false;
+    public boolean down = false;
 
     /**
      * creates an instance of Thief.
@@ -33,8 +35,7 @@ public class Thief extends JPanel implements KeyListener {
         this.currentRoom = currentRoom;
 
         ImageIcon icon = new ImageIcon(imageURL);
-        Image scaledImage = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        this.image = scaledImage;
+        Image scaledImage = icon.getImage().getScaledInstance(50, 100, Image.SCALE_SMOOTH);
         icon = new ImageIcon(scaledImage);
         
         thiefLabel = new JLabel(icon);
@@ -53,22 +54,17 @@ public class Thief extends JPanel implements KeyListener {
 
     public void moveLeft() {
         x -= 10;
-        
         this.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
     }
 
     public void moveUp() {
-        y -= 10;
+        y -= 1;
         this.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
     }
 
     public void moveDown() {
-        y += 10;
+        y += 1;
         this.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
-    }
-
-    public JPanel createThief() {
-        return this;
     }
 
     @Override
@@ -83,9 +79,24 @@ public class Thief extends JPanel implements KeyListener {
         } else if (keyCode == KeyEvent.VK_RIGHT) {
             moveRight();
         } else if (keyCode == KeyEvent.VK_UP) {
-            moveUp();
+            System.out.println(onLadder);
+            if (onLadder) {
+                up = true;
+                down = false;
+            } else {
+                up = false;
+                down = false;
+            }
         } else if (keyCode == KeyEvent.VK_DOWN) {
-            moveDown();
+            if (onLadder) {
+                down = true;
+                up = false;
+            } else {
+                down = false;
+                up = false;
+            }
+        } else if (keyCode == KeyEvent.VK_SPACE) {
+            onDoor = true;
         }
     }
 

@@ -2,20 +2,35 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
-import javax.swing.Timer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
+/**
+ * Door is a class that creates a door object. It extends JPanel and implements
+ * ActionListener. It has a method that checks if the thief is colliding with
+ * the door. If so, it sends the thief to the next room when the player presses the spacebar.
+ *
+ */
 public class Door extends JPanel implements ActionListener {
     int x; 
     int y;
     int width;
     int height;
-    boolean collision = false;
     Thief thief;
     Room sendToRoom;
+    boolean spacePressed = false;
 
+    /**
+     * Creates a new Door object.
+     * @param x is the x coordinate of the door
+     * @param y is the y coordinate of the door
+     * @param width is the width of the door
+     * @param height is the height of the door
+     * @param imageUrl is the URL of the image of the door
+     * @param sendToRoom is the room that the door sends the thief to
+     */
     public Door(int x, int y, int width, int height, URL imageUrl, Room sendToRoom) {
         this.x = x;
         this.y = y;
@@ -24,32 +39,33 @@ public class Door extends JPanel implements ActionListener {
         this.sendToRoom = sendToRoom;
 
         ImageIcon doorIcon = new ImageIcon(imageUrl);
-        Image scaledImage = doorIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        Image scaledImage = doorIcon.getImage().getScaledInstance(50, 100, Image.SCALE_SMOOTH);
         doorIcon = new ImageIcon(scaledImage);
         this.add(new JLabel(doorIcon));
     }
 
-    public boolean checkCollision(Thief thief, Door door) {
+    /**
+     * Checks if the thief is colliding with the door by using a timer and the actionListener class.
+     * @param thief is the thief object that it checks for collision
+     */
+    public void checkCollision(Thief thief) {
+        Timer timer = new Timer(10, this);
         this.thief = thief;
-        Timer timer = new Timer(10, (ActionListener) this);
         timer.start();
-        return collision;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (this.getBounds().intersects(thief.getBounds())) {
+        if (this.getBounds().intersects(thief.getBounds()) && thief.onDoor) {
             thief.getCurrentRoom().remove(thief);
             thief.getCurrentRoom().updateRoom();
             thief.setCurrentRoom(sendToRoom);
             sendToRoom.add(thief);
-            thief.setBounds(0, 0, 50, 50);
+            sendToRoom.setThiefToStartingPoint(thief);
+            thief.repaint();
             sendToRoom.updateRoom();
             thief.requestFocus(true);
+            thief.onDoor = false;
         }
-    }
-
-    public JPanel createDoor() {
-        return this;
     }
 }

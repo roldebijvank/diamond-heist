@@ -6,22 +6,18 @@ import javax.swing.JPanel;
 public class Room extends JPanel {
     private int width;
     private int height;
+    private int startingx;
+    private int startingy;
 
     /**
      * Creates a new Room with a given width and height.
      */
-    public Room(int width, int height) {
+    public Room(int width, int height, int startingx, int startingy) {
+        this.setLayout(null);
         this.width = width;
         this.height = height;
-    }
-
-    /**
-     * Creates a JPanel with a predefined width and height.
-     * @return a JPanel.
-     */
-    public JPanel createRoom() {
-        JPanel room = new JPanel();
-        return room;
+        this.startingx = startingx;
+        this.startingy = startingy;
     }
 
     public int getWidth() {
@@ -34,5 +30,17 @@ public class Room extends JPanel {
 
     public void updateRoom() {
         repaint();
+    }
+
+    public int getStartingx() {
+        return startingx;
+    }
+
+    public int getStartingy() {
+        return startingy;
+    }
+
+    public void setThiefToStartingPoint(Thief thief) {
+        thief.setBounds(0, 500, thief.getWidth(), thief.getHeight());
     }
 }
