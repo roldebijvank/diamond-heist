@@ -21,12 +21,12 @@ public class DiamondHeist {
 
     private static Thief thief;
 
-    private static void setupRooms() {
+    private static void setupRooms() throws MalformedURLException {
         bottomRoom1 = new Room(300, 233, 0, 105);
         bottomRoom1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         bottomRoom1.setBounds(0, 467, bottomRoom1.getWidth(), bottomRoom1.getHeight());
 
-        bottomRoom2 = new Room(800, 233, 10, 105);
+        bottomRoom2 = new Room(800, 233, 10, 105, new URL("https://i.pinimg.com/originals/f5/52/fa/f552fa026e97b0c27781b09ea23c30a7.jpg"));
         bottomRoom2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         bottomRoom2.setBounds(300, 467, bottomRoom2.getWidth(), bottomRoom2.getHeight());
 
@@ -34,7 +34,7 @@ public class DiamondHeist {
         middleRoom1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         middleRoom1.setBounds(0, 234, middleRoom1.getWidth(), middleRoom1.getHeight());
 
-        middleRoom2 = new Room(550, 233, 10, 115);
+        middleRoom2 = new Room(550, 233, 10, 115, new URL("https://static.vecteezy.com/system/resources/thumbnails/013/266/677/small/art-gallery-on-museum-of-exhibition-visitors-viewing-modern-abstract-paintings-at-contemporary-and-photo-in-flat-cartoon-hand-template-illustration-vector.jpg"));
         middleRoom2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         middleRoom2.setBounds(550, 234, middleRoom2.getWidth(), middleRoom2.getHeight());
         
@@ -90,7 +90,6 @@ public class DiamondHeist {
         Guard guard1 = new Guard(thief, guardImageUrl);
         guard1.setBounds(0, 49, guard1.getWidth(), guard1.getHeight());
         bottomRoom2.add(guard1);
-
 
         Guard guard2 = new Guard(thief, guardImageUrl);
         guard2.setBounds(0, 82, guard2.getWidth(), guard2.getHeight());
