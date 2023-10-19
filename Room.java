@@ -40,6 +40,10 @@ public class Room extends JPanel {
         return startingy;
     }
 
+    /**
+     * Sets the thief to the starting point of the room.
+     * @param thief is the thief that is set to the starting point
+     */
     public void setThiefToStartingPoint(Thief thief) {
         thief.x = startingx;
         thief.y = startingy;
