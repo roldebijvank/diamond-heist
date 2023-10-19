@@ -56,7 +56,7 @@ public class DiamondHeist {
     }
 
     private static void setupThief() throws MalformedURLException {
-        thief = new Thief(1, 155, new URL("https://t4.ftcdn.net/jpg/04/79/15/87/360_F_479158723_yY9DzwsXi9ahEKC1lLNkEeg4qCE2a7f7.jpg"), bottomRoom1);
+        thief = new Thief(1, 155, new URL("https://png.pngtree.com/png-clipart/20211116/original/pngtree-thief-shocked-png-image_6930188.png"), bottomRoom1);
         thief.setBounds(thief.getX(), thief.getY(), 50, 50);
 
         bottomRoom1.add(thief);

@@ -72,7 +72,7 @@ public class Dog extends JPanel {
             }
         }
 
-        this.setBounds(x, this.getY(), 60, 60);
+        this.setBounds(x, this.getY(), width, height);
     }
 
     /**
