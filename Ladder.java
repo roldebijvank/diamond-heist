@@ -45,7 +45,6 @@ public class Ladder extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (this.getBounds().intersects(thief.getBounds())) {
             thief.onLadder = true;
-            thief.repaint();
         }
         if (this.getBounds().intersects(thief.getBounds()) && thief.up) {
             this.setFocusable(true);
@@ -53,9 +52,11 @@ public class Ladder extends JPanel implements ActionListener {
             thief.moveUp();
             if (thief.getY() < this.getY()) {
                 thief.up = false;
+                thief.onLadder = false;
                 thief.getCurrentRoom().remove(thief);
                 thief.getCurrentRoom().updateRoom();
                 thief.setCurrentRoom(sendToRoom);
+                sendToRoom.setThiefToStartingPoint(thief);
                 sendToRoom.add(thief);
                 sendToRoom.updateRoom();
                 this.setFocusable(false);

@@ -41,6 +41,10 @@ public class Room extends JPanel {
     }
 
     public void setThiefToStartingPoint(Thief thief) {
-        thief.setBounds(0, 500, thief.getWidth(), thief.getHeight());
+        thief.x = startingx;
+        thief.y = startingy;
+        thief.setBounds(0, 100, thief.getWidth(), thief.getHeight());
+        repaint();
+        thief.repaint();
     }
 }

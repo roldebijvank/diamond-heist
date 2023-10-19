@@ -14,8 +14,8 @@ import java.awt.Image;
 public class Thief extends JPanel implements KeyListener {
     private boolean isDetected;
     private ArrayList<String> items;
-    private int x;
-    private int y;
+    public int x;
+    public int y;
     private JLabel thiefLabel;
     private Room currentRoom;
     public boolean onDoor = false;

@@ -22,19 +22,19 @@ public class DiamondHeist {
     private static Thief thief;
 
     private static void setupRooms() {
-        bottomRoom1 = new Room(300, 233, 0, 232);
+        bottomRoom1 = new Room(300, 233, 0, 105);
         bottomRoom1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         bottomRoom1.setBounds(0, 467, bottomRoom1.getWidth(), bottomRoom1.getHeight());
 
-        bottomRoom2 = new Room(850, 233, 0, 232);
+        bottomRoom2 = new Room(850, 233, 10, 105);
         bottomRoom2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         bottomRoom2.setBounds(300, 467, bottomRoom2.getWidth(), bottomRoom2.getHeight());
 
-        middleRoom1 = new Room(550, 233, 0, 232);
+        middleRoom1 = new Room(550, 233, 0, 105);
         middleRoom1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         middleRoom1.setBounds(0, 234, middleRoom1.getWidth(), middleRoom1.getHeight());
 
-        middleRoom2 = new Room(550, 233, 0, 232);
+        middleRoom2 = new Room(550, 233, 10, 115);
         middleRoom2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         middleRoom2.setBounds(550, 234, middleRoom2.getWidth(), middleRoom2.getHeight());
         
@@ -57,7 +57,7 @@ public class DiamondHeist {
     }
 
     private static void setupDoors() throws MalformedURLException {
-        Door doorBottomRoom1 = new Door(150, 105, 50, 100, new URL("https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/33142/door-clipart-md.png"), bottomRoom2);
+        Door doorBottomRoom1 = new Door(240, 105, 50, 100, new URL("https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/33142/door-clipart-md.png"), bottomRoom2);
         doorBottomRoom1.checkCollision(thief);
         doorBottomRoom1.setBounds(doorBottomRoom1.x, doorBottomRoom1.y,
                                   doorBottomRoom1.width, doorBottomRoom1.height);
@@ -78,7 +78,7 @@ public class DiamondHeist {
     public static void setupLadders() throws MalformedURLException {
         Ladder ladderBottomRoom2 = new Ladder(new URL("https://static.vecteezy.com/system/resources/thumbnails/000/645/132/small/illust58-696.jpg"), middleRoom2);
         ladderBottomRoom2.checkCollision(thief);
-        ladderBottomRoom2.setBounds(400, 0,
+        ladderBottomRoom2.setBounds(400, 1,
                                     30, 210);
 
         bottomRoom2.add(ladderBottomRoom2);
