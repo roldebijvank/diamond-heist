@@ -83,7 +83,15 @@ public class DiamondHeist {
         guard2.setBounds(0, 82, guard2.getWidth(), guard2.getHeight());
         middleRoom1.add(guard2);
     }
+
+    private static void setupDog() throws MalformedURLException {
+        URL dogImageUrl = new URL("https://png.pngtree.com/png-vector/20220816/ourmid/pngtree-cartoon-angry-dog-chasingvector-illustration-canine-fight-bark-vector-png-image_38428812.png");
     
+        Dog dog = new Dog(thief, dogImageUrl);
+        dog.setBounds(0, 170, dog.getWidth(), dog.getHeight());
+        topRoom.add(dog);
+    }
+
     public static void main(String[] args) throws MalformedURLException {
         frame = new JFrame("Diamond Heist");
         frame.setLayout(null);
@@ -92,6 +100,7 @@ public class DiamondHeist {
         setupThief();
         setupDoor();
         setupGuards();
+        setupDog();
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1100, 700);
