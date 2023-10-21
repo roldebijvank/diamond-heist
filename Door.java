@@ -1,3 +1,4 @@
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,7 @@ public class Door extends JPanel implements ActionListener {
     Thief thief;
     Room sendToRoom;
     boolean spacePressed = false;
+    Image image;
 
     /**
      * Creates a new Door object.
@@ -44,29 +46,6 @@ public class Door extends JPanel implements ActionListener {
         JLabel doorLabel = new JLabel(doorIcon);
         this.add(doorLabel);
         this.setOpaque(false);
-
-        Timer timer = new Timer(10, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (Door.this.getBounds().intersects(thief.getBounds())) {
-                    thief.onDoor = true;
-                    if (thief.space) {
-                        thief.getCurrentRoom().remove(thief);
-                        thief.getCurrentRoom().updateRoom();
-                        thief.setCurrentRoom(sendToRoom);
-                        sendToRoom.add(thief);
-                        sendToRoom.setThiefToStartingPoint(thief);
-                        thief.repaint();
-                        sendToRoom.updateRoom();
-                        thief.requestFocus(true);
-                        thief.space = false;
-                    }
-                } else {
-                    thief.onDoor = false;
-                }
-            }
-        });
-        timer.start();
     }
     
     /**
@@ -81,19 +60,22 @@ public class Door extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // if (this.getBounds().intersects(thief.getBounds())) {
-        //     thief.onDoor = true;
-        //     if (thief.space) {
-        //         thief.getCurrentRoom().remove(thief);
-        //         thief.getCurrentRoom().updateRoom();
-        //         thief.setCurrentRoom(sendToRoom);
-        //         sendToRoom.add(thief);
-        //         sendToRoom.setThiefToStartingPoint(thief);
-        //         thief.repaint();
-        //         sendToRoom.updateRoom();
-        //         thief.requestFocus(true);
-        //         thief.space = false;
-        //     }
-        // }
+        this.repaint();
+        if (this.getBounds().intersects(thief.getBounds())) {
+            thief.onDoor = true;
+            if (thief.space) {
+                thief.getCurrentRoom().remove(thief);
+                thief.getCurrentRoom().updateRoom();
+                thief.setCurrentRoom(sendToRoom);
+                sendToRoom.add(thief);
+                sendToRoom.setThiefToStartingPoint(thief);
+                thief.repaint();
+                sendToRoom.updateRoom();
+                thief.requestFocus(true);
+                thief.space = false;
+            }
+        } else {
+            thief.onDoor = false;
+        }
     }
 }
