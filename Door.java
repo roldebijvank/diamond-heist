@@ -41,9 +41,11 @@ public class Door extends JPanel implements ActionListener {
         ImageIcon doorIcon = new ImageIcon(imageUrl);
         Image scaledImage = doorIcon.getImage().getScaledInstance(50, 100, Image.SCALE_SMOOTH);
         doorIcon = new ImageIcon(scaledImage);
-        this.add(new JLabel(doorIcon));
+        JLabel doorLabel = new JLabel(doorIcon);
+        doorLabel.setOpaque(false);
+        this.add(doorLabel);
     }
-
+    
     /**
      * Checks if the thief is colliding with the door by using a timer and the actionListener class.
      * @param thief is the thief object that it checks for collision

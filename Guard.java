@@ -39,6 +39,7 @@ public class Guard extends JPanel {
         guardIcon = new ImageIcon(scaledImage);
         guardLabel = new JLabel(guardIcon);
         this.add(guardLabel);
+        this.setOpaque(false);
 
         Timer timer = new Timer(100, new ActionListener() {
             @Override
@@ -52,7 +53,6 @@ public class Guard extends JPanel {
         timer.start();
     }
      
-
     /**
      * Moves the guard within the room.
      * Flipping direction and image when the guard reaches the edge of its room.
