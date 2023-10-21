@@ -35,11 +35,12 @@ public class Thief extends JPanel implements KeyListener {
         this.currentRoom = currentRoom;
 
         ImageIcon icon = new ImageIcon(imageURL);
-        Image scaledImage = icon.getImage().getScaledInstance(50, 100, Image.SCALE_SMOOTH);
+        Image scaledImage = icon.getImage().getScaledInstance(70, 120, Image.SCALE_SMOOTH);
         icon = new ImageIcon(scaledImage);
         
         thiefLabel = new JLabel(icon);
         this.add(thiefLabel);
+        this.setOpaque(false);
 
         addKeyListener(this);
         setFocusable(true);

@@ -22,7 +22,7 @@ public class Dog extends JPanel {
     private boolean gameEnded;
     private JLabel dogLabel;
     private int width = 100;
-    private int height = 60;
+    private int height = 80;
 
     /**
      * Initializes a new Dog object.
@@ -35,10 +35,11 @@ public class Dog extends JPanel {
         this.gameEnded = false;
 
         ImageIcon dogIcon = new ImageIcon(dogImageUrl);
-        Image scaledImage = dogIcon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+        Image scaledImage = dogIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
         dogIcon = new ImageIcon(scaledImage);
         dogLabel = new JLabel(dogIcon);
         this.add(dogLabel);
+        this.setOpaque(false);
 
         Timer timer = new Timer(50, new ActionListener() {
             @Override
