@@ -22,7 +22,7 @@ public class DiamondHeist {
     private static Thief thief;
 
     private static void setupRooms() throws MalformedURLException {
-        bottomRoom1 = new Room(300, 233, 0, 105);
+        bottomRoom1 = new Room(300, 233, 10, 105);
         bottomRoom1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         bottomRoom1.setBounds(0, 467, bottomRoom1.getWidth(), bottomRoom1.getHeight());
 
@@ -30,15 +30,15 @@ public class DiamondHeist {
         bottomRoom2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         bottomRoom2.setBounds(300, 467, bottomRoom2.getWidth(), bottomRoom2.getHeight());
 
-        middleRoom1 = new Room(550, 233, 0, 105);
+        middleRoom1 = new Room(550, 233, 490, 105);
         middleRoom1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         middleRoom1.setBounds(0, 234, middleRoom1.getWidth(), middleRoom1.getHeight());
 
-        middleRoom2 = new Room(550, 233, 10, 115, new URL("https://static.vecteezy.com/system/resources/thumbnails/013/266/677/small/art-gallery-on-museum-of-exhibition-visitors-viewing-modern-abstract-paintings-at-contemporary-and-photo-in-flat-cartoon-hand-template-illustration-vector.jpg"));
+        middleRoom2 = new Room(550, 233, 10, 105, new URL("https://static.vecteezy.com/system/resources/thumbnails/013/266/677/small/art-gallery-on-museum-of-exhibition-visitors-viewing-modern-abstract-paintings-at-contemporary-and-photo-in-flat-cartoon-hand-template-illustration-vector.jpg"));
         middleRoom2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         middleRoom2.setBounds(550, 234, middleRoom2.getWidth(), middleRoom2.getHeight());
         
-        topRoom = new Room(1100, 234, 0, 232);
+        topRoom = new Room(1100, 234, 0, 105);
         topRoom.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         topRoom.setBounds(0, 0, topRoom.getWidth(), topRoom.getHeight());
 
@@ -67,15 +67,27 @@ public class DiamondHeist {
         doorBottomRoom2.setBounds(doorBottomRoom2.x, doorBottomRoom2.y,
                                   doorBottomRoom2.width, doorBottomRoom2.height);
 
+        Door doorMiddleRoom2 = new Door(10, 132, 50, 100, new URL("https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/33142/door-clipart-md.png"), middleRoom1);
+        doorMiddleRoom2.checkCollision(thief);
+        doorMiddleRoom2.setBounds(doorMiddleRoom2.x, doorMiddleRoom2.y,
+                                  doorMiddleRoom2.width, doorMiddleRoom2.height);
+
+        Door doorMiddleRoom1 = new Door(490, 132, 50, 100, new URL("https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/33142/door-clipart-md.png"), middleRoom2);
+        doorMiddleRoom1.checkCollision(thief);
+        doorMiddleRoom1.setBounds(doorMiddleRoom1.x, doorMiddleRoom1.y,
+                                  doorMiddleRoom1.width, doorMiddleRoom1.height);
+
         bottomRoom1.add(doorBottomRoom1);
         bottomRoom2.add(doorBottomRoom2);
+        middleRoom2.add(doorMiddleRoom2);
+        middleRoom1.add(doorMiddleRoom1);
     }
 
     /**
      * Sets up the ladders in the rooms.
      * @throws MalformedURLException if the URL is invalid
      */
-    public static void setupLadders() throws MalformedURLException {
+    private static void setupLadders() throws MalformedURLException {
         Ladder ladderBottomRoom2 = new Ladder(new URL("https://static.vecteezy.com/system/resources/thumbnails/000/645/132/small/illust58-696.jpg"), middleRoom2);
         ladderBottomRoom2.checkCollision(thief);
         ladderBottomRoom2.setBounds(400, 1,

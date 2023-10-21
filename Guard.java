@@ -41,7 +41,7 @@ public class Guard extends JPanel {
         this.add(guardLabel);
         this.setOpaque(false);
 
-        Timer timer = new Timer(100, new ActionListener() {
+        Timer timer = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!gameEnded) {
@@ -59,13 +59,13 @@ public class Guard extends JPanel {
      */
     public void move() {
         if (direction == 1) {
-            x += 10;
+            x += 2;
             if (x >= getParent().getWidth() - 100) {
                 direction = -1; // Change direction 
                 guardLabel.setIcon(flipImageVertically(guardLabel.getIcon()));
             }
         } else {
-            x -= 10;
+            x -= 2;
             if (x <= 0) {
                 direction = 1;
                 guardLabel.setIcon(flipImageVertically(guardLabel.getIcon()));

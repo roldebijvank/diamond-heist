@@ -40,7 +40,7 @@ public class Dog extends JPanel {
         dogLabel = new JLabel(dogIcon);
         this.add(dogLabel);
 
-        Timer timer = new Timer(50, new ActionListener() {
+        Timer timer = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!gameEnded) {
@@ -59,13 +59,13 @@ public class Dog extends JPanel {
     
     public void move() {
         if (direction == 1) {
-            x += 12; 
+            x += 5; 
             if (x >= getParent().getWidth() - 60) {
                 direction = -1;
                 dogLabel.setIcon(flipImageVertically(dogLabel.getIcon()));
             }
         } else {
-            x -= 12;
+            x -= 4;
             if (x <= 0) {
                 direction = 1;
                 dogLabel.setIcon(flipImageVertically(dogLabel.getIcon()));

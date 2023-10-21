@@ -42,8 +42,31 @@ public class Door extends JPanel implements ActionListener {
         Image scaledImage = doorIcon.getImage().getScaledInstance(50, 100, Image.SCALE_SMOOTH);
         doorIcon = new ImageIcon(scaledImage);
         JLabel doorLabel = new JLabel(doorIcon);
-        doorLabel.setOpaque(false);
         this.add(doorLabel);
+        this.setOpaque(false);
+
+        Timer timer = new Timer(10, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Door.this.getBounds().intersects(thief.getBounds())) {
+                    thief.onDoor = true;
+                    if (thief.space) {
+                        thief.getCurrentRoom().remove(thief);
+                        thief.getCurrentRoom().updateRoom();
+                        thief.setCurrentRoom(sendToRoom);
+                        sendToRoom.add(thief);
+                        sendToRoom.setThiefToStartingPoint(thief);
+                        thief.repaint();
+                        sendToRoom.updateRoom();
+                        thief.requestFocus(true);
+                        thief.space = false;
+                    }
+                } else {
+                    thief.onDoor = false;
+                }
+            }
+        });
+        timer.start();
     }
     
     /**
@@ -58,16 +81,19 @@ public class Door extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (this.getBounds().intersects(thief.getBounds()) && thief.onDoor) {
-            thief.getCurrentRoom().remove(thief);
-            thief.getCurrentRoom().updateRoom();
-            thief.setCurrentRoom(sendToRoom);
-            sendToRoom.add(thief);
-            sendToRoom.setThiefToStartingPoint(thief);
-            thief.repaint();
-            sendToRoom.updateRoom();
-            thief.requestFocus(true);
-            thief.onDoor = false;
-        }
+        // if (this.getBounds().intersects(thief.getBounds())) {
+        //     thief.onDoor = true;
+        //     if (thief.space) {
+        //         thief.getCurrentRoom().remove(thief);
+        //         thief.getCurrentRoom().updateRoom();
+        //         thief.setCurrentRoom(sendToRoom);
+        //         sendToRoom.add(thief);
+        //         sendToRoom.setThiefToStartingPoint(thief);
+        //         thief.repaint();
+        //         sendToRoom.updateRoom();
+        //         thief.requestFocus(true);
+        //         thief.space = false;
+        //     }
+        // }
     }
 }

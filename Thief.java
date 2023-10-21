@@ -1,4 +1,6 @@
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.net.URL;
@@ -6,12 +8,13 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 /**
  * Creates Thief object. Sets behaviour.
  */
 
-public class Thief extends JPanel implements KeyListener {
+public class Thief extends JPanel implements KeyListener, ActionListener {
     // private boolean isDetected;
     // private ArrayList<String> items;
     public int x;
@@ -22,6 +25,10 @@ public class Thief extends JPanel implements KeyListener {
     public boolean onLadder = false;
     public boolean up = false;
     public boolean down = false;
+    private boolean left = false;
+    private boolean right = false;
+    public boolean space = false;
+    Timer timer = new Timer(10, this);
 
     /**
      * creates an instance of Thief.
@@ -44,23 +51,26 @@ public class Thief extends JPanel implements KeyListener {
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
-        
     }
 
     /**
      * Moves the thief to the right.
      */
     public void moveRight() {
-        x += 10;
-        this.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
+        if (this.getX() + this.getWidth() + 3 <= currentRoom.getWidth()) {
+            x += 3;
+            this.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
+        }
     }
 
     /**
      * Moves the thief to the left.
      */
     public void moveLeft() {
-        x -= 10;
-        this.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
+        if (this.getX() - 3 >= 0) {
+            x -= 3;
+            this.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
+        }
     }
 
     /**
@@ -86,11 +96,13 @@ public class Thief extends JPanel implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        if (keyCode == KeyEvent.VK_LEFT) {
-            moveLeft();
-        } else if (keyCode == KeyEvent.VK_RIGHT) {
-            moveRight();
-        } else if (keyCode == KeyEvent.VK_UP) {
+        if (keyCode == KeyEvent.VK_LEFT && !right && !up && !down) {
+            left = true;
+            timer.start();
+        } else if (keyCode == KeyEvent.VK_RIGHT && !left && !up && !down) {
+            right = true;
+            timer.start();
+        } else if (keyCode == KeyEvent.VK_UP && !down && !left && !right) {
             System.out.println(onLadder);
             if (onLadder) {
                 up = true;
@@ -99,7 +111,7 @@ public class Thief extends JPanel implements KeyListener {
                 up = false;
                 down = false;
             }
-        } else if (keyCode == KeyEvent.VK_DOWN) {
+        } else if (keyCode == KeyEvent.VK_DOWN && !up && !left && !right) {
             if (onLadder) {
                 down = true;
                 up = false;
@@ -107,13 +119,33 @@ public class Thief extends JPanel implements KeyListener {
                 down = false;
                 up = false;
             }
-        } else if (keyCode == KeyEvent.VK_SPACE) {
-            onDoor = true;
+        } else if (keyCode == KeyEvent.VK_SPACE && !left && !right && !up && !down) {
+            if (onDoor) {
+                space = true;
+            }
         }
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        if (keyCode == KeyEvent.VK_LEFT) {
+            left = false;
+            timer.stop();
+        } else if (keyCode == KeyEvent.VK_RIGHT) {
+            right = false;
+            timer.stop();
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (left) {
+            moveLeft();
+        } else if (right) {
+            moveRight();
+        }
+    }
 
     public int getX() {
         return x;
