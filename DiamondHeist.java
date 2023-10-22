@@ -1,4 +1,6 @@
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.Point;
 import java.net.MalformedURLException;
 import java.net.URL;
 import javax.swing.BorderFactory;
@@ -104,6 +106,19 @@ public class DiamondHeist {
         topRoom.add(dog);
     }
 
+    private static void setupCamera() throws MalformedURLException {
+        URL cameraImageUrl = new URL("https://png.pngtree.com/png-vector/20231019/ourmid/pngtree-security-camera-illustration-in-minimal-style-png-image_10210822.png");
+        
+        Point cameraPosition = new Point(100, 1); // Adjust the camera position
+        Point buttonPosition1 = new Point(50, 50);   // Adjust button 1 position
+        Point buttonPosition2 = new Point(150, 50);  // Adjust button 2 position
+
+        Camera camera = new Camera(cameraImageUrl, cameraPosition, 
+                                                   buttonPosition1, buttonPosition2);
+        camera.setBounds(cameraPosition.x, cameraPosition.y, 50, 50);
+        middleRoom2.add(camera);
+    }
+
     public static void main(String[] args) throws MalformedURLException {
         frame = new JFrame("Diamond Heist");
         frame.setLayout(null);
@@ -114,6 +129,7 @@ public class DiamondHeist {
         setupLadders();
         setupGuards();
         setupDog();
+        setupCamera();
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1100, 700);
