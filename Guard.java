@@ -39,8 +39,9 @@ public class Guard extends JPanel {
         guardIcon = new ImageIcon(scaledImage);
         guardLabel = new JLabel(guardIcon);
         this.add(guardLabel);
+        this.setOpaque(false);
 
-        Timer timer = new Timer(100, new ActionListener() {
+        Timer timer = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!gameEnded) {
@@ -52,20 +53,19 @@ public class Guard extends JPanel {
         timer.start();
     }
      
-
     /**
      * Moves the guard within the room.
      * Flipping direction and image when the guard reaches the edge of its room.
      */
     public void move() {
         if (direction == 1) {
-            x += 10;
+            x += 2;
             if (x >= getParent().getWidth() - 100) {
-                direction = -1; // Change direction 
+                direction = -1;
                 guardLabel.setIcon(flipImageVertically(guardLabel.getIcon()));
             }
         } else {
-            x -= 10;
+            x -= 2;
             if (x <= 0) {
                 direction = 1;
                 guardLabel.setIcon(flipImageVertically(guardLabel.getIcon()));
