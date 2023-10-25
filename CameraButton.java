@@ -53,8 +53,8 @@ public class CameraButton extends JPanel implements ActionListener {
         timer = new Timer(4000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                timer.setRepeats(false);
                 camera.turnOn();
+                timer.stop();
             }
         });
     }

@@ -61,7 +61,7 @@ public class Guard extends JPanel {
         if (direction == 1) {
             x += 2;
             if (x >= getParent().getWidth() - 100) {
-                direction = -1; // Change direction 
+                direction = -1;
                 guardLabel.setIcon(flipImageVertically(guardLabel.getIcon()));
             }
         } else {

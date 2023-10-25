@@ -1,10 +1,11 @@
+import java.awt.Component;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.net.URL;
-// import java.util.ArrayList;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,8 +16,7 @@ import javax.swing.Timer;
  */
 
 public class Thief extends JPanel implements KeyListener, ActionListener {
-    // private boolean isDetected;
-    // private ArrayList<String> items;
+    private ArrayList<CollectableItem> collectedItems = new ArrayList<>();
     public int x;
     public int y;
     private JLabel thiefLabel;
@@ -148,8 +148,14 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
             space = false;
             doorClicked = false;
             buttonPressed = false;
+
+            onCoin();
+            onDiamond();
+            onKey();
         }
     }
+     
+    
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -175,5 +181,100 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
 
     public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
+    }
+
+    /**
+     * Checks if the thief is on a coin in the same room.
+     */
+    public void onCoin() {
+        Room currentRoom = getCurrentRoom();
+
+        if (this.getParent() == currentRoom) {
+            for (Component component : currentRoom.getComponents()) {
+                if (component instanceof Coin 
+                    && this.getBounds().intersects(component.getBounds())) {
+                    collectCoin((Coin) component);
+                }
+            }
+        }
+    }
+
+    /**
+     * Checks if the thief is on a diamond in the same room.
+     * @return true if the thief is on a diamond, false otherwise.
+     */
+    public boolean onDiamond() {
+        Room currentRoom = getCurrentRoom();
+
+        if (this.getParent() == currentRoom) {
+            for (Component component : currentRoom.getComponents()) {
+                if (component instanceof Diamond 
+                    && this.getBounds().intersects(component.getBounds())) {
+                    collectDiamond((Diamond) component);
+                    return true; 
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if the thief is on a key in the same room.
+     * @return true if the thief is on a key, false otherwise.
+     */
+    public boolean onKey() {
+        Room currentRoom = getCurrentRoom();
+
+        if (this.getParent() == currentRoom) {
+            for (Component component : currentRoom.getComponents()) {
+                if (component instanceof Key 
+                    && this.getBounds().intersects(component.getBounds())) {
+                    collectKey((Key) component);
+                    return true; // Thief is on a coin in the same room
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Collects the coin and removes it from the room.
+     * @param coin is the coin to be collected
+     */
+    public void collectCoin(Coin coin) {
+        Room currentRoom = getCurrentRoom();
+        coin.collect();
+        collectedItems.add(coin);
+        currentRoom.remove(coin); 
+        currentRoom.updateRoom();
+        
+    }
+
+    /**
+     * Collects the diamond and removes it from the room.
+     * @param diamond is the diamond to be collected
+     */
+    public void collectDiamond(Diamond diamond) {
+        Room currentRoom = getCurrentRoom();
+        diamond.collect();
+        collectedItems.add(diamond);
+        currentRoom.remove(diamond); 
+        currentRoom.updateRoom();
+        
+    }
+
+    /**
+     * Collects the key and removes it from the room.
+     * @param key is the key to be collected
+     */
+    public void collectKey(Key key) {
+        Room currentRoom = getCurrentRoom();
+        key.collect();
+        collectedItems.add(key);
+        currentRoom.remove(key); 
+        currentRoom.updateRoom();
+        
     }
 }

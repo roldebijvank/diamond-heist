@@ -117,16 +117,16 @@ public class DiamondHeist {
     }
 
     private static void setupCamera() throws MalformedURLException {
-        Camera camera = new Camera(200, 0, 233, 233, middleRoom2);
+        Camera camera = new Camera(170, 0, 233, 233, middleRoom2);
         camera.checkCollision(thief);
         camera.setBounds(camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight());
 
-        CameraButton cameraButtonLeft = new CameraButton(100, 100, 100, 100, camera, middleRoom2);
+        CameraButton cameraButtonLeft = new CameraButton(100, 100, 60, 60, camera, middleRoom2);
         cameraButtonLeft.checkCollision(thief);
         cameraButtonLeft.setBounds(cameraButtonLeft.getX(), cameraButtonLeft.getY(),
                                    cameraButtonLeft.getWidth(), cameraButtonLeft.getHeight());
 
-        CameraButton cameraButtonRight = new CameraButton(400, 100, 100, 100, camera, middleRoom2);
+        CameraButton cameraButtonRight = new CameraButton(450, 100, 60, 60, camera, middleRoom2);
         cameraButtonRight.checkCollision(thief);
         cameraButtonRight.setBounds(cameraButtonRight.getX(), cameraButtonRight.getY(),
                                     cameraButtonRight.getWidth(), cameraButtonRight.getHeight());
@@ -134,6 +134,38 @@ public class DiamondHeist {
         middleRoom2.add(cameraButtonLeft);
         middleRoom2.add(cameraButtonRight);
         middleRoom2.add(camera);
+    }
+
+    private static void setupDiamond() throws MalformedURLException {
+        URL diamondImageUrl = new URL("https://images.vexels.com/media/users/3/157265/isolated/lists/d546c542730b45e5893fc0ed71c8f4d7-blue-diamond-stone-vector.png");
+
+        Diamond diamond = new Diamond(diamondImageUrl);
+        diamond.setBounds(diamond.x, diamond.y, diamond.width, diamond.height);
+        topRoom.add(diamond);
+    }
+
+    private static void setupCoins() throws MalformedURLException {
+        URL coinImageUrl = new URL("https://static.vecteezy.com/system/resources/previews/011/307/638/original/dollar-gold-coin-icon-png.png");
+
+        Coin coin1 = new Coin(coinImageUrl, 150, 100);
+        coin1.setBounds(coin1.x, coin1.y, coin1.width, coin1.height);
+        bottomRoom2.add(coin1);
+
+        Coin coin2 = new Coin(coinImageUrl, 500, 100);
+        coin2.setBounds(coin2.x, coin2.y, coin2.width, coin2.height);
+        middleRoom2.add(coin2);
+
+        Coin coin3 = new Coin(coinImageUrl, 450, 100);
+        coin3.setBounds(coin3.x, coin3.y, coin3.width, coin3.height);
+        middleRoom1.add(coin3);
+    }
+
+    private static void setupKey() throws MalformedURLException {
+        URL keyImageUrl = new URL("https://i.pinimg.com/originals/c7/be/1d/c7be1d00edfee40df974c43762f57e53.png");
+
+        Key key = new Key(keyImageUrl);
+        key.setBounds(key.x, key.y, key.width, key.height);
+        topRoom.add(key);
     }
 
     public static void main(String[] args) throws MalformedURLException {
@@ -147,6 +179,9 @@ public class DiamondHeist {
         setupGuards();
         setupDog();
         setupCamera();
+        setupDiamond();
+        setupCoins();
+        setupKey();
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1100, 700);
