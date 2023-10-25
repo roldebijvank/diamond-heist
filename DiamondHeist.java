@@ -173,13 +173,6 @@ public class DiamondHeist {
 
     public static void main(String[] args) throws MalformedURLException {
         frame = new JFrame("Diamond Heist");
-        try {
-            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-            SwingUtilities.updateComponentTreeUI(new JFrame());
-        } catch (ClassNotFoundException | InstantiationException
-                | IllegalAccessException | UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
-        }
         frame.setLayout(null);
 
         setupRooms();
