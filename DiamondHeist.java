@@ -1,6 +1,4 @@
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.Point;
 import java.net.MalformedURLException;
 import java.net.URL;
 import javax.swing.BorderFactory;
@@ -59,12 +57,12 @@ public class DiamondHeist {
     }
 
     private static void setupDoors() throws MalformedURLException {
-        Door doorBottomRoom1 = new Door(240, 105, 50, 100, new URL("https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/33142/door-clipart-md.png"), bottomRoom2);
+        Door doorBottomRoom1 = new Door(240, 105, 50, 100, new URL("https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/33142/door-clipart-md.png"), bottomRoom2, bottomRoom1);
         doorBottomRoom1.checkCollision(thief);
         doorBottomRoom1.setBounds(doorBottomRoom1.x, doorBottomRoom1.y,
                                   doorBottomRoom1.width, doorBottomRoom1.height);
 
-        Door doorBottomRoom2 = new Door(10, 105, 50, 100, new URL("https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/33142/door-clipart-md.png"), bottomRoom1);
+        Door doorBottomRoom2 = new Door(10, 105, 50, 100, new URL("https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/33142/door-clipart-md.png"), bottomRoom1, bottomRoom2);
         doorBottomRoom2.checkCollision(thief);
         doorBottomRoom2.setBounds(doorBottomRoom2.x, doorBottomRoom2.y,
                                   doorBottomRoom2.width, doorBottomRoom2.height);
@@ -107,15 +105,22 @@ public class DiamondHeist {
     }
 
     private static void setupCamera() throws MalformedURLException {
-        URL cameraImageUrl = new URL("https://png.pngtree.com/png-vector/20231019/ourmid/pngtree-security-camera-illustration-in-minimal-style-png-image_10210822.png");
-        
-        Point cameraPosition = new Point(100, 1); // Adjust the camera position
-        Point buttonPosition1 = new Point(50, 50);   // Adjust button 1 position
-        Point buttonPosition2 = new Point(150, 50);  // Adjust button 2 position
+        Camera camera = new Camera(200, 0, 233, 233, middleRoom2);
+        camera.checkCollision(thief);
+        camera.setBounds(camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight());
 
-        Camera camera = new Camera(cameraImageUrl, cameraPosition, 
-                                                   buttonPosition1, buttonPosition2);
-        camera.setBounds(cameraPosition.x, cameraPosition.y, 50, 50);
+        CameraButton cameraButtonLeft = new CameraButton(100, 100, 100, 100, camera, middleRoom2);
+        cameraButtonLeft.checkCollision(thief);
+        cameraButtonLeft.setBounds(cameraButtonLeft.getX(), cameraButtonLeft.getY(),
+                                   cameraButtonLeft.getWidth(), cameraButtonLeft.getHeight());
+
+        CameraButton cameraButtonRight = new CameraButton(400, 100, 100, 100, camera, middleRoom2);
+        cameraButtonRight.checkCollision(thief);
+        cameraButtonRight.setBounds(cameraButtonRight.getX(), cameraButtonRight.getY(),
+                                    cameraButtonRight.getWidth(), cameraButtonRight.getHeight());
+
+        middleRoom2.add(cameraButtonLeft);
+        middleRoom2.add(cameraButtonRight);
         middleRoom2.add(camera);
     }
 

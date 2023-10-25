@@ -20,6 +20,7 @@ public class Door extends JPanel implements ActionListener {
     int height;
     Thief thief;
     Room sendToRoom;
+    Room currentRoom;
     boolean spacePressed = false;
 
     /**
@@ -31,12 +32,14 @@ public class Door extends JPanel implements ActionListener {
      * @param imageUrl is the URL of the image of the door
      * @param sendToRoom is the room that the door sends the thief to
      */
-    public Door(int x, int y, int width, int height, URL imageUrl, Room sendToRoom) {
+    public Door(int x, int y, int width, int height,
+                URL imageUrl, Room sendToRoom, Room currentRoom) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.sendToRoom = sendToRoom;
+        this.currentRoom = currentRoom;
 
         ImageIcon doorIcon = new ImageIcon(imageUrl);
         Image scaledImage = doorIcon.getImage().getScaledInstance(50, 100, Image.SCALE_SMOOTH);
@@ -58,16 +61,20 @@ public class Door extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (this.getBounds().intersects(thief.getBounds()) && thief.onDoor) {
-            thief.getCurrentRoom().remove(thief);
-            thief.getCurrentRoom().updateRoom();
-            thief.setCurrentRoom(sendToRoom);
-            sendToRoom.add(thief);
-            sendToRoom.setThiefToStartingPoint(thief);
-            thief.repaint();
-            sendToRoom.updateRoom();
-            thief.requestFocus(true);
-            thief.onDoor = false;
+        if (this.getBounds().intersects(thief.getBounds())
+            && thief.getCurrentRoom() == currentRoom) {
+            thief.onDoor = true;
+            if (thief.doorClicked) {
+                thief.getCurrentRoom().remove(thief);
+                thief.getCurrentRoom().updateRoom();
+                thief.setCurrentRoom(sendToRoom);
+                sendToRoom.add(thief);
+                sendToRoom.setThiefToStartingPoint(thief);
+                thief.repaint();
+                sendToRoom.updateRoom();
+                thief.requestFocus(true);
+                thief.doorClicked = false;
+            }
         }
     }
 }

@@ -22,6 +22,9 @@ public class Thief extends JPanel implements KeyListener {
     public boolean onLadder = false;
     public boolean up = false;
     public boolean down = false;
+    public boolean onButton = false;
+    public boolean buttonPressed = false;
+    public boolean doorClicked = false;
 
     /**
      * creates an instance of Thief.
@@ -92,7 +95,6 @@ public class Thief extends JPanel implements KeyListener {
         } else if (keyCode == KeyEvent.VK_RIGHT) {
             moveRight();
         } else if (keyCode == KeyEvent.VK_UP) {
-            System.out.println(onLadder);
             if (onLadder) {
                 up = true;
                 down = false;
@@ -109,12 +111,24 @@ public class Thief extends JPanel implements KeyListener {
                 up = false;
             }
         } else if (keyCode == KeyEvent.VK_SPACE) {
-            onDoor = true;
+            if (onDoor) {
+                doorClicked = true;
+            }
+
+            if (onButton) {
+                buttonPressed = true;
+            }
         }
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        if (keyCode == KeyEvent.VK_SPACE) {
+            doorClicked = false;
+            buttonPressed = false;
+        }
+    }
 
     public int getX() {
         return x;
