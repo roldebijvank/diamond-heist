@@ -66,7 +66,7 @@ public class Dog extends JPanel {
                 dogLabel.setIcon(flipImageVertically(dogLabel.getIcon()));
             }
         } else {
-            x -= 4;
+            x -= 5;
             if (x <= 0) {
                 direction = 1;
                 dogLabel.setIcon(flipImageVertically(dogLabel.getIcon()));
