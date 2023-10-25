@@ -40,7 +40,7 @@ public class Guard extends JPanel {
         guardLabel = new JLabel(guardIcon);
         this.add(guardLabel);
 
-        Timer timer = new Timer(100, new ActionListener() {
+        Timer timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!gameEnded) {
