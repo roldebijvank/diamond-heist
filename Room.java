@@ -14,6 +14,7 @@ public class Room extends JPanel {
     private int startingy;
     private Image backgroundImage;
 
+
     /**
      * Creates a new Room with a given width and height.
      */

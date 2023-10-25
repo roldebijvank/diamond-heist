@@ -1,4 +1,3 @@
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +20,7 @@ public class Door extends JPanel implements ActionListener {
     int height;
     Thief thief;
     Room sendToRoom;
+    Room currentRoom;
     boolean spacePressed = false;
     Image image;
 
@@ -33,12 +33,14 @@ public class Door extends JPanel implements ActionListener {
      * @param imageUrl is the URL of the image of the door
      * @param sendToRoom is the room that the door sends the thief to
      */
-    public Door(int x, int y, int width, int height, URL imageUrl, Room sendToRoom) {
+    public Door(int x, int y, int width, int height,
+                URL imageUrl, Room sendToRoom, Room currentRoom) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.sendToRoom = sendToRoom;
+        this.currentRoom = currentRoom;
 
         ImageIcon doorIcon = new ImageIcon(imageUrl);
         Image scaledImage = doorIcon.getImage().getScaledInstance(50, 100, Image.SCALE_SMOOTH);
@@ -60,10 +62,10 @@ public class Door extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.repaint();
-        if (this.getBounds().intersects(thief.getBounds())) {
+        if (this.getBounds().intersects(thief.getBounds())
+            && thief.getCurrentRoom() == currentRoom) {
             thief.onDoor = true;
-            if (thief.space) {
+            if (thief.doorClicked) {
                 thief.getCurrentRoom().remove(thief);
                 thief.getCurrentRoom().updateRoom();
                 thief.setCurrentRoom(sendToRoom);
@@ -72,10 +74,8 @@ public class Door extends JPanel implements ActionListener {
                 thief.repaint();
                 sendToRoom.updateRoom();
                 thief.requestFocus(true);
-                thief.space = false;
+                thief.doorClicked = false;
             }
-        } else {
-            thief.onDoor = false;
         }
     }
 }

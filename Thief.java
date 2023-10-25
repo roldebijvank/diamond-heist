@@ -25,6 +25,9 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
     public boolean onLadder = false;
     public boolean up = false;
     public boolean down = false;
+    public boolean onButton = false;
+    public boolean buttonPressed = false;
+    public boolean doorClicked = false;
     private boolean left = false;
     private boolean right = false;
     public boolean space = false;
@@ -42,11 +45,12 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
         this.currentRoom = currentRoom;
 
         ImageIcon icon = new ImageIcon(imageURL);
-        Image scaledImage = icon.getImage().getScaledInstance(50, 100, Image.SCALE_SMOOTH);
+        Image scaledImage = icon.getImage().getScaledInstance(70, 120, Image.SCALE_SMOOTH);
         icon = new ImageIcon(scaledImage);
         
         thiefLabel = new JLabel(icon);
         this.add(thiefLabel);
+        this.setOpaque(false);
 
         addKeyListener(this);
         setFocusable(true);
@@ -122,6 +126,11 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
         } else if (keyCode == KeyEvent.VK_SPACE && !left && !right && !up && !down) {
             if (onDoor) {
                 space = true;
+                doorClicked = true;
+            }
+
+            if (onButton) {
+                buttonPressed = true;
             }
         }
     }
@@ -135,6 +144,10 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
         } else if (keyCode == KeyEvent.VK_RIGHT) {
             right = false;
             timer.stop();
+        } else if (keyCode == KeyEvent.VK_SPACE) {
+            space = false;
+            doorClicked = false;
+            buttonPressed = false;
         }
     }
 
@@ -146,6 +159,7 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
             moveRight();
         }
     }
+
 
     public int getX() {
         return x;
