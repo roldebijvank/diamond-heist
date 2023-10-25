@@ -3,9 +3,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  * DiamondHeist is the main class of the game. It creates the frame and adds the
