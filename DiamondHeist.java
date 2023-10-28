@@ -24,6 +24,7 @@ public class DiamondHeist {
         welcomeScreen = new WelcomeScreen(diamondHeist);
         welcomeScreen.setVisible(true);
     }
+    
     private static void setupRooms() {
         bottomRoom1 = new Room(300, 233, 0, 105, "img/bottomRoom1_image.jpg");
         bottomRoom1.setBorder(BorderFactory.createLineBorder(Color.BLACK));

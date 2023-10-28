@@ -17,7 +17,7 @@ public class WelcomeScreen extends JFrame {
     private DiamondHeist diamondHeist;
 
     /**
-     * Constructs a new WelcomeScreen instancee.
+     * Constructs a new WelcomeScreen instance.
      * @param diamondHeist The DiamondHeist instance that manages the game.
      */
     public WelcomeScreen(DiamondHeist diamondHeist) {
@@ -81,6 +81,9 @@ public class WelcomeScreen extends JFrame {
         });
     }
 
+    /**
+     * Closes the welcome screen and starts the game.
+     */
     public void closeWelcomeScreen() {
         setVisible(false);
         diamondHeist.startGame();
