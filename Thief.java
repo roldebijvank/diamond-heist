@@ -1,5 +1,6 @@
 import java.awt.Component;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -16,8 +17,10 @@ import javax.swing.Timer;
 
 public class Thief extends JPanel implements KeyListener, ActionListener {
     private ArrayList<CollectableItem> collectedItems = new ArrayList<>();
-    public int x;
-    public int y;
+    private int x;
+    private int y;
+    private int width = 70;
+    private int height = 120;
     private JLabel thiefLabel;
     private Room currentRoom;
     public boolean onDoor = false;
@@ -43,7 +46,7 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
         this.currentRoom = currentRoom;
 
         ImageIcon icon = new ImageIcon("img/thief.png");
-        Image scaledImage = icon.getImage().getScaledInstance(70, 120, Image.SCALE_SMOOTH);
+        Image scaledImage = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
         icon = new ImageIcon(scaledImage);
         
         thiefLabel = new JLabel(icon);
@@ -69,6 +72,7 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
         if (this.getX() - 3 >= 0) {
             x -= 3;
             this.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
+            repaint();
         }
     }
 
@@ -78,6 +82,7 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
     public void moveUp() {
         y -= 1;
         this.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
+        repaint();
     }
 
     /**
@@ -86,6 +91,7 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
     public void moveDown() {
         y += 1;
         this.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
+        repaint();
     }
 
     @Override
@@ -102,22 +108,9 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
             right = true;
             timer.start();
         } else if (keyCode == KeyEvent.VK_UP && !down && !left && !right) {
-            System.out.println(onLadder);
-            if (onLadder) {
-                up = true;
-                down = false;
-            } else {
-                up = false;
-                down = false;
-            }
+            up = true;
         } else if (keyCode == KeyEvent.VK_DOWN && !up && !left && !right) {
-            if (onLadder) {
-                down = true;
-                up = false;
-            } else {
-                down = false;
-                up = false;
-            }
+            down = true;
         } else if (keyCode == KeyEvent.VK_SPACE && !left && !right && !up && !down) {
             if (onDoor) {
                 space = true;
@@ -147,6 +140,10 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
             onCoin();
             onDiamond();
             onKey();
+        } else if (keyCode == KeyEvent.VK_UP) {
+            up = false;
+        } else if (keyCode == KeyEvent.VK_DOWN) {
+            down = false;
         }
     }
      
@@ -168,6 +165,14 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
 
     public int getY() {
         return y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public Room getCurrentRoom() {
@@ -271,5 +276,15 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
         currentRoom.remove(key); 
         currentRoom.updateRoom();
         
+    }
+
+    /**
+     * Sets the position of the thief.
+     * @param point is the point to set the thief to
+     */
+    public void setCurrentPoint(Point point) {
+        this.x = point.x;
+        this.y = point.y;
+        this.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
     }
 }
