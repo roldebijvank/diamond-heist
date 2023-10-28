@@ -1,10 +1,8 @@
-import java.net.URL;
-
 /**
  * Creates Diamond object which extends CollectableItem.
  */
 public class Diamond extends CollectableItem {
-    public Diamond(URL imageUrl) {
-        super(imageUrl, 1000, 100, 60, 60); 
+    public Diamond(int x, int y) {
+        super("img/diamond.png", x, y, 90, 60); 
     }
 }

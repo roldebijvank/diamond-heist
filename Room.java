@@ -1,6 +1,5 @@
 import java.awt.Graphics;
 import java.awt.Image;
-import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -18,14 +17,14 @@ public class Room extends JPanel {
     /**
      * Creates a new Room with a given width and height.
      */
-    public Room(int width, int height, int startingx, int startingy, URL backgroundImageURL) {
+    public Room(int width, int height, int startingx, int startingy, String backgroundImagePath) {
         this.setLayout(null);
         this.width = width;
         this.height = height;
         this.startingx = startingx;
         this.startingy = startingy;
 
-        ImageIcon backgroundIcon = new ImageIcon(backgroundImageURL);
+        ImageIcon backgroundIcon = new ImageIcon(backgroundImagePath);
         this.backgroundImage = backgroundIcon.getImage().getScaledInstance(this.width,
                                                                         this.height,
                                                                         Image.SCALE_SMOOTH);
@@ -39,17 +38,6 @@ public class Room extends JPanel {
     
         // Draw the background image.
         g.drawImage(backgroundImage, 0, 0, this);
-    }
-
-    /**
-     * Creates a new Room with a given width and height.
-     */
-    public Room(int width, int height, int startingx, int startingy) {
-        this.setLayout(null);
-        this.width = width;
-        this.height = height;
-        this.startingx = startingx;
-        this.startingy = startingy;
     }
 
     public int getWidth() {

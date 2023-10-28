@@ -1,5 +1,4 @@
 import java.awt.Image;
-import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,21 +17,22 @@ public abstract class CollectableItem extends JPanel {
 
     /**
      * Creates an instance of CollectableItem.
-     * @param imageUrl is the URL of the image
      * @param x is the x coordinate of the item
      * @param y is the y coordinate of the item
      * @param width is the width of the item
      * @param height is the height of the item
      */
-    public CollectableItem(URL imageUrl, int x, int y, int width, int height) {
+    public CollectableItem(String filePath, int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        ImageIcon icon = new ImageIcon(imageUrl);
+        ImageIcon icon = new ImageIcon(filePath);
         Image scaledImage = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
         icon = new ImageIcon(scaledImage);
         itemLabel = new JLabel(icon);
+        this.setLayout(null);
+        itemLabel.setBounds(0, 0, width, height);
         this.add(itemLabel);
         this.setOpaque(false);
     }

@@ -1,7 +1,6 @@
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -11,7 +10,7 @@ import javax.swing.Timer;
  * Creates a new Ladder object. The thief can go up and down this ladder.
  */
 public class Ladder extends JPanel implements ActionListener {
-    private int width = 50;
+    private int width = 70;
     private int height = 233;
     private Thief thief;
     private Timer timer;
@@ -19,15 +18,16 @@ public class Ladder extends JPanel implements ActionListener {
 
     /**
      * Creates a new Ladder object.
-     * @param imageUrl is the URL of the image of the ladder
+     * @param sendToRoom is the room that the ladder sends the thief to
      */
-    public Ladder(URL imageUrl, Room sendToRoom) {
+    public Ladder(Room sendToRoom) {
         this.sendToRoom = sendToRoom;
-        ImageIcon ladderIcon = new ImageIcon(imageUrl);
+        ImageIcon ladderIcon = new ImageIcon("img/ladder.png");
         Image scaledImage = ladderIcon.getImage()
-                            .getScaledInstance(width, height, Image.SCALE_AREA_AVERAGING);
+                            .getScaledInstance(width, height, Image.SCALE_SMOOTH);
         ladderIcon = new ImageIcon(scaledImage);
         this.add(new JLabel(ladderIcon));
+        this.setOpaque(false);
     }
 
     /**
@@ -75,5 +75,13 @@ public class Ladder extends JPanel implements ActionListener {
             this.setFocusable(false);
             thief.setFocusable(true);
         }
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }

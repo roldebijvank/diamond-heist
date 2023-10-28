@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.net.URL;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -37,24 +36,20 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
      * creates an instance of Thief.
      * @param x is the x coordinate of the thief
      * @param y is the y coordinate of the thief
-     * @param imageURL is the URL of the image of the thief
      */
-    public Thief(int x, int y, URL imageURL, Room currentRoom) {
+    public Thief(int x, int y, Room currentRoom) {
         this.x = x;
         this.y = y;
         this.currentRoom = currentRoom;
 
-        ImageIcon icon = new ImageIcon(imageURL);
+        ImageIcon icon = new ImageIcon("img/thief.png");
         Image scaledImage = icon.getImage().getScaledInstance(70, 120, Image.SCALE_SMOOTH);
         icon = new ImageIcon(scaledImage);
         
         thiefLabel = new JLabel(icon);
         this.add(thiefLabel);
         this.setOpaque(false);
-
-        addKeyListener(this);
-        setFocusable(true);
-        setFocusTraversalKeysEnabled(false);
+        this.addKeyListener(this);
     }
 
     /**

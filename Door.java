@@ -1,7 +1,6 @@
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -30,11 +29,9 @@ public class Door extends JPanel implements ActionListener {
      * @param y is the y coordinate of the door
      * @param width is the width of the door
      * @param height is the height of the door
-     * @param imageUrl is the URL of the image of the door
      * @param sendToRoom is the room that the door sends the thief to
      */
-    public Door(int x, int y, int width, int height,
-                URL imageUrl, Room sendToRoom, Room currentRoom) {
+    public Door(int x, int y, int width, int height, Room sendToRoom, Room currentRoom) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -42,7 +39,7 @@ public class Door extends JPanel implements ActionListener {
         this.sendToRoom = sendToRoom;
         this.currentRoom = currentRoom;
 
-        ImageIcon doorIcon = new ImageIcon(imageUrl);
+        ImageIcon doorIcon = new ImageIcon("img/door.png");
         Image scaledImage = doorIcon.getImage().getScaledInstance(50, 100, Image.SCALE_SMOOTH);
         doorIcon = new ImageIcon(scaledImage);
         JLabel doorLabel = new JLabel(doorIcon);
