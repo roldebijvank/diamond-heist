@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -112,8 +111,7 @@ public class Dog extends JPanel {
      */
     public void endGame() {
         gameEnded = true;
-        JOptionPane.showMessageDialog(null, "Game Over! The dog has caught you!");
-        System.exit(0);
+        Ending.showDogCaughtMessage();
     }
 
     public int getWidth() {

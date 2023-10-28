@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.net.MalformedURLException;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 
@@ -60,31 +61,37 @@ public class DiamondHeist {
         bottomRoom1.add(thief);
     }
 
-    private static void setupDoors() {
-        Door doorBottomRoom1 = new Door(240, 105, 50, 100, bottomRoom2, bottomRoom1);
+    private static void setupDoors() throws MalformedURLException {
+        Door doorBottomRoom1 = new Door(240, 105, 50, 100, bottomRoom2, bottomRoom1, false);
         doorBottomRoom1.checkCollision(thief);
         doorBottomRoom1.setBounds(doorBottomRoom1.x, doorBottomRoom1.y,
                                   doorBottomRoom1.width, doorBottomRoom1.height);
 
-        Door doorBottomRoom2 = new Door(10, 105, 50, 100, bottomRoom1, bottomRoom2);
+        Door doorBottomRoom2 = new Door(10, 105, 50, 100, bottomRoom1, bottomRoom2, false);
         doorBottomRoom2.checkCollision(thief);
         doorBottomRoom2.setBounds(doorBottomRoom2.x, doorBottomRoom2.y,
                                   doorBottomRoom2.width, doorBottomRoom2.height);
 
-        Door doorMiddleRoom2 = new Door(10, 132, 50, 100, middleRoom1, middleRoom2);
+        Door doorMiddleRoom2 = new Door(10, 132, 50, 100, middleRoom1, middleRoom2, false);
         doorMiddleRoom2.checkCollision(thief);
         doorMiddleRoom2.setBounds(doorMiddleRoom2.x, doorMiddleRoom2.y,
                                   doorMiddleRoom2.width, doorMiddleRoom2.height);
 
-        Door doorMiddleRoom1 = new Door(490, 132, 50, 100, middleRoom2, middleRoom1);
+        Door doorMiddleRoom1 = new Door(490, 132, 50, 100, middleRoom2, middleRoom1, false);
         doorMiddleRoom1.checkCollision(thief);
         doorMiddleRoom1.setBounds(doorMiddleRoom1.x, doorMiddleRoom1.y,
                                   doorMiddleRoom1.width, doorMiddleRoom1.height);
+
+        Door exitDoor = new Door(0, 105, 70, 120, bottomRoom1, bottomRoom1, true);
+        exitDoor.checkCollision(thief);
+        exitDoor.setBounds(exitDoor.x, exitDoor.y,
+                                exitDoor.width, exitDoor.height);
 
         bottomRoom1.add(doorBottomRoom1);
         bottomRoom2.add(doorBottomRoom2);
         middleRoom2.add(doorMiddleRoom2);
         middleRoom1.add(doorMiddleRoom1);
+        bottomRoom1.add(exitDoor);
     }
 
     /**
@@ -165,7 +172,36 @@ public class DiamondHeist {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
+
+    /**
+     * Resets the game by disposing the current game window and starting a new game.
+     * @throws MalformedURLException to indicate that a malformed URL has occurred.
+     */
+    public static void resetGame() throws MalformedURLException {
+        frame.dispose(); // Close the current game window
+    
+        frame = new JFrame("Diamond Heist");
+        frame.setLayout(null);
+        setupRooms();
+        setupThief();
+        setupDoors();
+        setupLadders();
+        setupGuards();
+        setupDog();
+        setupCamera();
+        setupDiamond();
+        setupCoins();
+        setupKey();
+        setupWelcomeScreen();
+    
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(1100, 700);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
+    }
+    
+
+    public static void main(String[] args) throws MalformedURLException {
 
         diamondHeist = new DiamondHeist();
         frame = new JFrame("Diamond Heist");

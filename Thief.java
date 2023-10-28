@@ -18,6 +18,7 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
     private ArrayList<CollectableItem> collectedItems = new ArrayList<>();
     public int x;
     public int y;
+    private static int coinsCollected = 0;
     private JLabel thiefLabel;
     private Room currentRoom;
     public boolean onDoor = false;
@@ -244,7 +245,12 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
         collectedItems.add(coin);
         currentRoom.remove(coin); 
         currentRoom.updateRoom();
+        coinsCollected++;
         
+    }
+
+    public static int getNumberOfCoins() {
+        return coinsCollected;
     }
 
     /**
@@ -271,5 +277,14 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
         currentRoom.remove(key); 
         currentRoom.updateRoom();
         
+    }
+
+    public boolean hasDiamond() {
+        for (CollectableItem item : collectedItems) {
+            if (item instanceof Diamond) {
+                return true;
+            }
+        }
+        return false;
     }
 }
