@@ -1,16 +1,25 @@
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Font;
-import java.awt.Color;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
 
+
+/**
+ * The WelcomeScreen class displays a welcome message.
+ * Provides instructions and hints before starting the Diamond Heist game.
+ * 
+ */
 public class WelcomeScreen extends JFrame {
     private DiamondHeist diamondHeist;
 
+    /**
+     * Constructs a new WelcomeScreen instancee.
+     * @param diamondHeist The DiamondHeist instance that manages the game.
+     */
     public WelcomeScreen(DiamondHeist diamondHeist) {
         this.diamondHeist = diamondHeist;
         setSize(600, 500);
@@ -19,7 +28,7 @@ public class WelcomeScreen extends JFrame {
         setLayout(null);
         getContentPane().setBackground(new Color(192, 192, 192)); // Background color
 
-        JLabel welcomeLabel = new JLabel("\u0024   Welcome to Diamond Heist!   \u0024");
+        JLabel welcomeLabel = new JLabel("$   Welcome to Diamond Heist!   $");
         welcomeLabel.setBounds(100, 20, 400, 40); // Centered and larger
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Larger font
 
