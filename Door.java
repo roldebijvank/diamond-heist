@@ -71,7 +71,6 @@ public class Door extends JPanel implements ActionListener {
             if (thief.doorClicked) {
                 if (requiresDiamond && !thief.hasDiamond()) {
                     JOptionPane.showMessageDialog(null, "You need a diamond to exit the game!");
-                    thief.repaint();
                 } else {
                     if (requiresDiamond && thief.hasDiamond()) {
                         JOptionPane.showMessageDialog(null, "Congratulations! You've successfully collected the diamond and exited the game. Well done!");
