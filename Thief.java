@@ -249,20 +249,39 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
         collectedItems.add(coin);
         currentRoom.remove(coin); 
         currentRoom.updateRoom();
-        
+
+        for (CollectableItem item : collectedItems) {
+        if (item instanceof Coin) {
+            numCollectedCoins++;
+        }
     }
+
+    if (numCollectedCoins == 0) {
+        Ending.showZeroStars();
+        } else if (numCollectedCoins == 1) {
+            // Display one star
+            Ending.showOneStar();
+        } else if (numCollectedCoins == 2) {
+            // Display two stars
+            Ending.showTwoStars();
+        } else if (numCollectedCoins == 3) {
+            // Display three stars
+            Ending.showThreeStars();
+        }
+    }
+        
 
     /**
      * Collects the diamond and removes it from the room.
      * @param diamond is the diamond to be collected
      */
+    int numCollectedCoins = 0;
     public void collectDiamond(Diamond diamond) {
         Room currentRoom = getCurrentRoom();
         diamond.collect();
         collectedItems.add(diamond);
         currentRoom.remove(diamond); 
         currentRoom.updateRoom();
-        
     }
 
     /**
@@ -276,5 +295,18 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
         currentRoom.remove(key); 
         currentRoom.updateRoom();
         
+    }
+
+    public boolean hasDiamond() {
+        for (CollectableItem item : collectedItems) {
+            if (item instanceof Diamond) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int getNumCollectedCoins() {
+        return numCollectedCoins;
     }
 }

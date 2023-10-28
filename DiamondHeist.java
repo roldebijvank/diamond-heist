@@ -11,7 +11,7 @@ import javax.swing.JFrame;
  * @author Rik Olde Bijvank
  * @author Marta Stepien
  */
-public class DiamondHeist {
+public class DiamondHeist{
     private static JFrame frame;
     private static Room bottomRoom1;
     private static Room bottomRoom2;
@@ -57,30 +57,36 @@ public class DiamondHeist {
     }
 
     private static void setupDoors() throws MalformedURLException {
-        Door doorBottomRoom1 = new Door(240, 105, 50, 100, new URL("https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/33142/door-clipart-md.png"), bottomRoom2, bottomRoom1);
+        Door doorBottomRoom1 = new Door(240, 105, 50, 100, new URL("https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/33142/door-clipart-md.png"), bottomRoom2, bottomRoom1, false);
         doorBottomRoom1.checkCollision(thief);
         doorBottomRoom1.setBounds(doorBottomRoom1.x, doorBottomRoom1.y,
                                   doorBottomRoom1.width, doorBottomRoom1.height);
 
-        Door doorBottomRoom2 = new Door(10, 105, 50, 100, new URL("https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/33142/door-clipart-md.png"), bottomRoom1, bottomRoom2);
+        Door doorBottomRoom2 = new Door(10, 105, 50, 100, new URL("https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/33142/door-clipart-md.png"), bottomRoom1, bottomRoom2, false);
         doorBottomRoom2.checkCollision(thief);
         doorBottomRoom2.setBounds(doorBottomRoom2.x, doorBottomRoom2.y,
                                   doorBottomRoom2.width, doorBottomRoom2.height);
 
-        Door doorMiddleRoom2 = new Door(10, 132, 50, 100, new URL("https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/33142/door-clipart-md.png"), middleRoom1, middleRoom2);
+        Door doorMiddleRoom2 = new Door(10, 132, 50, 100, new URL("https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/33142/door-clipart-md.png"), middleRoom1, middleRoom2, false);
         doorMiddleRoom2.checkCollision(thief);
         doorMiddleRoom2.setBounds(doorMiddleRoom2.x, doorMiddleRoom2.y,
                                   doorMiddleRoom2.width, doorMiddleRoom2.height);
 
-        Door doorMiddleRoom1 = new Door(490, 132, 50, 100, new URL("https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/33142/door-clipart-md.png"), middleRoom2, middleRoom1);
+        Door doorMiddleRoom1 = new Door(490, 132, 50, 100, new URL("https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/33142/door-clipart-md.png"), middleRoom2, middleRoom1, false);
         doorMiddleRoom1.checkCollision(thief);
         doorMiddleRoom1.setBounds(doorMiddleRoom1.x, doorMiddleRoom1.y,
                                   doorMiddleRoom1.width, doorMiddleRoom1.height);
+
+        Door exitDoor = new Door(0, 105, 70, 120, new URL("https://dooraykapi.com/wp-content/uploads/yangin-tek-kanat-1.png"), bottomRoom1, bottomRoom1, true);
+        exitDoor.checkCollision(thief);
+        exitDoor.setBounds(exitDoor.x, exitDoor.y,
+                                  exitDoor.width, exitDoor.height);
 
         bottomRoom1.add(doorBottomRoom1);
         bottomRoom2.add(doorBottomRoom2);
         middleRoom2.add(doorMiddleRoom2);
         middleRoom1.add(doorMiddleRoom1);
+        bottomRoom1.add(exitDoor);
     }
 
     /**

@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -22,6 +23,7 @@ public class Door extends JPanel implements ActionListener {
     Room sendToRoom;
     Room currentRoom;
     boolean spacePressed = false;
+    boolean requiresDiamond;
     Image image;
 
     /**
@@ -34,13 +36,14 @@ public class Door extends JPanel implements ActionListener {
      * @param sendToRoom is the room that the door sends the thief to
      */
     public Door(int x, int y, int width, int height,
-                URL imageUrl, Room sendToRoom, Room currentRoom) {
+                URL imageUrl, Room sendToRoom, Room currentRoom, boolean requiresDiamond) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.sendToRoom = sendToRoom;
         this.currentRoom = currentRoom;
+        this.requiresDiamond = requiresDiamond;
 
         ImageIcon doorIcon = new ImageIcon(imageUrl);
         Image scaledImage = doorIcon.getImage().getScaledInstance(50, 100, Image.SCALE_SMOOTH);
@@ -66,6 +69,16 @@ public class Door extends JPanel implements ActionListener {
             && thief.getCurrentRoom() == currentRoom) {
             thief.onDoor = true;
             if (thief.doorClicked) {
+                if (requiresDiamond && !thief.hasDiamond()) {
+                    JOptionPane.showMessageDialog(null, "You need a diamond to exit the game!");
+                    thief.repaint();
+                } else {
+                    if (requiresDiamond && thief.hasDiamond()) {
+                        JOptionPane.showMessageDialog(null, "Congratulations! You've successfully collected the diamond and exited the game. Well done!");
+                        System.exit(0);
+                    }
+                }
+
                 thief.getCurrentRoom().remove(thief);
                 thief.getCurrentRoom().updateRoom();
                 thief.setCurrentRoom(sendToRoom);
