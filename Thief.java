@@ -33,6 +33,7 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
     private boolean left = false;
     private boolean right = false;
     public boolean space = false;
+    public boolean jumps = false;
     Timer timer = new Timer(10, this);
 
     /**
@@ -94,9 +95,31 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
         repaint();
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
+    /**
+     * Makes the thief jump.
+     */
+    public void jump() {
+        Timer jumpTimer = new Timer(5, new ActionListener() {
+            int i = 0;
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (i < 100) {
+                    moveUp();
+                    i++;
+                } else if (i >= 100 && i < 200) {
+                    moveDown();
+                    i++;
+                } else {
+                    ((Timer) e.getSource()).stop();
+                    jumps = false;
+                }
+            }
+        });
+        jumpTimer.start();
     }
+
+    @Override
+    public void keyTyped(KeyEvent e) {}
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -109,6 +132,10 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
             timer.start();
         } else if (keyCode == KeyEvent.VK_UP && !down && !left && !right) {
             up = true;
+            if (!onLadder && !jumps) {
+                jump();
+                jumps = true;
+            }
         } else if (keyCode == KeyEvent.VK_DOWN && !up && !left && !right) {
             down = true;
         } else if (keyCode == KeyEvent.VK_SPACE && !left && !right && !up && !down) {
@@ -116,7 +143,6 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
                 space = true;
                 doorClicked = true;
             }
-
             if (onButton) {
                 buttonPressed = true;
             }
@@ -142,6 +168,7 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
             onKey();
         } else if (keyCode == KeyEvent.VK_UP) {
             up = false;
+            timer.stop();
         } else if (keyCode == KeyEvent.VK_DOWN) {
             down = false;
         }
@@ -155,6 +182,8 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
             moveLeft();
         } else if (right) {
             moveRight();
+        } else if (up && !onLadder) {
+            jump();
         }
     }
 
