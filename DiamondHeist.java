@@ -83,6 +83,16 @@ public class DiamondHeist {
         middleRoom1.add(doorMiddleRoom1);
     }
 
+    private static void setupHatch() throws MalformedURLException {
+
+        Hatch hatch = new Hatch(10, 180, new URL("https://clipart.coolclips.com/480/vectors/tf05081/CoolClips_hous1024.png"), bottomRoom1, middleRoom1);
+        hatch.checkCollision(thief);
+        hatch.setBounds(hatch.x, hatch.y,
+                                  hatch.width, hatch.height);
+
+        middleRoom1.add(hatch);
+    }
+
     /**
      * Sets up the ladders in the rooms.
      * @throws MalformedURLException if the URL is invalid
@@ -175,6 +185,7 @@ public class DiamondHeist {
         setupRooms();
         setupThief();
         setupDoors();
+        setupHatch();
         setupLadders();
         setupGuards();
         setupDog();

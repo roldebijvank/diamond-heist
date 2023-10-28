@@ -277,4 +277,13 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
         currentRoom.updateRoom();
         
     }
+
+    public boolean hasKey() {
+        for (CollectableItem item : collectedItems) {
+            if (item instanceof Key) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
