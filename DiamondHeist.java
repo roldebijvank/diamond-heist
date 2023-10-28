@@ -17,6 +17,13 @@ public class DiamondHeist {
     private static Room middleRoom2;
     private static Room topRoom;
     private static Thief thief;
+    private static WelcomeScreen welcomeScreen;
+    private static DiamondHeist diamondHeist;
+
+    private static void setupWelcomeScreen() {
+        welcomeScreen = new WelcomeScreen(diamondHeist);
+        welcomeScreen.setVisible(true);
+    }
     
     private static void setupRooms() {
         bottomRoom1 = new Room(300, 233, 0, 105, "img/bottomRoom1_image.jpg");
@@ -154,10 +161,15 @@ public class DiamondHeist {
         topRoom.add(key);
     }
 
+    public void startGame() {
+        frame.setVisible(true);
+    }
+
     public static void main(String[] args) {
+
+        diamondHeist = new DiamondHeist();
         frame = new JFrame("Diamond Heist");
         frame.setLayout(null);
-
         setupRooms();
         setupThief();
         setupDoors();
@@ -168,10 +180,11 @@ public class DiamondHeist {
         setupDiamond();
         setupCoins();
         setupKey();
+        setupWelcomeScreen();
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1100, 700);
         frame.setResizable(false);
-        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
     }
 }
