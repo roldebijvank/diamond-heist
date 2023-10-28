@@ -27,7 +27,7 @@ public class DiamondHeist {
         bottomRoom2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         bottomRoom2.setBounds(300, 467, bottomRoom2.getWidth(), bottomRoom2.getHeight());
 
-        middleRoom1 = new Room(550, 233, 0, 105, "img/middleRoom1_image.jpg");
+        middleRoom1 = new Room(550, 233, 480, 105, "img/middleRoom1_image.jpg");
         middleRoom1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         middleRoom1.setBounds(0, 234, middleRoom1.getWidth(), middleRoom1.getHeight());
 
@@ -35,7 +35,7 @@ public class DiamondHeist {
         middleRoom2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         middleRoom2.setBounds(550, 234, middleRoom2.getWidth(), middleRoom2.getHeight());
         
-        topRoom = new Room(1100, 234, 0, 105, "img/topRoom_image.jpg");
+        topRoom = new Room(1100, 234, 200, 105, "img/topRoom_image.jpg");
         topRoom.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         topRoom.setBounds(0, 0, topRoom.getWidth(), topRoom.getHeight());
 
@@ -89,7 +89,13 @@ public class DiamondHeist {
         ladderBottomRoom2.setBounds(400, 1,
                                     ladderBottomRoom2.getWidth(), ladderBottomRoom2.getHeight());
 
+        Ladder ladderMiddleRoom1 = new Ladder(topRoom);
+        ladderMiddleRoom1.checkCollision(thief);
+        ladderMiddleRoom1.setBounds(200, 1,
+                                    ladderMiddleRoom1.getWidth(), ladderMiddleRoom1.getHeight());
+
         bottomRoom2.add(ladderBottomRoom2);
+        middleRoom1.add(ladderMiddleRoom1);
     }
 
     private static void setupGuards() {
