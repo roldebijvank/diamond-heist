@@ -57,25 +57,25 @@ public class DiamondHeist {
 
     private static void setupDoors() {
         Door doorBottomRoom1 = new Door(240, 132, 50, 100,
-                                        bottomRoom2, bottomRoom1, new Point(10, 105));
+                                        bottomRoom2, bottomRoom1, new Point(0, 105));
         doorBottomRoom1.checkCollision(thief);
         doorBottomRoom1.setBounds(doorBottomRoom1.getX(), doorBottomRoom1.getY(),
                                   doorBottomRoom1.getWidth(), doorBottomRoom1.getHeight());
 
         Door doorBottomRoom2 = new Door(10, 132, 50, 100,
-                                        bottomRoom1, bottomRoom2, new Point(240, 105));
+                                        bottomRoom1, bottomRoom2, new Point(230, 105));
         doorBottomRoom2.checkCollision(thief);
         doorBottomRoom2.setBounds(doorBottomRoom2.getX(), doorBottomRoom2.getY(),
                                   doorBottomRoom2.getWidth(), doorBottomRoom2.getHeight());
 
         Door doorMiddleRoom2 = new Door(10, 132, 50, 100,
-                                        middleRoom1, middleRoom2, new Point(490, 105));
+                                        middleRoom1, middleRoom2, new Point(480, 105));
         doorMiddleRoom2.checkCollision(thief);
         doorMiddleRoom2.setBounds(doorMiddleRoom2.getX(), doorMiddleRoom2.getY(),
                                   doorMiddleRoom2.getWidth(), doorMiddleRoom2.getHeight());
 
         Door doorMiddleRoom1 = new Door(490, 132, 50, 100,
-                                        middleRoom2, middleRoom1, new Point(10, 105));
+                                        middleRoom2, middleRoom1, new Point(0, 105));
         doorMiddleRoom1.checkCollision(thief);
         doorMiddleRoom1.setBounds(doorMiddleRoom1.getX(), doorMiddleRoom1.getY(),
                                   doorMiddleRoom1.getWidth(), doorMiddleRoom1.getHeight());
