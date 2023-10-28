@@ -33,7 +33,7 @@ public class Guard extends JPanel {
         this.gameEnded = false;
 
         ImageIcon guardIcon = new ImageIcon("img/guard.png");
-        Image scaledImage = guardIcon.getImage().getScaledInstance(100, 150, Image.SCALE_SMOOTH);
+        Image scaledImage = guardIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
         guardIcon = new ImageIcon(scaledImage);
         guardLabel = new JLabel(guardIcon);
         this.add(guardLabel);
