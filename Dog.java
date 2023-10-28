@@ -3,7 +3,6 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.net.URL;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -27,14 +26,13 @@ public class Dog extends JPanel {
     /**
      * Initializes a new Dog object.
      * @param thief is the thief in the game.
-     * @param dogImageUrl is the dog's image URL.
      */
-    public Dog(Thief thief, URL dogImageUrl) {
+    public Dog(Thief thief) {
         this.thief = thief;
-        this.direction = 1; // starts by going right
+        this.direction = 1;
         this.gameEnded = false;
 
-        ImageIcon dogIcon = new ImageIcon(dogImageUrl);
+        ImageIcon dogIcon = new ImageIcon("img/dog.png");
         Image scaledImage = dogIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
         dogIcon = new ImageIcon(scaledImage);
         dogLabel = new JLabel(dogIcon);

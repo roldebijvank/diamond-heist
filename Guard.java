@@ -3,7 +3,6 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.net.URL;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -27,15 +26,14 @@ public class Guard extends JPanel {
     /**
      * Initializes a new Guard object.
      * @param thief is the thief in the game.
-     * @param guardImageUrl is the guard's image url.
      */
-    public Guard(Thief thief, URL guardImageUrl) {
+    public Guard(Thief thief) {
         this.thief = thief;
         this.direction = 1; //starts by going right
         this.gameEnded = false;
 
-        ImageIcon guardIcon = new ImageIcon(guardImageUrl);
-        Image scaledImage = guardIcon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+        ImageIcon guardIcon = new ImageIcon("img/guard.png");
+        Image scaledImage = guardIcon.getImage().getScaledInstance(100, 150, Image.SCALE_SMOOTH);
         guardIcon = new ImageIcon(scaledImage);
         guardLabel = new JLabel(guardIcon);
         this.add(guardLabel);
