@@ -78,9 +78,12 @@ public class Guard extends JPanel {
      * Ends the game is the thief is caught.
      */
     public void checkForThief() {
-        if (getParent() == thief.getCurrentRoom() 
-            && ((direction == -1 && x > thief.getX()) || (direction == 1 && x < thief.getX()))) {
-            endGame();
+        if (getParent() == thief.getCurrentRoom()) {
+            if (direction == -1 && x > thief.getX()) {
+                endGame();
+            } else if (direction == 1 && x < thief.getX()) {
+                endGame();
+            }
         }
     }   
     
