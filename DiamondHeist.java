@@ -226,9 +226,6 @@ public class DiamondHeist {
     
 
     public static void main(String[] args) {
-        if (System.getProperty("os.name").contains("Windows")) {
-            System.setProperty("sun.java2d.d3d", "false");
-        }
         diamondHeist = new DiamondHeist();
         frame = new JFrame("Diamond Heist");
         frame.setLayout(null);
