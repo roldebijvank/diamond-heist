@@ -26,6 +26,7 @@ public class TimerManager implements ActionListener {
     private static Door exitDoor;
     private static Ladder ladderBottomRoom2;
     private static Ladder ladderMiddleRoom1;
+    private static Hatch hatch;
 
     /**
      * Starts the global timer.
@@ -34,7 +35,7 @@ public class TimerManager implements ActionListener {
                         CameraButton cameraButton2, Guard guardBottomRoom2, Guard guardMiddleRoom1,
                         Dog dog, Door doorBottomRoom1, Door doorBottomRoom2, Door doorMiddleRoom1,
                         Door doorMiddleRoom2, Door exitDoor, Ladder ladderBottomRoom2,
-                        Ladder ladderMiddleRoom1) {
+                        Ladder ladderMiddleRoom1, Hatch hatch) {
         globalTimer = new Timer(16, this);
         TimerManager.thief = thief;
         TimerManager.camera = camera;
@@ -50,6 +51,7 @@ public class TimerManager implements ActionListener {
         TimerManager.exitDoor = exitDoor;
         TimerManager.ladderBottomRoom2 = ladderBottomRoom2;
         TimerManager.ladderMiddleRoom1 = ladderMiddleRoom1;
+        TimerManager.hatch = hatch;
 
         globalTimer.start();
     }
@@ -148,6 +150,21 @@ public class TimerManager implements ActionListener {
         // Ladder actions
         ladderAction(ladderBottomRoom2);
         ladderAction(ladderMiddleRoom1);
+
+        // Hatch actions
+        if (hatch.getBounds().intersects(thief.getBounds())
+            && thief.getCurrentRoom() == hatch.getCurrentRoom()) {
+            thief.onDoor = true;
+            if (thief.doorClicked) {
+                if (thief.hasKey()) {
+                    hatch.openHatch();
+                } else {
+                    JOptionPane.showMessageDialog(null, "You need a key to open the hatch!");
+                    thief.doorClicked = false;
+                }
+                
+            }
+        }
     }
 
     private static void ladderAction(Ladder ladder) {
