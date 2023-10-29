@@ -9,7 +9,7 @@ import javax.swing.Timer;
 /**
  * Creates a camera button that will temporarily turn the camera off.
  */
-public class CameraButton extends JPanel implements ActionListener {
+public class CameraButton extends JPanel {
     private int x;
     private int y;
     private int width;
@@ -17,7 +17,6 @@ public class CameraButton extends JPanel implements ActionListener {
     private Thief thief;
     private Camera camera;
     private Room currentRoom;
-    private Timer timer;
     private ImageIcon buttonIcon;
     private JLabel buttonLabel;
     private CameraButton relatedButton;
@@ -51,14 +50,14 @@ public class CameraButton extends JPanel implements ActionListener {
         this.add(buttonLabel);
         this.setOpaque(false);
 
-        timer = new Timer(4000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                camera.turnOn();
-                pressed = false;
-                timer.stop();
-            }
-        });
+        // timer = new Timer(4000, new ActionListener() {
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+        //         camera.turnOn();
+        //         pressed = false;
+        //         timer.stop();
+        //     }
+        // });
     }
 
     /**
@@ -66,32 +65,30 @@ public class CameraButton extends JPanel implements ActionListener {
      * @param thief is the thief
      */
     public void checkCollision(Thief thief) {
-        Timer timer = new Timer(10, this);
         this.thief = thief;
-        timer.start();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (this.getBounds().intersects(thief.getBounds())
-            && thief.getCurrentRoom() == currentRoom) {
-            thief.onButton = true;
+    // @Override
+    // public void actionPerformed(ActionEvent e) {
+    //     if (this.getBounds().intersects(thief.getBounds())
+    //         && thief.getCurrentRoom() == currentRoom) {
+    //         thief.onButton = true;
 
-            if (thief.buttonPressed) {
-                timer.stop();
-                pressed = true;
-                changeImage("img/button_pressed.png");
-                if (relatedButton.getPressed()) {
-                    relatedButton.timer.stop();
-                    timer.stop();
-                }
-                camera.turnOff();
-                timer.start();
-            } else {
-                changeImage("img/button.png");
-            }
-        }
-    }
+    //         if (thief.buttonPressed) {
+    //             timer.stop();
+    //             pressed = true;
+    //             changeImage("img/button_pressed.png");
+    //             if (relatedButton.getPressed()) {
+    //                 relatedButton.timer.stop();
+    //                 timer.stop();
+    //             }
+    //             camera.turnOff();
+    //             timer.start();
+    //         } else {
+    //             changeImage("img/button.png");
+    //         }
+    //     }
+    // }
 
     /**
      * Changes the image of the button based on whether it is pressed or not.
@@ -124,7 +121,20 @@ public class CameraButton extends JPanel implements ActionListener {
         return pressed;
     }
 
+    public void setPressed(boolean pressed) {
+        this.pressed = pressed;
+    
+    }
+
     public void setRelatedButton(CameraButton relatedButton) {
         this.relatedButton = relatedButton;
+    }
+
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public CameraButton getRelatedButton() {
+        return relatedButton;
     }
 }

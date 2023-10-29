@@ -15,7 +15,7 @@ import javax.swing.Timer;
  * the door. If so, it sends the thief to the next room when the player presses the spacebar.
  *
  */
-public class Door extends JPanel implements ActionListener {
+public class Door extends JPanel {
     private int x; 
     private int y;
     private int width;
@@ -34,7 +34,6 @@ public class Door extends JPanel implements ActionListener {
      * @param height is the height of the door
      * @param sendToRoom is the room that the door sends the thief to
      * @param requiresDiamond decides whether the door requires a key to be opened.  
-     * @throws MalformedURLException to indicate that a malformed URL has occurred.
      */
     public Door(int x, int y, int width, int height,
                 Room sendToRoom, Room currentRoom, Point sendToPoint, boolean requiresDiamond) {
@@ -65,39 +64,37 @@ public class Door extends JPanel implements ActionListener {
      * Checks if the thief is colliding with the door by using a timer and the actionListener class.
      * @param thief is the thief object that it checks for collision
      */
-    public void checkCollision(Thief thief) {
-        Timer timer = new Timer(10, this);
+    public void setThief(Thief thief) {
         this.thief = thief;
-        timer.start();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (this.getBounds().intersects(thief.getBounds())
-            && thief.getCurrentRoom() == currentRoom) {
-            thief.onDoor = true;
-            if (thief.doorClicked) {
-                if (requiresDiamond && !thief.hasDiamond()) {
-                    String message = "You need a diamond to exit the game!";
-                    String title = "Exit Requires Diamond";
-                    JOptionPane.showMessageDialog(null, 
-                                    message, title, JOptionPane.INFORMATION_MESSAGE);
-                }
-                thief.getCurrentRoom().remove(thief);
-                thief.getCurrentRoom().updateRoom();
-                thief.setCurrentRoom(sendToRoom);
-                thief.setCurrentPoint(sendToPoint);
-                sendToRoom.add(thief);
-                sendToRoom.updateRoom();
-                thief.requestFocus(true);
-                thief.doorClicked = false;
+    // @Override
+    // public void actionPerformed(ActionEvent e) {
+    //     if (this.getBounds().intersects(thief.getBounds())
+    //         && thief.getCurrentRoom() == currentRoom) {
+    //         thief.onDoor = true;
+    //         if (thief.doorClicked) {
+    //             if (requiresDiamond && !thief.hasDiamond()) {
+    //                 String message = "You need a diamond to exit the game!";
+    //                 String title = "Exit Requires Diamond";
+    //                 JOptionPane.showMessageDialog(null, 
+    //                                 message, title, JOptionPane.INFORMATION_MESSAGE);
+    //             }
+    //             thief.getCurrentRoom().remove(thief);
+    //             thief.getCurrentRoom().updateRoom();
+    //             thief.setCurrentRoom(sendToRoom);
+    //             thief.setCurrentPoint(sendToPoint);
+    //             sendToRoom.add(thief);
+    //             sendToRoom.updateRoom();
+    //             thief.requestFocus(true);
+    //             thief.doorClicked = false;
 
-                if (requiresDiamond && thief.hasDiamond()) {
-                    Ending.showEndGameDialog(thief.getNumCollectedCoins());
-                }
-            }
-        }
-    }
+    //             if (requiresDiamond && thief.hasDiamond()) {
+    //                 Ending.showEndGameDialog(thief.getNumCollectedCoins());
+    //             }
+    //         }
+    //     }
+    // }
 
     public int getX() {
         return x;
@@ -113,5 +110,21 @@ public class Door extends JPanel implements ActionListener {
 
     public int getHeight() {
         return this.height;
+    }
+
+    public Room getCurrentRoom() {
+        return this.currentRoom;
+    }
+
+    public boolean getRequiresDiamond() {
+        return this.requiresDiamond;
+    }
+
+    public Room getSendToRoom() {
+        return this.sendToRoom;
+    }
+
+    public Point getSendToPoint() {
+        return this.sendToPoint;
     }
 }

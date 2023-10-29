@@ -7,7 +7,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 /**
  * The Guard class represents a guard in the game.
@@ -38,17 +37,6 @@ public class Guard extends JPanel {
         guardLabel = new JLabel(guardIcon);
         this.add(guardLabel);
         this.setOpaque(false);
-
-        Timer timer = new Timer(10, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!gameEnded) {
-                    move();
-                    checkForThief();
-                }
-            }
-        });
-        timer.start();
     }
      
     /**
@@ -114,7 +102,7 @@ public class Guard extends JPanel {
      * Create a game-over message.
      */
     public void endGame() {
-        thief.timer.stop();
+        TimerManager.globalTimer.stop();
         this.setFocusable(true);
         gameEnded = true;
         Ending.showCaughtDialog(Ending.GUARD);
@@ -126,5 +114,9 @@ public class Guard extends JPanel {
 
     public int getHeight() {
         return height;
+    }
+
+    public boolean getGameEnded() {
+        return gameEnded;
     }
 }

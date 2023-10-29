@@ -7,7 +7,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 /**
  * The Dog class represents a dog in the game.
@@ -37,17 +36,6 @@ public class Dog extends JPanel {
         dogLabel = new JLabel(dogIcon);
         this.add(dogLabel);
         this.setOpaque(false);
-
-        Timer timer = new Timer(10, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!gameEnded) {
-                    move();
-                    checkForThief();
-                }
-            }
-        });
-        timer.start();
     }
 
     /**
@@ -111,7 +99,6 @@ public class Dog extends JPanel {
      * Create a game-over message.
      */
     public void endGame() {
-        thief.timer.stop();
         gameEnded = true;
         Ending.showCaughtDialog(Ending.DOG);
     }
@@ -122,5 +109,9 @@ public class Dog extends JPanel {
 
     public int getHeight() {
         return height;
+    }
+
+    public boolean getGameEnded() {
+        return gameEnded;
     }
 }
