@@ -3,7 +3,6 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.net.URL;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -21,20 +20,19 @@ public class Dog extends JPanel {
     private Thief thief;
     private boolean gameEnded;
     private JLabel dogLabel;
-    private int width = 100;
-    private int height = 80;
+    private int width = 80;
+    private int height = 50;
 
     /**
      * Initializes a new Dog object.
      * @param thief is the thief in the game.
-     * @param dogImageUrl is the dog's image URL.
      */
-    public Dog(Thief thief, URL dogImageUrl) {
+    public Dog(Thief thief) {
         this.thief = thief;
-        this.direction = 1; // starts by going right
+        this.direction = 1;
         this.gameEnded = false;
 
-        ImageIcon dogIcon = new ImageIcon(dogImageUrl);
+        ImageIcon dogIcon = new ImageIcon("img/dog.png");
         Image scaledImage = dogIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
         dogIcon = new ImageIcon(scaledImage);
         dogLabel = new JLabel(dogIcon);
@@ -81,7 +79,8 @@ public class Dog extends JPanel {
      * Ends the game if the dog makes contact with the thief.
      */
     public void checkForThief() {
-        if (getParent() == thief.getCurrentRoom() && Math.abs(x - thief.getX()) < 50) {
+        if (getParent() == thief.getCurrentRoom()
+            && this.getBounds().intersects(thief.getBounds())) {
             endGame();
         }
     }
@@ -113,9 +112,9 @@ public class Dog extends JPanel {
      * Create a game-over message.
      */
     public void endGame() {
+        thief.timer.stop();
         gameEnded = true;
-        JOptionPane.showMessageDialog(null, "Game Over! The dog has caught you!");
-        System.exit(0);
+        Ending.showStars(thief.getNumCollectedCoins());
     }
 
     public int getWidth() {

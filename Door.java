@@ -1,7 +1,7 @@
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -15,16 +15,15 @@ import javax.swing.Timer;
  *
  */
 public class Door extends JPanel implements ActionListener {
-    int x; 
-    int y;
-    int width;
-    int height;
-    Thief thief;
-    Room sendToRoom;
-    Room currentRoom;
-    boolean spacePressed = false;
-    boolean requiresDiamond;
-    Image image;
+    private int x; 
+    private int y;
+    private int width;
+    private int height;
+    private Thief thief;
+    private Room sendToRoom;
+    private Room currentRoom;
+    private Point sendToPoint;
+    private boolean requiresDiamond;
 
     /**
      * Creates a new Door object.
@@ -32,21 +31,27 @@ public class Door extends JPanel implements ActionListener {
      * @param y is the y coordinate of the door
      * @param width is the width of the door
      * @param height is the height of the door
-     * @param imageUrl is the URL of the image of the door
      * @param sendToRoom is the room that the door sends the thief to
      */
     public Door(int x, int y, int width, int height,
-                URL imageUrl, Room sendToRoom, Room currentRoom, boolean requiresDiamond) {
+                Room sendToRoom, Room currentRoom, Point sendToPoint, boolean requiresDiamond) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.sendToRoom = sendToRoom;
         this.currentRoom = currentRoom;
+        this.sendToPoint = sendToPoint;
         this.requiresDiamond = requiresDiamond;
 
-        ImageIcon doorIcon = new ImageIcon(imageUrl);
-        Image scaledImage = doorIcon.getImage().getScaledInstance(50, 100, Image.SCALE_SMOOTH);
+        ImageIcon doorIcon;
+        if (requiresDiamond) {
+            doorIcon = new ImageIcon("img/exit_door.png");
+        } else {
+            doorIcon = new ImageIcon("img/door.png");
+        }
+        Image scaledImage = doorIcon.getImage().getScaledInstance(width, height, 
+                                                                  Image.SCALE_SMOOTH);
         doorIcon = new ImageIcon(scaledImage);
         JLabel doorLabel = new JLabel(doorIcon);
         this.add(doorLabel);
@@ -71,23 +76,35 @@ public class Door extends JPanel implements ActionListener {
             if (thief.doorClicked) {
                 if (requiresDiamond && !thief.hasDiamond()) {
                     JOptionPane.showMessageDialog(null, "You need a diamond to exit the game!");
-                } else {
-                    if (requiresDiamond && thief.hasDiamond()) {
-                        JOptionPane.showMessageDialog(null, "Congratulations! You've successfully collected the diamond and exited the game. Well done!");
-                        System.exit(0);
-                    }
+                } else if (requiresDiamond && thief.hasDiamond()) {
+                    Ending.showStars(thief.getNumCollectedCoins());
                 }
 
                 thief.getCurrentRoom().remove(thief);
                 thief.getCurrentRoom().updateRoom();
                 thief.setCurrentRoom(sendToRoom);
+                thief.setCurrentPoint(sendToPoint);
                 sendToRoom.add(thief);
-                sendToRoom.setThiefToStartingPoint(thief);
-                thief.repaint();
                 sendToRoom.updateRoom();
                 thief.requestFocus(true);
                 thief.doorClicked = false;
             }
         }
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getWidth() {
+        return this.width;
+    }
+
+    public int getHeight() {
+        return this.height;
     }
 }

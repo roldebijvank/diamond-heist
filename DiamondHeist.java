@@ -1,6 +1,6 @@
 import java.awt.Color;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.awt.Dimension;
+import java.awt.Point;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 
@@ -18,27 +18,33 @@ public class DiamondHeist{
     private static Room middleRoom1;
     private static Room middleRoom2;
     private static Room topRoom;
-
     private static Thief thief;
+    private static WelcomeScreen welcomeScreen;
+    private static DiamondHeist diamondHeist;
 
-    private static void setupRooms() throws MalformedURLException {
-        bottomRoom1 = new Room(300, 233, 0, 105, new URL("https://img.freepik.com/free-vector/gallery-exhibition-realistic-mockup-with-pictures-wall-visitors-couch-vector-illustration_1284-76858.jpg?size=626&ext=jpg&ga=GA1.1.1825464540.1697495894"));
+    private static void setupWelcomeScreen() {
+        welcomeScreen = new WelcomeScreen(diamondHeist);
+        welcomeScreen.setVisible(true);
+    }
+    
+    private static void setupRooms() {
+        bottomRoom1 = new Room(300, 233, "img/bottomRoom1_image.jpg");
         bottomRoom1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         bottomRoom1.setBounds(0, 467, bottomRoom1.getWidth(), bottomRoom1.getHeight());
 
-        bottomRoom2 = new Room(800, 233, 10, 105, new URL("https://img.freepik.com/premium-vector/gallery-realistic-mockup-with-blank-picture-frames-visitors-couch-vector-illustration_1284-76855.jpg?size=626&ext=jpg&ga=GA1.1.1825464540.1697495894"));
+        bottomRoom2 = new Room(800, 233, "img/bottomRoom2_image.jpg");
         bottomRoom2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         bottomRoom2.setBounds(300, 467, bottomRoom2.getWidth(), bottomRoom2.getHeight());
 
-        middleRoom1 = new Room(550, 233, 0, 105, new URL("https://img.freepik.com/premium-vector/galleru-exhibition-realistic-mockup-with-empty-picture-frame-lightning-equipment-vector-illustration_1284-76846.jpg?size=626&ext=jpg&ga=GA1.1.1825464540.1697495894"));
+        middleRoom1 = new Room(550, 233, "img/middleRoom1_image.jpg");
         middleRoom1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         middleRoom1.setBounds(0, 234, middleRoom1.getWidth(), middleRoom1.getHeight());
 
-        middleRoom2 = new Room(550, 233, 10, 105, new URL("https://img.freepik.com/premium-vector/gallery-museum-realistic-mockup-with-exhibition-picture-frames-vector-illustration_1284-76851.jpg?size=626&ext=jpg&ga=GA1.1.1825464540.1697495894&semt=ais"));
+        middleRoom2 = new Room(550, 233, "img/middleRoom2_image.jpg");
         middleRoom2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         middleRoom2.setBounds(550, 234, middleRoom2.getWidth(), middleRoom2.getHeight());
         
-        topRoom = new Room(1100, 234, 0, 232, new URL("https://img.freepik.com/premium-vector/exhibition-museum-paintings-vertical-positioning-wall-with-spot-light-red-barrier-blank-space-you-realistic-wooden-floor-sunlight_134830-276.jpg?w=1060"));
+        topRoom = new Room(1100, 234, "img/topRoom_image.jpg");
         topRoom.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         topRoom.setBounds(0, 0, topRoom.getWidth(), topRoom.getHeight());
 
@@ -49,38 +55,42 @@ public class DiamondHeist{
         frame.add(topRoom);
     }
 
-    private static void setupThief() throws MalformedURLException {
-        thief = new Thief(1, 75, new URL("https://static.vecteezy.com/system/resources/previews/021/978/524/original/cartoon-stealthy-thief-free-png.png"), bottomRoom1);
-        thief.setBounds(thief.getX(), thief.getY(), 70, 120);
+    private static void setupThief() {
+        thief = new Thief(1, 105, bottomRoom1);
+        thief.setBounds(thief.getX(), thief.getY(), thief.getWidth(), thief.getHeight());
 
         bottomRoom1.add(thief);
     }
 
-    private static void setupDoors() throws MalformedURLException {
-        Door doorBottomRoom1 = new Door(240, 105, 50, 100, new URL("https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/33142/door-clipart-md.png"), bottomRoom2, bottomRoom1, false);
+    private static void setupDoors() {
+        Door doorBottomRoom1 = new Door(240, 132, 50, 100,
+                                        bottomRoom2, bottomRoom1, new Point(0, 105), false);
         doorBottomRoom1.checkCollision(thief);
-        doorBottomRoom1.setBounds(doorBottomRoom1.x, doorBottomRoom1.y,
-                                  doorBottomRoom1.width, doorBottomRoom1.height);
+        doorBottomRoom1.setBounds(doorBottomRoom1.getX(), doorBottomRoom1.getY(),
+                                  doorBottomRoom1.getWidth(), doorBottomRoom1.getHeight());
 
-        Door doorBottomRoom2 = new Door(10, 105, 50, 100, new URL("https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/33142/door-clipart-md.png"), bottomRoom1, bottomRoom2, false);
+        Door doorBottomRoom2 = new Door(10, 132, 50, 100,
+                                        bottomRoom1, bottomRoom2, new Point(230, 105), false);
         doorBottomRoom2.checkCollision(thief);
-        doorBottomRoom2.setBounds(doorBottomRoom2.x, doorBottomRoom2.y,
-                                  doorBottomRoom2.width, doorBottomRoom2.height);
+        doorBottomRoom2.setBounds(doorBottomRoom2.getX(), doorBottomRoom2.getY(),
+                                  doorBottomRoom2.getWidth(), doorBottomRoom2.getHeight());
 
-        Door doorMiddleRoom2 = new Door(10, 132, 50, 100, new URL("https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/33142/door-clipart-md.png"), middleRoom1, middleRoom2, false);
+        Door doorMiddleRoom2 = new Door(10, 132, 50, 100,
+                                        middleRoom1, middleRoom2, new Point(480, 105), false);
         doorMiddleRoom2.checkCollision(thief);
-        doorMiddleRoom2.setBounds(doorMiddleRoom2.x, doorMiddleRoom2.y,
-                                  doorMiddleRoom2.width, doorMiddleRoom2.height);
+        doorMiddleRoom2.setBounds(doorMiddleRoom2.getX(), doorMiddleRoom2.getY(),
+                                  doorMiddleRoom2.getWidth(), doorMiddleRoom2.getHeight());
 
-        Door doorMiddleRoom1 = new Door(490, 132, 50, 100, new URL("https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/33142/door-clipart-md.png"), middleRoom2, middleRoom1, false);
+        Door doorMiddleRoom1 = new Door(490, 132, 50, 100,
+                                        middleRoom2, middleRoom1, new Point(0, 105), false);
         doorMiddleRoom1.checkCollision(thief);
-        doorMiddleRoom1.setBounds(doorMiddleRoom1.x, doorMiddleRoom1.y,
-                                  doorMiddleRoom1.width, doorMiddleRoom1.height);
+        doorMiddleRoom1.setBounds(doorMiddleRoom1.getX(), doorMiddleRoom1.getY(),
+                                  doorMiddleRoom1.getWidth(), doorMiddleRoom1.getHeight());
 
-        Door exitDoor = new Door(0, 105, 70, 120, new URL("https://dooraykapi.com/wp-content/uploads/yangin-tek-kanat-1.png"), bottomRoom1, bottomRoom1, true);
+        Door exitDoor = new Door(5, 112, 70, 120, bottomRoom1, bottomRoom1, new Point(thief.getX(), thief.getY()), true);
         exitDoor.checkCollision(thief);
-        exitDoor.setBounds(exitDoor.x, exitDoor.y,
-                                  exitDoor.width, exitDoor.height);
+        exitDoor.setBounds(exitDoor.getX(), exitDoor.getY(),
+                                  exitDoor.getWidth(), exitDoor.getHeight());
 
         bottomRoom1.add(doorBottomRoom1);
         bottomRoom2.add(doorBottomRoom2);
@@ -89,45 +99,55 @@ public class DiamondHeist{
         bottomRoom1.add(exitDoor);
     }
 
-    /**
-     * Sets up the ladders in the rooms.
-     * @throws MalformedURLException if the URL is invalid
-     */
-    private static void setupLadders() throws MalformedURLException {
-        Ladder ladderBottomRoom2 = new Ladder(new URL("https://static.vecteezy.com/system/resources/thumbnails/000/645/132/small/illust58-696.jpg"), middleRoom2);
-        ladderBottomRoom2.checkCollision(thief);
-        ladderBottomRoom2.setBounds(400, 1,
-                                    30, 210);
+    private static void setupHatch() {
+        Hatch hatch = new Hatch(10, 180, bottomRoom1, middleRoom1);
+        hatch.checkCollision(thief);
+        hatch.setBounds(hatch.x, hatch.y,
+                                  hatch.width, hatch.height);
 
-        bottomRoom2.add(ladderBottomRoom2);
+        middleRoom1.add(hatch);
     }
 
-    private static void setupGuards() throws MalformedURLException {
-        URL guardImageUrl = new URL("https://images.rawpixel.com/image_transparent_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA0L2pvYjk2OS0xMjgtcC5wbmc.png");
+    /**
+     * Sets up the ladders in the rooms.
+     */
+    private static void setupLadders() {
+        Ladder ladderBottomRoom2 = new Ladder(bottomRoom2, middleRoom2, new Point(100, 105));
+        ladderBottomRoom2.checkCollision(thief);
+        ladderBottomRoom2.setBounds(350, 1,
+                                    ladderBottomRoom2.getWidth(), ladderBottomRoom2.getHeight());
 
-        Guard guard1 = new Guard(thief, guardImageUrl);
-        guard1.setBounds(0, 49, guard1.getWidth(), guard1.getHeight());
+        Ladder ladderMiddleRoom1 = new Ladder(middleRoom1, topRoom, new Point(200, 105));
+        ladderMiddleRoom1.checkCollision(thief);
+        ladderMiddleRoom1.setBounds(200, 1,
+                                    ladderMiddleRoom1.getWidth(), ladderMiddleRoom1.getHeight());
+
+        bottomRoom2.add(ladderBottomRoom2);
+        middleRoom1.add(ladderMiddleRoom1);
+    }
+
+    private static void setupGuards() {
+        Guard guard1 = new Guard(thief);
+        guard1.setBounds(0, 80, guard1.getWidth(), guard1.getHeight());
         bottomRoom2.add(guard1);
 
-        Guard guard2 = new Guard(thief, guardImageUrl);
-        guard2.setBounds(0, 82, guard2.getWidth(), guard2.getHeight());
+        Guard guard2 = new Guard(thief);
+        guard2.setBounds(0, 80, guard2.getWidth(), guard2.getHeight());
         middleRoom1.add(guard2);
     }
 
-    private static void setupDog() throws MalformedURLException {
-        URL dogImageUrl = new URL("https://png.pngtree.com/png-vector/20220816/ourmid/pngtree-cartoon-angry-dog-chasingvector-illustration-canine-fight-bark-vector-png-image_38428812.png");
-    
-        Dog dog = new Dog(thief, dogImageUrl);
-        dog.setBounds(0, 153, dog.getWidth(), dog.getHeight());
+    private static void setupDog() {    
+        Dog dog = new Dog(thief);
+        dog.setBounds(0, 183, dog.getWidth(), dog.getHeight());
         topRoom.add(dog);
     }
 
-    private static void setupCamera() throws MalformedURLException {
-        Camera camera = new Camera(170, 0, 233, 233, middleRoom2);
+    private static void setupCamera() {
+        Camera camera = new Camera(250, 0, middleRoom2);
         camera.checkCollision(thief);
         camera.setBounds(camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight());
 
-        CameraButton cameraButtonLeft = new CameraButton(100, 100, 60, 60, camera, middleRoom2);
+        CameraButton cameraButtonLeft = new CameraButton(140, 100, 60, 60, camera, middleRoom2);
         cameraButtonLeft.checkCollision(thief);
         cameraButtonLeft.setBounds(cameraButtonLeft.getX(), cameraButtonLeft.getY(),
                                    cameraButtonLeft.getWidth(), cameraButtonLeft.getHeight());
@@ -142,45 +162,47 @@ public class DiamondHeist{
         middleRoom2.add(camera);
     }
 
-    private static void setupDiamond() throws MalformedURLException {
-        URL diamondImageUrl = new URL("https://images.vexels.com/media/users/3/157265/isolated/lists/d546c542730b45e5893fc0ed71c8f4d7-blue-diamond-stone-vector.png");
-
-        Diamond diamond = new Diamond(diamondImageUrl);
+    private static void setupDiamond() {
+        Diamond diamond = new Diamond(1000, 100);
         diamond.setBounds(diamond.x, diamond.y, diamond.width, diamond.height);
         topRoom.add(diamond);
     }
 
-    private static void setupCoins() throws MalformedURLException {
-        URL coinImageUrl = new URL("https://static.vecteezy.com/system/resources/previews/011/307/638/original/dollar-gold-coin-icon-png.png");
-
-        Coin coin1 = new Coin(coinImageUrl, 150, 100);
+    private static void setupCoins() {
+        Coin coin1 = new Coin(150, 100);
         coin1.setBounds(coin1.x, coin1.y, coin1.width, coin1.height);
         bottomRoom2.add(coin1);
 
-        Coin coin2 = new Coin(coinImageUrl, 500, 100);
+        Coin coin2 = new Coin(500, 100);
         coin2.setBounds(coin2.x, coin2.y, coin2.width, coin2.height);
         middleRoom2.add(coin2);
 
-        Coin coin3 = new Coin(coinImageUrl, 450, 100);
+        Coin coin3 = new Coin(400, 100);
         coin3.setBounds(coin3.x, coin3.y, coin3.width, coin3.height);
         middleRoom1.add(coin3);
     }
 
-    private static void setupKey() throws MalformedURLException {
-        URL keyImageUrl = new URL("https://i.pinimg.com/originals/c7/be/1d/c7be1d00edfee40df974c43762f57e53.png");
-
-        Key key = new Key(keyImageUrl);
+    private static void setupKey() {
+        Key key = new Key(20, 170);
         key.setBounds(key.x, key.y, key.width, key.height);
         topRoom.add(key);
     }
 
-    public static void main(String[] args) throws MalformedURLException {
+    public void startGame() {
+        frame.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+
+        diamondHeist = new DiamondHeist();
         frame = new JFrame("Diamond Heist");
         frame.setLayout(null);
+        frame.getRootPane().setPreferredSize(new Dimension(1100, 700));
 
         setupRooms();
         setupThief();
         setupDoors();
+        setupHatch();
         setupLadders();
         setupGuards();
         setupDog();
@@ -188,10 +210,11 @@ public class DiamondHeist{
         setupDiamond();
         setupCoins();
         setupKey();
+        setupWelcomeScreen();
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1100, 700);
+        frame.pack();
         frame.setResizable(false);
-        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
     }
 }
