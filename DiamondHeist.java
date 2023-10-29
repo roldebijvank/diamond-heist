@@ -20,9 +20,7 @@ public class DiamondHeist {
     private static Room middleRoom1;
     private static Room middleRoom2;
     private static Room topRoom;
-    private static WelcomeScreen welcomeScreen;
     private static DiamondHeist diamondHeist;
-
     private static Thief thief;
     private static Camera camera;
     private static CameraButton cameraButton1;
@@ -39,7 +37,7 @@ public class DiamondHeist {
     private static Ladder ladderMiddleRoom1;
 
     private static void setupWelcomeScreen() {
-        welcomeScreen = new WelcomeScreen(diamondHeist);
+        WelcomeScreen welcomeScreen = new WelcomeScreen(diamondHeist);
         welcomeScreen.setVisible(true);
     }
     
@@ -81,31 +79,26 @@ public class DiamondHeist {
     private static void setupDoors() {
         doorBottomRoom1 = new Door(240, 132, 50, 100,
                                         bottomRoom2, bottomRoom1, new Point(0, 105), false);
-        doorBottomRoom1.setThief(thief);
         doorBottomRoom1.setBounds(doorBottomRoom1.getX(), doorBottomRoom1.getY(),
                                   doorBottomRoom1.getWidth(), doorBottomRoom1.getHeight());
 
         doorBottomRoom2 = new Door(10, 132, 50, 100,
                                         bottomRoom1, bottomRoom2, new Point(230, 105), false);
-        doorBottomRoom2.setThief(thief);
         doorBottomRoom2.setBounds(doorBottomRoom2.getX(), doorBottomRoom2.getY(),
                                   doorBottomRoom2.getWidth(), doorBottomRoom2.getHeight());
 
         doorMiddleRoom2 = new Door(10, 132, 50, 100,
                                         middleRoom1, middleRoom2, new Point(480, 105), false);
-        doorMiddleRoom2.setThief(thief);
         doorMiddleRoom2.setBounds(doorMiddleRoom2.getX(), doorMiddleRoom2.getY(),
                                   doorMiddleRoom2.getWidth(), doorMiddleRoom2.getHeight());
 
         doorMiddleRoom1 = new Door(490, 132, 50, 100,
                                         middleRoom2, middleRoom1, new Point(0, 105), false);
-        doorMiddleRoom1.setThief(thief);
         doorMiddleRoom1.setBounds(doorMiddleRoom1.getX(), doorMiddleRoom1.getY(),
                                   doorMiddleRoom1.getWidth(), doorMiddleRoom1.getHeight());
 
         exitDoor = new Door(5, 112, 70, 120, bottomRoom1, bottomRoom1,
                                  new Point(thief.getX(), thief.getY()), true);
-        exitDoor.setThief(thief);
         exitDoor.setBounds(exitDoor.getX(), exitDoor.getY(),
                                   exitDoor.getWidth(), exitDoor.getHeight());
 
@@ -121,7 +114,6 @@ public class DiamondHeist {
         hatch.checkCollision(thief);
         hatch.setBounds(hatch.x, hatch.y,
                                   hatch.width, hatch.height);
-
         middleRoom1.add(hatch);
     }
 
@@ -164,14 +156,12 @@ public class DiamondHeist {
         camera.setBounds(camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight());
 
         cameraButton1 = new CameraButton(140, 100, 60, 60,
-                                                         camera, null, middleRoom2);
-        cameraButton1.checkCollision(thief);
+                                                          null, middleRoom2);
         cameraButton1.setBounds(cameraButton1.getX(), cameraButton1.getY(),
                                    cameraButton1.getWidth(), cameraButton1.getHeight());
 
         cameraButton2 = new CameraButton(450, 100, 60, 60,
-                                                          camera, cameraButton1, middleRoom2);
-        cameraButton2.checkCollision(thief);
+                                                          cameraButton1, middleRoom2);
         cameraButton2.setBounds(cameraButton2.getX(), cameraButton2.getY(),
                                     cameraButton2.getWidth(), cameraButton2.getHeight());
 

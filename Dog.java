@@ -15,11 +15,11 @@ import javax.swing.JPanel;
 public class Dog extends JPanel {
     private int x;
     private int direction;
-    private Thief thief;
+    private final Thief thief;
     private boolean gameEnded;
-    private JLabel dogLabel;
-    private int width = 80;
-    private int height = 50;
+    private final JLabel dogLabel;
+    private final int width = 80;
+    private final int height = 50;
 
     /**
      * Initializes a new Dog object.
@@ -57,7 +57,6 @@ public class Dog extends JPanel {
                 dogLabel.setIcon(flipImageVertically(dogLabel.getIcon()));
             }
         }
-
         this.setBounds(x, this.getY(), width, height);
     }
 
@@ -79,8 +78,7 @@ public class Dog extends JPanel {
      */
 
     private ImageIcon flipImageVertically(Icon icon) {
-        if (icon instanceof ImageIcon) {
-            ImageIcon imageIcon = (ImageIcon) icon;
+        if (icon instanceof ImageIcon imageIcon) {
             Image image = imageIcon.getImage();
             int width = image.getWidth(null);
             int height = image.getHeight(null);

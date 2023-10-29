@@ -8,11 +8,11 @@ import javax.swing.JPanel;
  * The camera will turn off when the thief clicks the corresponding buttons.
  */
 public class Camera extends JPanel {
-    private int x;
-    private int y;
-    private int width;
-    private int height;
-    private Room currentRoom;
+    private final int x;
+    private final int y;
+    private final int width;
+    private final int height;
+    private final Room currentRoom;
     private boolean isOn = true;
 
     /**

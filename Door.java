@@ -16,15 +16,14 @@ import javax.swing.Timer;
  *
  */
 public class Door extends JPanel {
-    private int x; 
-    private int y;
-    private int width;
-    private int height;
-    private Thief thief;
-    private Room sendToRoom;
-    private Room currentRoom;
-    private Point sendToPoint;
-    private boolean requiresDiamond;
+    private final int x;
+    private final int y;
+    private final int width;
+    private final int height;
+    private final Room sendToRoom;
+    private final Room currentRoom;
+    private final Point sendToPoint;
+    private final boolean requiresDiamond;
 
     /**
      * Creates a new Door object.
@@ -52,49 +51,13 @@ public class Door extends JPanel {
         } else {
             doorIcon = new ImageIcon("img/door.png");
         }
-        Image scaledImage = doorIcon.getImage().getScaledInstance(width, height, 
-                                                                  Image.SCALE_SMOOTH);
+        Image scaledImage = doorIcon.getImage().getScaledInstance(width, height,
+                Image.SCALE_SMOOTH);
         doorIcon = new ImageIcon(scaledImage);
         JLabel doorLabel = new JLabel(doorIcon);
         this.add(doorLabel);
         this.setOpaque(false);
     }
-    
-    /**
-     * Checks if the thief is colliding with the door by using a timer and the actionListener class.
-     * @param thief is the thief object that it checks for collision
-     */
-    public void setThief(Thief thief) {
-        this.thief = thief;
-    }
-
-    // @Override
-    // public void actionPerformed(ActionEvent e) {
-    //     if (this.getBounds().intersects(thief.getBounds())
-    //         && thief.getCurrentRoom() == currentRoom) {
-    //         thief.onDoor = true;
-    //         if (thief.doorClicked) {
-    //             if (requiresDiamond && !thief.hasDiamond()) {
-    //                 String message = "You need a diamond to exit the game!";
-    //                 String title = "Exit Requires Diamond";
-    //                 JOptionPane.showMessageDialog(null, 
-    //                                 message, title, JOptionPane.INFORMATION_MESSAGE);
-    //             }
-    //             thief.getCurrentRoom().remove(thief);
-    //             thief.getCurrentRoom().updateRoom();
-    //             thief.setCurrentRoom(sendToRoom);
-    //             thief.setCurrentPoint(sendToPoint);
-    //             sendToRoom.add(thief);
-    //             sendToRoom.updateRoom();
-    //             thief.requestFocus(true);
-    //             thief.doorClicked = false;
-
-    //             if (requiresDiamond && thief.hasDiamond()) {
-    //                 Ending.showEndGameDialog(thief.getNumCollectedCoins());
-    //             }
-    //         }
-    //     }
-    // }
 
     public int getX() {
         return x;

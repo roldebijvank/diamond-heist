@@ -10,17 +10,14 @@ import javax.swing.Timer;
  * Creates a camera button that will temporarily turn the camera off.
  */
 public class CameraButton extends JPanel {
-    private int x;
-    private int y;
-    private int width;
-    private int height;
-    private Thief thief;
-    private Camera camera;
-    private Room currentRoom;
+    private final int x;
+    private final int y;
+    private final int width;
+    private final int height;
+    private final Room currentRoom;
     private ImageIcon buttonIcon;
-    private JLabel buttonLabel;
+    private final JLabel buttonLabel;
     private CameraButton relatedButton;
-    private boolean pressed = false;
 
     /**
      * Creates an instance of CameraButton.
@@ -29,13 +26,11 @@ public class CameraButton extends JPanel {
      * @param width is the width of the button
      * @param height is the height of the button
      */
-    public CameraButton(int x, int y, int width, int height,
-                        Camera camera, CameraButton relatedButton, Room currentRoom) {
+    public CameraButton(int x, int y, int width, int height, CameraButton relatedButton, Room currentRoom) {
         this.x = x;
         this.y = y;
         this.width = width;
-        this.height = width;      
-        this.camera = camera;
+        this.height = height;
         this.relatedButton = relatedButton;
         this.currentRoom = currentRoom;
         
@@ -49,46 +44,7 @@ public class CameraButton extends JPanel {
         buttonLabel.setBounds(0, 0, width, height);
         this.add(buttonLabel);
         this.setOpaque(false);
-
-        // timer = new Timer(4000, new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         camera.turnOn();
-        //         pressed = false;
-        //         timer.stop();
-        //     }
-        // });
     }
-
-    /**
-     * Checks if the thief has collided with the camera button.
-     * @param thief is the thief
-     */
-    public void checkCollision(Thief thief) {
-        this.thief = thief;
-    }
-
-    // @Override
-    // public void actionPerformed(ActionEvent e) {
-    //     if (this.getBounds().intersects(thief.getBounds())
-    //         && thief.getCurrentRoom() == currentRoom) {
-    //         thief.onButton = true;
-
-    //         if (thief.buttonPressed) {
-    //             timer.stop();
-    //             pressed = true;
-    //             changeImage("img/button_pressed.png");
-    //             if (relatedButton.getPressed()) {
-    //                 relatedButton.timer.stop();
-    //                 timer.stop();
-    //             }
-    //             camera.turnOff();
-    //             timer.start();
-    //         } else {
-    //             changeImage("img/button.png");
-    //         }
-    //     }
-    // }
 
     /**
      * Changes the image of the button based on whether it is pressed or not.
@@ -117,24 +73,11 @@ public class CameraButton extends JPanel {
         return height;
     }
 
-    public boolean getPressed() {
-        return pressed;
-    }
-
-    public void setPressed(boolean pressed) {
-        this.pressed = pressed;
-    
-    }
-
     public void setRelatedButton(CameraButton relatedButton) {
         this.relatedButton = relatedButton;
     }
 
     public Room getCurrentRoom() {
         return currentRoom;
-    }
-
-    public CameraButton getRelatedButton() {
-        return relatedButton;
     }
 }

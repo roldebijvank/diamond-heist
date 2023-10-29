@@ -8,7 +8,6 @@ import javax.swing.JPanel;
  * collected by the thief.
  */
 public abstract class CollectableItem extends JPanel {
-    private JLabel itemLabel;
     protected boolean collected;
     public int x;
     public int y;
@@ -30,15 +29,11 @@ public abstract class CollectableItem extends JPanel {
         ImageIcon icon = new ImageIcon(filePath);
         Image scaledImage = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
         icon = new ImageIcon(scaledImage);
-        itemLabel = new JLabel(icon);
+        JLabel itemLabel = new JLabel(icon);
         this.setLayout(null);
         itemLabel.setBounds(0, 0, width, height);
         this.add(itemLabel);
         this.setOpaque(false);
-    }
-
-    public boolean isCollected() {
-        return collected;
     }
 
     /**

@@ -95,11 +95,7 @@ public class TimerManager implements ActionListener {
             thief.onButton = true;
 
             if (thief.getButtonPressed()) {
-                cameraButton1.setPressed(true);
                 cameraButton1.changeImage("img/button_pressed.png");
-                // if (cameraButton1.getRelatedButton().getPressed()) {
-                    
-                // }
                 camera.turnOff();
             } else {
                 cameraButton1.changeImage("img/button.png");
@@ -111,11 +107,7 @@ public class TimerManager implements ActionListener {
             thief.onButton = true;
 
             if (thief.getButtonPressed()) {
-                cameraButton2.setPressed(true);
                 cameraButton2.changeImage("img/button_pressed.png");
-                // if (cameraButton2.getRelatedButton().getPressed()) {
-                    
-                // }
                 camera.turnOff();
             } else {
                 cameraButton2.changeImage("img/button.png");
@@ -127,7 +119,6 @@ public class TimerManager implements ActionListener {
             cameraIndex++;
             if (cameraIndex == 200) {
                 camera.turnOn();
-                cameraButton1.setPressed(false);
                 cameraIndex = 0;
             }
         }
