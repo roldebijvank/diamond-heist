@@ -3,7 +3,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -64,16 +63,10 @@ public class Camera extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (this.getBounds().intersects(thief.getBounds())
             && thief.getCurrentRoom() == currentRoom) {
-            endGame();
+            timer.stop();
+            thief.timer.stop();
+            Ending.showCaughtDialog(Ending.CAMERA);
         }
-    }
-
-    /**
-     * Ends the game if the thief gets detected by the camera.
-     */
-    private void endGame() {
-        JOptionPane.showMessageDialog(null, "Game Over! You've been caught!");
-        System.exit(0);
     }
 
     /**

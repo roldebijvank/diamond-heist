@@ -25,7 +25,6 @@ public class Door extends JPanel implements ActionListener {
     private Room currentRoom;
     private Point sendToPoint;
     private boolean requiresDiamond;
-    private static boolean exitDiamondMessageShown = false;
 
     /**
      * Creates a new Door object.
@@ -78,12 +77,11 @@ public class Door extends JPanel implements ActionListener {
             && thief.getCurrentRoom() == currentRoom) {
             thief.onDoor = true;
             if (thief.doorClicked) {
-                if (requiresDiamond && !thief.hasDiamond() && !exitDiamondMessageShown) {
+                if (requiresDiamond && !thief.hasDiamond()) {
                     String message = "You need a diamond to exit the game!";
                     String title = "Exit Requires Diamond";
                     JOptionPane.showMessageDialog(null, 
                                     message, title, JOptionPane.INFORMATION_MESSAGE);
-                    exitDiamondMessageShown = true;
                 }
                 thief.getCurrentRoom().remove(thief);
                 thief.getCurrentRoom().updateRoom();
@@ -95,7 +93,7 @@ public class Door extends JPanel implements ActionListener {
                 thief.doorClicked = false;
 
                 if (requiresDiamond && thief.hasDiamond()) {
-                    Ending.showEndGameDialog();
+                    Ending.showEndGameDialog(thief.getNumCollectedCoins());
                 }
             }
         }

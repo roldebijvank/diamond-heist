@@ -283,7 +283,6 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
                 }
             }
         }
-
         return false;
     }
 
@@ -297,6 +296,7 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
         collectedItems.add(coin);
         currentRoom.remove(coin); 
         currentRoom.updateRoom();
+        numCollectedCoins++;
         coinsCollected++;
         
     }

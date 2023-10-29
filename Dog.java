@@ -113,7 +113,7 @@ public class Dog extends JPanel {
     public void endGame() {
         thief.timer.stop();
         gameEnded = true;
-        Ending.showDogCaughtMessage();
+        Ending.showCaughtDialog(Ending.DOG);
     }
 
     public int getWidth() {

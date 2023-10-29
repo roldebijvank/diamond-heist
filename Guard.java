@@ -115,8 +115,9 @@ public class Guard extends JPanel {
      */
     public void endGame() {
         thief.timer.stop();
+        this.setFocusable(true);
         gameEnded = true;
-        Ending.showGuardCaughtMessage();
+        Ending.showCaughtDialog(Ending.GUARD);
     }
 
     public int getWidth() {
