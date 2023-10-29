@@ -170,11 +170,8 @@ public class DiamondHeist {
 
     private static void setupDiamond() {
         Diamond diamond = new Diamond(1000, 100);
-        Diamond bottomdiamond = new Diamond(100, 100);
         diamond.setBounds(diamond.x, diamond.y, diamond.width, diamond.height);
-        bottomdiamond.setBounds(bottomdiamond.x, bottomdiamond.y, bottomdiamond.width, bottomdiamond.height);
         topRoom.add(diamond);
-        bottomRoom1.add(bottomdiamond);
     }
 
     private static void setupCoins() {
