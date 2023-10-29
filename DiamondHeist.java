@@ -227,9 +227,8 @@ public class DiamondHeist {
 
     public static void main(String[] args) {
         if (System.getProperty("os.name").contains("Windows")) {
-            System.setProperty("sun.java2d.noddraw", Boolean.TRUE.toString());
+            System.setProperty("sun.java2d.d3d", "false");
         }
-        System.out.println("OS: " + System.getProperty("os.name"));
         diamondHeist = new DiamondHeist();
         frame = new JFrame("Diamond Heist");
         frame.setLayout(null);
