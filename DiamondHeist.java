@@ -94,7 +94,6 @@ public class DiamondHeist {
     }
 
     private static void setupHatch() {
-
         Hatch hatch = new Hatch(10, 180, bottomRoom1, middleRoom1);
         hatch.checkCollision(thief);
         hatch.setBounds(hatch.x, hatch.y,
@@ -172,7 +171,7 @@ public class DiamondHeist {
         coin2.setBounds(coin2.x, coin2.y, coin2.width, coin2.height);
         middleRoom2.add(coin2);
 
-        Coin coin3 = new Coin(450, 100);
+        Coin coin3 = new Coin(400, 100);
         coin3.setBounds(coin3.x, coin3.y, coin3.width, coin3.height);
         middleRoom1.add(coin3);
     }

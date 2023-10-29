@@ -52,13 +52,24 @@ public class Ladder extends JPanel implements ActionListener {
         boolean intersects = this.getBounds().intersects(thief.getBounds())
                              && thief.getCurrentRoom() == this.currentRoom;
 
-        if (intersects) {
+        if (thief.down && thief.getCurrentRoom() == sendToRoom
+                    && thief.getBounds().intersects(sendToPoint.x, sendToPoint.y, 70, 233)) {
+            thief.onLadder = true;
+            this.setFocusable(true);
+            this.requestFocus();
+            thief.getCurrentRoom().remove(thief);
+            thief.getCurrentRoom().updateRoom();
+            thief.setCurrentRoom(currentRoom);
+            thief.setCurrentPoint(new Point(this.getX(), 0));
+            currentRoom.add(thief);
+            currentRoom.updateRoom();
+        } else if (intersects) {
             thief.onLadder = true;
             if (thief.up) {
                 this.setFocusable(true);
                 this.requestFocus();
                 thief.moveUp();
-                if (thief.getY() < this.getY()) {
+                if (thief.getY() <= this.getY()) {
                     thief.up = false;
                     thief.onLadder = false;
                     thief.getCurrentRoom().remove(thief);
@@ -69,18 +80,17 @@ public class Ladder extends JPanel implements ActionListener {
                     sendToRoom.updateRoom();
                     this.setFocusable(false);
                     thief.setFocusable(true);
-                    timer.stop();
                 }
-            } else if (thief.down
-                    && thief.getCurrentRoom() == sendToRoom
-                    && thief.getX() == sendToPoint.getX()) {
-                System.out.println("yo");
-                this.setFocusable(true);
-                this.requestFocus();
+            } else if (thief.down) {
                 thief.moveDown();
-                if (thief.getY() > this.getY()) {
+                if (thief.getY() >= 105) {
                     thief.down = false;
-                    timer.stop();
+                    thief.onLadder = false;
+                    thief.setCurrentPoint(new Point(this.getX(), 105));
+                    currentRoom.add(thief);
+                    currentRoom.updateRoom();
+                    this.setFocusable(false);
+                    thief.setFocusable(true);
                 }
             }
         } else {

@@ -146,8 +146,10 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
                 jump();
                 jumps = true;
             }
-        } else if (downKey && !up && !left && !right) {
-            down = true;
+        } else if (downKey && !up) {
+            if (!right && !left) {
+                down = true;
+            }
         } else if (spaceKey) {
             if (onDoor) {
                 space = true;
