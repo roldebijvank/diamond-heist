@@ -20,6 +20,8 @@ public class CameraButton extends JPanel implements ActionListener {
     private Timer timer;
     private ImageIcon buttonIcon;
     private JLabel buttonLabel;
+    private CameraButton relatedButton;
+    private boolean pressed = false;
 
     /**
      * Creates an instance of CameraButton.
@@ -28,13 +30,16 @@ public class CameraButton extends JPanel implements ActionListener {
      * @param width is the width of the button
      * @param height is the height of the button
      */
-    public CameraButton(int x, int y, int width, int height, Camera camera, Room currentRoom) {
+    public CameraButton(int x, int y, int width, int height,
+                        Camera camera, CameraButton relatedButton, Room currentRoom) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = width;      
         this.camera = camera;
+        this.relatedButton = relatedButton;
         this.currentRoom = currentRoom;
+        
         
         buttonIcon = new ImageIcon("img/button.png");
         Image scaledImage = buttonIcon.getImage().getScaledInstance(width, height,
@@ -50,6 +55,7 @@ public class CameraButton extends JPanel implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 camera.turnOn();
+                pressed = false;
                 timer.stop();
             }
         });
@@ -72,7 +78,13 @@ public class CameraButton extends JPanel implements ActionListener {
             thief.onButton = true;
 
             if (thief.buttonPressed) {
+                timer.stop();
+                pressed = true;
                 changeImage("img/button_pressed.png");
+                if (relatedButton.getPressed()) {
+                    relatedButton.timer.stop();
+                    timer.stop();
+                }
                 camera.turnOff();
                 timer.start();
             } else {
@@ -106,5 +118,13 @@ public class CameraButton extends JPanel implements ActionListener {
 
     public int getHeight() {
         return height;
+    }
+
+    public boolean getPressed() {
+        return pressed;
+    }
+
+    public void setRelatedButton(CameraButton relatedButton) {
+        this.relatedButton = relatedButton;
     }
 }

@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -117,8 +116,7 @@ public class Guard extends JPanel {
     public void endGame() {
         thief.timer.stop();
         gameEnded = true;
-        JOptionPane.showMessageDialog(null, "Game Over! You've been caught!");
-        System.exit(0);
+        Ending.showGuardCaughtMessage();
     }
 
     public int getWidth() {

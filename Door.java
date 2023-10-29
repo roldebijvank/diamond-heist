@@ -2,8 +2,10 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -22,6 +24,8 @@ public class Door extends JPanel implements ActionListener {
     private Room sendToRoom;
     private Room currentRoom;
     private Point sendToPoint;
+    private boolean requiresDiamond;
+    private static boolean exitDiamondMessageShown = false;
 
     /**
      * Creates a new Door object.
@@ -30,9 +34,11 @@ public class Door extends JPanel implements ActionListener {
      * @param width is the width of the door
      * @param height is the height of the door
      * @param sendToRoom is the room that the door sends the thief to
+     * @param requiresDiamond decides whether the door requires a key to be opened.  
+     * @throws MalformedURLException to indicate that a malformed URL has occurred.
      */
     public Door(int x, int y, int width, int height,
-                Room sendToRoom, Room currentRoom, Point sendToPoint) {
+                Room sendToRoom, Room currentRoom, Point sendToPoint, boolean requiresDiamond) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -40,9 +46,16 @@ public class Door extends JPanel implements ActionListener {
         this.sendToRoom = sendToRoom;
         this.currentRoom = currentRoom;
         this.sendToPoint = sendToPoint;
+        this.requiresDiamond = requiresDiamond;
 
-        ImageIcon doorIcon = new ImageIcon("img/door.png");
-        Image scaledImage = doorIcon.getImage().getScaledInstance(50, 100, Image.SCALE_SMOOTH);
+        ImageIcon doorIcon;
+        if (requiresDiamond) {
+            doorIcon = new ImageIcon("img/exit_door.png");
+        } else {
+            doorIcon = new ImageIcon("img/door.png");
+        }
+        Image scaledImage = doorIcon.getImage().getScaledInstance(width, height, 
+                                                                  Image.SCALE_SMOOTH);
         doorIcon = new ImageIcon(scaledImage);
         JLabel doorLabel = new JLabel(doorIcon);
         this.add(doorLabel);
@@ -65,6 +78,13 @@ public class Door extends JPanel implements ActionListener {
             && thief.getCurrentRoom() == currentRoom) {
             thief.onDoor = true;
             if (thief.doorClicked) {
+                if (requiresDiamond && !thief.hasDiamond() && !exitDiamondMessageShown) {
+                    String message = "You need a diamond to exit the game!";
+                    String title = "Exit Requires Diamond";
+                    JOptionPane.showMessageDialog(null, 
+                                    message, title, JOptionPane.INFORMATION_MESSAGE);
+                    exitDiamondMessageShown = true;
+                }
                 thief.getCurrentRoom().remove(thief);
                 thief.getCurrentRoom().updateRoom();
                 thief.setCurrentRoom(sendToRoom);
@@ -73,6 +93,10 @@ public class Door extends JPanel implements ActionListener {
                 sendToRoom.updateRoom();
                 thief.requestFocus(true);
                 thief.doorClicked = false;
+
+                if (requiresDiamond && thief.hasDiamond()) {
+                    Ending.showEndGameDialog();
+                }
             }
         }
     }

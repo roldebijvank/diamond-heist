@@ -19,6 +19,7 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
     private ArrayList<CollectableItem> collectedItems = new ArrayList<>();
     private int x;
     private int y;
+    private static int coinsCollected = 0;
     private int width = 70;
     private int height = 120;
     private JLabel thiefLabel;
@@ -34,6 +35,7 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
     private boolean right = false;
     public boolean space = false;
     public boolean jumps = false;
+    private int numCollectedCoins = 0;
     Timer timer = new Timer(10, this);
 
     /**
@@ -295,7 +297,12 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
         collectedItems.add(coin);
         currentRoom.remove(coin); 
         currentRoom.updateRoom();
+        coinsCollected++;
         
+    }
+
+    public static int getNumberOfCoins() {
+        return coinsCollected;
     }
 
     /**
@@ -308,7 +315,6 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
         collectedItems.add(diamond);
         currentRoom.remove(diamond); 
         currentRoom.updateRoom();
-        
     }
 
     /**
@@ -345,5 +351,22 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
             }
         }
         return false;
+    }
+
+    /**
+     * Checks if the thief has a diamond.
+     * @return true if the thief has a diamond, false otherwise.
+     */
+    public boolean hasDiamond() {
+        for (CollectableItem item : collectedItems) {
+            if (item instanceof Diamond) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int getNumCollectedCoins() {
+        return numCollectedCoins;
     }
 }
