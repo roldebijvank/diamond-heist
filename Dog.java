@@ -19,8 +19,8 @@ public class Dog extends JPanel {
     private Thief thief;
     private boolean gameEnded;
     private JLabel dogLabel;
-    private int width = 100;
-    private int height = 80;
+    private int width = 80;
+    private int height = 50;
 
     /**
      * Initializes a new Dog object.
@@ -78,7 +78,8 @@ public class Dog extends JPanel {
      * Ends the game if the dog makes contact with the thief.
      */
     public void checkForThief() {
-        if (getParent() == thief.getCurrentRoom() && Math.abs(x - thief.getX()) < 50) {
+        if (getParent() == thief.getCurrentRoom()
+            && this.getBounds().intersects(thief.getBounds())) {
             endGame();
         }
     }
@@ -110,6 +111,7 @@ public class Dog extends JPanel {
      * Create a game-over message.
      */
     public void endGame() {
+        thief.timer.stop();
         gameEnded = true;
         Ending.showDogCaughtMessage();
     }

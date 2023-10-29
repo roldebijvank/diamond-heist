@@ -1,4 +1,5 @@
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
@@ -15,13 +16,18 @@ public class Ladder extends JPanel implements ActionListener {
     private Thief thief;
     private Timer timer;
     private Room sendToRoom;
+    private Room currentRoom;
+    private Point sendToPoint;
 
     /**
      * Creates a new Ladder object.
      * @param sendToRoom is the room that the ladder sends the thief to
      */
-    public Ladder(Room sendToRoom) {
+    public Ladder(Room currentRoom, Room sendToRoom, Point sendToPoint) {
         this.sendToRoom = sendToRoom;
+        this.sendToPoint = sendToPoint;
+        this.currentRoom = currentRoom;
+        
         ImageIcon ladderIcon = new ImageIcon("img/ladder.png");
         Image scaledImage = ladderIcon.getImage()
                             .getScaledInstance(width, height, Image.SCALE_SMOOTH);
@@ -43,33 +49,49 @@ public class Ladder extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (this.getBounds().intersects(thief.getBounds())) {
+        boolean intersects = this.getBounds().intersects(thief.getBounds())
+                             && thief.getCurrentRoom() == this.currentRoom;
+
+        if (thief.down && thief.getCurrentRoom() == sendToRoom
+                    && thief.getBounds().intersects(sendToPoint.x, sendToPoint.y, 70, 233)) {
             thief.onLadder = true;
-        }
-        if (this.getBounds().intersects(thief.getBounds()) && thief.up) {
             this.setFocusable(true);
             this.requestFocus();
-            thief.moveUp();
-            if (thief.getY() < this.getY()) {
-                thief.up = false;
-                thief.onLadder = false;
-                thief.getCurrentRoom().remove(thief);
-                thief.getCurrentRoom().updateRoom();
-                thief.setCurrentRoom(sendToRoom);
-                sendToRoom.setThiefToStartingPoint(thief);
-                sendToRoom.add(thief);
-                sendToRoom.updateRoom();
-                this.setFocusable(false);
-                thief.setFocusable(true);
-                timer.stop();
-            }
-        } else if (this.getBounds().intersects(thief.getBounds()) && thief.down) {
-            this.setFocusable(true);
-            this.requestFocus();
-            thief.moveDown();
-            if (thief.getY() > this.getY()) {
-                thief.down = false;
-                timer.stop();
+            thief.getCurrentRoom().remove(thief);
+            thief.getCurrentRoom().updateRoom();
+            thief.setCurrentRoom(currentRoom);
+            thief.setCurrentPoint(new Point(this.getX(), 0));
+            currentRoom.add(thief);
+            currentRoom.updateRoom();
+        } else if (intersects) {
+            thief.onLadder = true;
+            if (thief.up) {
+                this.setFocusable(true);
+                this.requestFocus();
+                thief.moveUp();
+                if (thief.getY() <= this.getY()) {
+                    thief.up = false;
+                    thief.onLadder = false;
+                    thief.getCurrentRoom().remove(thief);
+                    thief.getCurrentRoom().updateRoom();
+                    thief.setCurrentRoom(sendToRoom);
+                    thief.setCurrentPoint(sendToPoint);
+                    sendToRoom.add(thief);
+                    sendToRoom.updateRoom();
+                    this.setFocusable(false);
+                    thief.setFocusable(true);
+                }
+            } else if (thief.down) {
+                thief.moveDown();
+                if (thief.getY() >= 105) {
+                    thief.down = false;
+                    thief.onLadder = false;
+                    thief.setCurrentPoint(new Point(this.getX(), 105));
+                    currentRoom.add(thief);
+                    currentRoom.updateRoom();
+                    this.setFocusable(false);
+                    thief.setFocusable(true);
+                }
             }
         } else {
             this.setFocusable(false);

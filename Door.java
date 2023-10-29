@@ -1,8 +1,8 @@
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
-import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,17 +16,15 @@ import javax.swing.Timer;
  *
  */
 public class Door extends JPanel implements ActionListener {
-    int x; 
-    int y;
-    int width;
-    int height;
-    Thief thief;
-    Room sendToRoom;
-    Room currentRoom;
-    boolean spacePressed = false;
-    Image image;
-    boolean requiresDiamond;
-    ImageIcon doorIcon;
+    private int x; 
+    private int y;
+    private int width;
+    private int height;
+    private Thief thief;
+    private Room sendToRoom;
+    private Room currentRoom;
+    private Point sendToPoint;
+    private boolean requiresDiamond;
     private static boolean exitDiamondMessageShown = false;
 
     /**
@@ -39,24 +37,25 @@ public class Door extends JPanel implements ActionListener {
      * @param requiresDiamond decides whether the door requires a key to be opened.  
      * @throws MalformedURLException to indicate that a malformed URL has occurred.
      */
-    public Door(int x, int y, int width, int height, 
-                        Room sendToRoom, Room currentRoom, boolean requiresDiamond) 
-                        throws MalformedURLException {
+    public Door(int x, int y, int width, int height,
+                Room sendToRoom, Room currentRoom, Point sendToPoint, boolean requiresDiamond) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.sendToRoom = sendToRoom;
         this.currentRoom = currentRoom;
+        this.sendToPoint = sendToPoint;
         this.requiresDiamond = requiresDiamond;
 
+        ImageIcon doorIcon;
         if (requiresDiamond) {
-            doorIcon = new ImageIcon(new URL("https://dooraykapi.com/wp-content/uploads/yangin-tek-kanat-1.png"));
-        } else { 
-            doorIcon = new ImageIcon("img/door.png"); 
+            doorIcon = new ImageIcon("img/exit_door.png");
+        } else {
+            doorIcon = new ImageIcon("img/door.png");
         }
-
-        Image scaledImage = doorIcon.getImage().getScaledInstance(50, 100, Image.SCALE_SMOOTH);
+        Image scaledImage = doorIcon.getImage().getScaledInstance(width, height, 
+                                                                  Image.SCALE_SMOOTH);
         doorIcon = new ImageIcon(scaledImage);
         JLabel doorLabel = new JLabel(doorIcon);
         this.add(doorLabel);
@@ -89,22 +88,32 @@ public class Door extends JPanel implements ActionListener {
                 thief.getCurrentRoom().remove(thief);
                 thief.getCurrentRoom().updateRoom();
                 thief.setCurrentRoom(sendToRoom);
+                thief.setCurrentPoint(sendToPoint);
                 sendToRoom.add(thief);
-                sendToRoom.setThiefToStartingPoint(thief);
-                thief.repaint();
                 sendToRoom.updateRoom();
                 thief.requestFocus(true);
                 thief.doorClicked = false;
 
                 if (requiresDiamond && thief.hasDiamond()) {
-                    try {
-                        Ending.showEndGameDialog();
-                    } catch (MalformedURLException e1) {
-                        e1.printStackTrace();
-                    }
+                    Ending.showEndGameDialog();
                 }
             }
         }
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getWidth() {
+        return this.width;
+    }
+
+    public int getHeight() {
+        return this.height;
+    }
 }

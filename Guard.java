@@ -32,7 +32,8 @@ public class Guard extends JPanel {
         this.gameEnded = false;
 
         ImageIcon guardIcon = new ImageIcon("img/guard.png");
-        Image scaledImage = guardIcon.getImage().getScaledInstance(100, 150, Image.SCALE_SMOOTH);
+        Image scaledImage = guardIcon.getImage().getScaledInstance(width, height,
+                                                                   Image.SCALE_SMOOTH);
         guardIcon = new ImageIcon(scaledImage);
         guardLabel = new JLabel(guardIcon);
         this.add(guardLabel);
@@ -56,13 +57,13 @@ public class Guard extends JPanel {
      */
     public void move() {
         if (direction == 1) {
-            x += 2;
+            x += 1;
             if (x >= getParent().getWidth() - 100) {
                 direction = -1;
                 guardLabel.setIcon(flipImageVertically(guardLabel.getIcon()));
             }
         } else {
-            x -= 2;
+            x -= 1;
             if (x <= 0) {
                 direction = 1;
                 guardLabel.setIcon(flipImageVertically(guardLabel.getIcon()));
@@ -110,6 +111,7 @@ public class Guard extends JPanel {
      * Create a game-over message.
      */
     public void endGame() {
+        thief.timer.stop();
         gameEnded = true;
         Ending.showGuardCaughtMessage();
     }

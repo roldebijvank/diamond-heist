@@ -5,8 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.MalformedURLException;
-import java.net.URL;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,7 +22,7 @@ public class Ending {
      * Displays an end-game dialog with stars collected and an option to reset the game.
      * @throws MalformedURLException to indicate that a malformed URL has occurred.
      */
-    public static void showEndGameDialog() throws MalformedURLException {
+    public static void showEndGameDialog() {
 
         JDialog endGameDialog = new JDialog();
         endGameDialog.setTitle("Congratulations!");
@@ -46,17 +44,12 @@ public class Ending {
         messageLabel.setAlignmentX(Component.CENTER_ALIGNMENT); 
         messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(messageLabel);
-
-        int starsCollected = Thief.getNumberOfCoins();
         
-        String starImageUrl = getStarImage(starsCollected);
-        if (starImageUrl != null) {
-            ImageIcon starIcon = new ImageIcon(new URL(starImageUrl));
-            if (starIcon != null) {
-                JLabel starLabel = new JLabel(starIcon);
-                starLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-                panel.add(starLabel);
-            }
+        ImageIcon starIcon = new ImageIcon("img/three_stars.png");
+        if (starIcon != null) {
+            JLabel starLabel = new JLabel(starIcon);
+            starLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            panel.add(starLabel);
         }
 
         JPanel buttonPanel = new JPanel();
@@ -64,8 +57,8 @@ public class Ending {
 
         JButton exitButton = new JButton("Exit");
         exitButton.setFont(customFont);
-        exitButton.setBackground(new Color(192, 0, 0));
-        exitButton.setForeground(Color.WHITE);
+        exitButton.setBackground(Color.GREEN);
+        exitButton.setForeground(Color.BLACK);
 
         JButton resetButton = new JButton("Play Again");
         resetButton.setFont(customFont);
@@ -82,11 +75,7 @@ public class Ending {
             @Override
             public void actionPerformed(ActionEvent e) {
                 endGameDialog.dispose();
-                try {
-                    DiamondHeist.resetGame();
-                } catch (MalformedURLException e1) {
-                    e1.printStackTrace();
-                }
+                DiamondHeist.resetGame();
             }
         });
 
@@ -143,11 +132,7 @@ public class Ending {
             @Override
             public void actionPerformed(ActionEvent e) {
                 endGameDialog.dispose();
-                try {
-                    DiamondHeist.resetGame();
-                } catch (MalformedURLException e1) {
-                    e1.printStackTrace();
-                }
+                DiamondHeist.resetGame();
             }
         });
 
@@ -208,11 +193,7 @@ public class Ending {
             @Override
             public void actionPerformed(ActionEvent e) {
                 endGameDialog.dispose();
-                try {
-                    DiamondHeist.resetGame();
-                } catch (MalformedURLException e1) {
-                    e1.printStackTrace();
-                }
+                DiamondHeist.resetGame();
             }
         });
 
@@ -227,25 +208,5 @@ public class Ending {
 
         endGameDialog.add(panel);
         endGameDialog.setVisible(true);
-    }
-
-
-    /**
-     * Retrieves the correct image of the stars based on the number of stars collected.
-     *
-     * @param starsCollected   The number of stars collected.
-     * @return the correct image of the stars.
-     */
-    private static String getStarImage(int starsCollected) {
-        if (starsCollected == 0) {
-            return "https://png.pngtree.com/png-vector/20230831/ourmid/pngtree-three-stars-review-rating-design-vector-png-image_9968825.png";
-        } else if (starsCollected == 1) {
-            return "https://png.pngtree.com/png-vector/20230831/ourmid/pngtree-three-stars-review-rating-design-vector-png-image_9968825.png";
-        } else if (starsCollected == 2) {
-            return "https://png.pngtree.com/png-vector/20230831/ourmid/pngtree-three-stars-review-rating-design-vector-png-image_9968825.png";
-        } else if (starsCollected == 3) {
-            return "https://png.pngtree.com/png-vector/20230831/ourmid/pngtree-three-stars-review-rating-design-vector-png-image_9968825.png";
-        }
-        return null;
     }
 }
