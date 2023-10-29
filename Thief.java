@@ -146,8 +146,10 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
                 jump();
                 jumps = true;
             }
-        } else if (downKey && !up && !left && !right) {
-            down = true;
+        } else if (downKey && !up) {
+            if (!right && !left) {
+                down = true;
+            }
         } else if (spaceKey) {
             if (onDoor) {
                 space = true;
@@ -330,5 +332,18 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
         this.x = point.x;
         this.y = point.y;
         this.setBounds(x, y, thiefLabel.getWidth(), thiefLabel.getHeight());
+    }
+
+    /**
+     * Checks if the thief has a key.
+     * @return true if the thief has a key, false otherwise.
+     */
+    public boolean hasKey() {
+        for (CollectableItem item : collectedItems) {
+            if (item instanceof Key) {
+                return true;
+            }
+        }
+        return false;
     }
 }
