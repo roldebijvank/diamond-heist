@@ -43,13 +43,13 @@ public class Guard extends JPanel {
      */
     public void move() {
         if (direction == 1) {
-            x += 1;
+            x += 2;
             if (x >= getParent().getWidth() - 100) {
                 direction = -1;
                 guardLabel.setIcon(flipImageVertically(guardLabel.getIcon()));
             }
         } else {
-            x -= 1;
+            x -= 2;
             if (x <= 0) {
                 direction = 1;
                 guardLabel.setIcon(flipImageVertically(guardLabel.getIcon()));

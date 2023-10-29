@@ -97,6 +97,7 @@ public class Dog extends JPanel {
     public void endGame() {
         gameEnded = true;
         Ending.showCaughtDialog(Ending.DOG);
+        TimerManager.globalTimer.stop();
     }
 
     public int getWidth() {

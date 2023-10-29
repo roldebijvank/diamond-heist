@@ -7,12 +7,28 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
- * DiamondHeist is the main class of the game. It creates the frame and adds the
- * rooms to it.
- * 
- * @author Rik Olde Bijvank
- * @author Marta Stepien
- */
+* Diamond Heist Game
+* 
+* Main class for the Diamond Heist game, focusing on two main objectives:
+* 
+* Game Design: Emergent Gameplay
+* - Create immersive and challenging room layouts.
+* - Implement interactive objects, guards, and security systems.
+* - Allow players to explore and complete the game with emergent strategies.
+* 
+* Version Control: Advanced Quality Maintenance
+* - Utilize version control (GitHub) for collaborative development.
+* - Implement GitHub Actions for automated code quality checks.
+* - Ensure code quality and maintainability throughout development.
+* 
+* GitHub Repository: https://github.com/roldebijvank/diamond-heist
+* 
+* Developed by:
+* @author Rik Olde Bijvank
+* @id 1963287
+* @author Marta Stepien
+* @id 1962833
+*/
 public class DiamondHeist {
     private static JFrame frame;
     private static Room bottomRoom1;
@@ -154,11 +170,11 @@ public class DiamondHeist {
         camera = new Camera(250, 0, middleRoom2);
         camera.setBounds(camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight());
 
-        cameraButton1 = new CameraButton(140, 100, 60, 60, middleRoom2);
+        cameraButton1 = new CameraButton(160, 100, 60, 60, middleRoom2);
         cameraButton1.setBounds(cameraButton1.getX(), cameraButton1.getY(),
                                    cameraButton1.getWidth(), cameraButton1.getHeight());
 
-        cameraButton2 = new CameraButton(450, 100, 60, 60, middleRoom2);
+        cameraButton2 = new CameraButton(430, 100, 60, 60, middleRoom2);
         cameraButton2.setBounds(cameraButton2.getX(), cameraButton2.getY(),
                                     cameraButton2.getWidth(), cameraButton2.getHeight());
 

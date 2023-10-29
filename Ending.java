@@ -67,12 +67,14 @@ public class Ending {
         resetButton.setFont(customFont);
         resetButton.setBackground(new Color(192, 0, 0));
         resetButton.setForeground(Color.WHITE);
+        resetButton.setFocusable(false);
         buttonPanel.add(resetButton);
 
         JButton exitButton = new JButton("Exit");
         exitButton.setFont(customFont);
         exitButton.setBackground(new Color(50, 50, 50));
         exitButton.setForeground(Color.WHITE);
+        exitButton.setFocusable(true);
         buttonPanel.add(exitButton);
 
         resetButton.addActionListener(new ActionListener() {

@@ -117,7 +117,7 @@ public class TimerManager implements ActionListener {
         // Camera on or off
         if (!camera.getOn()) {
             cameraIndex++;
-            if (cameraIndex == 200) {
+            if (cameraIndex == 110) {
                 camera.turnOn();
                 cameraIndex = 0;
             }
@@ -173,6 +173,8 @@ public class TimerManager implements ActionListener {
                 ladder.setFocusable(true);
                 ladder.requestFocus();
                 thief.moveUp();
+                thief.moveUp();
+                thief.moveUp();
                 if (thief.getY() <= ladder.getY()) {
                     thief.up = false;
                     thief.onLadder = false;
@@ -186,6 +188,8 @@ public class TimerManager implements ActionListener {
                     thief.setFocusable(true);
                 }
             } else if (thief.down) {
+                thief.moveDown();
+                thief.moveDown();
                 thief.moveDown();
                 if (thief.getY() >= 105) {
                     thief.down = false;
@@ -225,6 +229,7 @@ public class TimerManager implements ActionListener {
 
                 if (door.getRequiresDiamond() && thief.hasDiamond()) {
                     Ending.showEndGameDialog(thief.getNumCollectedCoins());
+                    globalTimer.stop();
                 }
             }
         }
