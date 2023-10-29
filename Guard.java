@@ -65,9 +65,8 @@ public class Guard extends JPanel {
      */
     public void checkForThief() {
         if (getParent() == thief.getCurrentRoom()) {
-            if (direction == -1 && x > thief.getX()) {
-                endGame();
-            } else if (direction == 1 && x < thief.getX()) {
+            if (direction == -1 && x > thief.getX() || direction == 1 && x < thief.getX()) {
+                TimerManager.globalTimer.stop();
                 endGame();
             }
         }
@@ -101,7 +100,6 @@ public class Guard extends JPanel {
     public void endGame() {
         gameEnded = true;
         Ending.showCaughtDialog(Ending.GUARD);
-        TimerManager.globalTimer.stop();
     }
 
     public int getWidth() {
