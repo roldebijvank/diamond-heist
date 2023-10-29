@@ -51,7 +51,6 @@ public class DiamondHeist {
     private static Door exitDoor;
     private static Ladder ladderBottomRoom2;
     private static Ladder ladderMiddleRoom1;
-    private static Hatch hatch;
 
     private static void setupWelcomeScreen() {
         WelcomeScreen welcomeScreen = new WelcomeScreen(diamondHeist);
@@ -127,7 +126,8 @@ public class DiamondHeist {
     }
 
     private static void setupHatch() {
-        hatch = new Hatch(10, 180, bottomRoom1, middleRoom1);
+        Hatch hatch = new Hatch(10, 180, bottomRoom1, middleRoom1);
+        hatch.checkCollision(thief);
         hatch.setBounds(hatch.getX(), hatch.getY(), hatch.getWidth(), hatch.getHeight());
         middleRoom1.add(hatch);
     }
@@ -170,11 +170,11 @@ public class DiamondHeist {
         camera = new Camera(250, 0, middleRoom2);
         camera.setBounds(camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight());
 
-        cameraButton1 = new CameraButton(150, 100, 60, 60, middleRoom2);
+        cameraButton1 = new CameraButton(160, 100, 60, 60, middleRoom2);
         cameraButton1.setBounds(cameraButton1.getX(), cameraButton1.getY(),
                                    cameraButton1.getWidth(), cameraButton1.getHeight());
 
-        cameraButton2 = new CameraButton(450, 100, 60, 60, middleRoom2);
+        cameraButton2 = new CameraButton(430, 100, 60, 60, middleRoom2);
         cameraButton2.setBounds(cameraButton2.getX(), cameraButton2.getY(),
                                     cameraButton2.getWidth(), cameraButton2.getHeight());
 
@@ -194,7 +194,7 @@ public class DiamondHeist {
         coin1.setBounds(coin1.x, coin1.y, coin1.width, coin1.height);
         bottomRoom2.add(coin1);
 
-        Coin coin2 = new Coin(300, 100);
+        Coin coin2 = new Coin(500, 100);
         coin2.setBounds(coin2.x, coin2.y, coin2.width, coin2.height);
         middleRoom2.add(coin2);
 
@@ -207,15 +207,6 @@ public class DiamondHeist {
         Key key = new Key(20, 170);
         key.setBounds(key.x, key.y, key.width, key.height);
         topRoom.add(key);
-    }
-
-    private static void setupTimer() {
-        TimerManager timerManager = new TimerManager(thief, camera, cameraButton1, cameraButton2,
-                                                     guardBottomRoom2, guardMiddleRoom1, dog,
-                                                     doorBottomRoom1, doorBottomRoom2,
-                                                     doorMiddleRoom1, doorMiddleRoom2, exitDoor,
-                                                     ladderBottomRoom2, ladderMiddleRoom1, hatch);
-        timerManager.start(); 
     }
 
     public void startGame() {
@@ -250,6 +241,15 @@ public class DiamondHeist {
         frame.pack();
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
+    }
+    
+    private static void setupTimer() {
+        TimerManager timerManager = new TimerManager(thief, camera, cameraButton1, cameraButton2,
+                                                     guardBottomRoom2, guardMiddleRoom1, dog,
+                                                     doorBottomRoom1, doorBottomRoom2,
+                                                     doorMiddleRoom1, doorMiddleRoom2, exitDoor,
+                                                     ladderBottomRoom2, ladderMiddleRoom1);
+        timerManager.start(); 
     }
 
     public static void main(String[] args) {
