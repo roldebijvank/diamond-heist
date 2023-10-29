@@ -65,16 +65,14 @@ public class Ending {
 
         JButton resetButton = new JButton("Try Again");
         resetButton.setFont(customFont);
-        resetButton.setBackground(new Color(192, 0, 0)); // A dark red button
+        resetButton.setBackground(new Color(192, 0, 0));
         resetButton.setForeground(Color.WHITE);
-        resetButton.setFocusable(false);
         buttonPanel.add(resetButton);
 
         JButton exitButton = new JButton("Exit");
         exitButton.setFont(customFont);
-        exitButton.setBackground(new Color(50, 50, 50)); // A dark gray button
+        exitButton.setBackground(new Color(50, 50, 50));
         exitButton.setForeground(Color.WHITE);
-        exitButton.setFocusable(false);
         buttonPanel.add(exitButton);
 
         resetButton.addActionListener(new ActionListener() {
@@ -94,7 +92,6 @@ public class Ending {
 
         panel.add(buttonPanel, BorderLayout.SOUTH);
 
-        endGameDialog.setFocusable(true);
         endGameDialog.add(panel);
         endGameDialog.setVisible(true);
     }
@@ -172,7 +169,6 @@ public class Ending {
             }
         });
 
-        endGameDialog.setFocusable(true);
         endGameDialog.setVisible(true);
     }
 }
