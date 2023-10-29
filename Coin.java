@@ -6,10 +6,4 @@ public class Coin extends CollectableItem {
     public Coin(int x, int y) {
         super("img/coin.png", x, y, 50, 50);
     }
-
-    @Override
-    public void collect() {
-        collected = true;
-        setVisible(false); // Hide the coin
-    }
 }

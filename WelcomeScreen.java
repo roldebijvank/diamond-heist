@@ -14,7 +14,7 @@ import javax.swing.JTextArea;
  * 
  */
 public class WelcomeScreen extends JFrame {
-    private DiamondHeist diamondHeist;
+    private final DiamondHeist diamondHeist;
 
     /**
      * Constructs a new WelcomeScreen instance.
@@ -52,11 +52,12 @@ public class WelcomeScreen extends JFrame {
         hintsLabel.setBounds(20, 250, 100, 20);
 
         JTextArea hintsText = new JTextArea(
-            "1. Avoid being spotted by human guards and security cameras.\n"
-            + "2. Stay clear of the guard dogs to avoid their bites.\n"
-            + "3. Locate the key to unlock the hatch for your escape.\n"
-            + "4. You can only exit after successfully collecting the precious diamond.\n"
-            + "5. Collect coins for a higher rating."
+                """
+                        1. Avoid being spotted by human guards and security cameras.
+                        2. Stay clear of the guard dogs to avoid their bites.
+                        3. Locate the key to unlock the hatch for your escape.
+                        4. You can only exit after successfully collecting the precious diamond.
+                        5. Collect coins for a higher rating."""
         );
         hintsText.setBounds(20, 270, 540, 100); // Centered and slightly taller
         hintsText.setEditable(false);

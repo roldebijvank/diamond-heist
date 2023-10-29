@@ -1,28 +1,24 @@
 import java.awt.Component;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 /**
  * Creates Thief object. Sets behaviour.
  */
 
-public class Thief extends JPanel implements KeyListener, ActionListener {
-    private ArrayList<CollectableItem> collectedItems = new ArrayList<>();
+public class Thief extends JPanel implements KeyListener {
+    private final ArrayList<CollectableItem> collectedItems = new ArrayList<>();
     private int x;
     private int y;
-    private static int coinsCollected = 0;
-    private int width = 70;
-    private int height = 120;
-    private JLabel thiefLabel;
+    private final int width = 70;
+    private final int height = 120;
+    private final JLabel thiefLabel;
     private Room currentRoom;
     public boolean onDoor = false;
     public boolean onLadder = false;
@@ -36,7 +32,6 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
     public boolean space = false;
     public boolean jumps = false;
     private int numCollectedCoins = 0;
-    Timer timer = new Timer(10, this);
 
     /**
      * creates an instance of Thief.
@@ -97,29 +92,6 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
         repaint();
     }
 
-    /**
-     * Makes the thief jump.
-     */
-    public void jump() {
-        Timer jumpTimer = new Timer(3, new ActionListener() {
-            int i = 0;
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (i < 120) {
-                    moveUp();
-                    i++;
-                } else if (i >= 120 && i < 240) {
-                    moveDown();
-                    i++;
-                } else {
-                    ((Timer) e.getSource()).stop();
-                    jumps = false;
-                }
-            }
-        });
-        jumpTimer.start();
-    }
-
     @Override
     public void keyTyped(KeyEvent e) {}
 
@@ -135,17 +107,14 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
         if (leftKey) {
             left = true;
             right = false;
-            timer.start();
         } else if (rightKey) {
             right = true;
             left = false;
-            timer.start();
         } else if (upKey && !down) {
             if (!right && !left) {
                 up = true;
             }
             if (!onLadder && !jumps) {
-                jump();
                 jumps = true;
             }
         } else if (downKey && !up) {
@@ -168,15 +137,9 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
         int keyCode = e.getKeyCode();
         if (keyCode == KeyEvent.VK_LEFT) {
             left = false;
-            if (!right) {
-                timer.stop();
-            }
             
         } else if (keyCode == KeyEvent.VK_RIGHT) {
             right = false;
-            if (!left) {
-                timer.stop();
-            }
         } else if (keyCode == KeyEvent.VK_SPACE) {
             space = false;
             doorClicked = false;
@@ -190,45 +153,6 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
         } else if (keyCode == KeyEvent.VK_DOWN) {
             down = false;
         }
-    }
-     
-    
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        if (left) {
-            moveLeft();
-        } else if (right) {
-            moveRight();
-        } else if (up && !onLadder) {
-            jump();
-        }
-    }
-
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public Room getCurrentRoom() {
-        return currentRoom;
-    }
-
-    public void setCurrentRoom(Room currentRoom) {
-        this.currentRoom = currentRoom;
     }
 
     /**
@@ -249,9 +173,8 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
 
     /**
      * Checks if the thief is on a diamond in the same room.
-     * @return true if the thief is on a diamond, false otherwise.
      */
-    public boolean onDiamond() {
+    public void onDiamond() {
         Room currentRoom = getCurrentRoom();
 
         if (this.getParent() == currentRoom) {
@@ -259,19 +182,17 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
                 if (component instanceof Diamond 
                     && this.getBounds().intersects(component.getBounds())) {
                     collectDiamond((Diamond) component);
-                    return true; 
+                    return;
                 }
             }
         }
 
-        return false;
     }
 
     /**
      * Checks if the thief is on a key in the same room.
-     * @return true if the thief is on a key, false otherwise.
      */
-    public boolean onKey() {
+    public void onKey() {
         Room currentRoom = getCurrentRoom();
 
         if (this.getParent() == currentRoom) {
@@ -279,12 +200,10 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
                 if (component instanceof Key 
                     && this.getBounds().intersects(component.getBounds())) {
                     collectKey((Key) component);
-                    return true; // Thief is on a coin in the same room
+                    return; // Thief is on a coin in the same room
                 }
             }
         }
-
-        return false;
     }
 
     /**
@@ -297,12 +216,7 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
         collectedItems.add(coin);
         currentRoom.remove(coin); 
         currentRoom.updateRoom();
-        coinsCollected++;
-        
-    }
-
-    public static int getNumberOfCoins() {
-        return coinsCollected;
+        numCollectedCoins++;
     }
 
     /**
@@ -368,5 +282,49 @@ public class Thief extends JPanel implements KeyListener, ActionListener {
 
     public int getNumCollectedCoins() {
         return numCollectedCoins;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(Room currentRoom) {
+        this.currentRoom = currentRoom;
+    }
+
+    public boolean getLeft() {
+        return left;
+    }
+
+    public boolean getRight() {
+        return right;
+    }
+
+    public boolean getJumps() {
+        return jumps;
+    }
+
+    public void setJumps(boolean jumps) {
+        this.jumps = jumps;
+    }
+
+    public boolean getButtonPressed() {
+        return buttonPressed;
     }
 }

@@ -1,25 +1,22 @@
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 /**
  * The Guard class represents a guard in the game.
  * Sets the behaviour of the guards.
  */
 public class Guard extends JPanel {
-    private int width = 100;
-    private int height = 150;
+    private final int width = 100;
+    private final int height = 150;
     private int x;
     private int direction; 
-    private Thief thief;
-    private JLabel guardLabel;
+    private final Thief thief;
+    private final JLabel guardLabel;
     private boolean gameEnded;
 
     /**
@@ -28,7 +25,7 @@ public class Guard extends JPanel {
      */
     public Guard(Thief thief) {
         this.thief = thief;
-        this.direction = 1; //starts by going right
+        this.direction = 1;
         this.gameEnded = false;
 
         ImageIcon guardIcon = new ImageIcon("img/guard.png");
@@ -38,17 +35,6 @@ public class Guard extends JPanel {
         guardLabel = new JLabel(guardIcon);
         this.add(guardLabel);
         this.setOpaque(false);
-
-        Timer timer = new Timer(10, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!gameEnded) {
-                    move();
-                    checkForThief();
-                }
-            }
-        });
-        timer.start();
     }
      
     /**
@@ -57,13 +43,13 @@ public class Guard extends JPanel {
      */
     public void move() {
         if (direction == 1) {
-            x += 1;
+            x += 2;
             if (x >= getParent().getWidth() - 100) {
                 direction = -1;
                 guardLabel.setIcon(flipImageVertically(guardLabel.getIcon()));
             }
         } else {
-            x -= 1;
+            x -= 2;
             if (x <= 0) {
                 direction = 1;
                 guardLabel.setIcon(flipImageVertically(guardLabel.getIcon()));
@@ -79,9 +65,8 @@ public class Guard extends JPanel {
      */
     public void checkForThief() {
         if (getParent() == thief.getCurrentRoom()) {
-            if (direction == -1 && x > thief.getX()) {
-                endGame();
-            } else if (direction == 1 && x < thief.getX()) {
+            if (direction == -1 && x > thief.getX() || direction == 1 && x < thief.getX()) {
+                TimerManager.globalTimer.stop();
                 endGame();
             }
         }
@@ -94,8 +79,7 @@ public class Guard extends JPanel {
      * @return The vertically flipped ImageIcon.
      */
     private ImageIcon flipImageVertically(Icon icon) {
-        if (icon instanceof ImageIcon) {
-            ImageIcon imageIcon = (ImageIcon) icon;
+        if (icon instanceof ImageIcon imageIcon) {
             Image image = imageIcon.getImage();
             int width = image.getWidth(null);
             int height = image.getHeight(null);
@@ -114,9 +98,8 @@ public class Guard extends JPanel {
      * Create a game-over message.
      */
     public void endGame() {
-        thief.timer.stop();
         gameEnded = true;
-        Ending.showGuardCaughtMessage();
+        Ending.showCaughtDialog(Ending.GUARD);
     }
 
     public int getWidth() {
@@ -125,5 +108,9 @@ public class Guard extends JPanel {
 
     public int getHeight() {
         return height;
+    }
+
+    public boolean getGameEnded() {
+        return gameEnded;
     }
 }

@@ -18,12 +18,90 @@ import javax.swing.SwingConstants;
  * Includes star ratings and a reset button.
  */
 public class Ending {
+    public static final int DOG = 1;
+    public static final int GUARD = 2;
+    public static final int CAMERA = 3;
+
+    /**
+     * Displays an end-game dialog with a message and an option to reset the game.
+     * message is based on the type of alert that ended the game.
+     * @param type is the type of alert that ended the game.
+     */
+    public static void showCaughtDialog(int type) {
+        String title = "";
+        String message = "";
+        if (type == DOG) {
+            title = "Guard Dog Alert!";
+            message = "You've been bitten by a guard dog!";
+        } else if (type == GUARD) {
+            title = "Guard Alert!";
+            message = "You've been caught by a guard!";
+        } else if (type == CAMERA) {
+            title = "Camera Alert!";
+            message = "You've been caught by a camera!";
+        }
+
+        JDialog endGameDialog = new JDialog();
+        endGameDialog.setTitle(title);
+        endGameDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        endGameDialog.setSize(400, 200);
+        endGameDialog.setLocationRelativeTo(null); 
+        endGameDialog.setResizable(false);
+
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(192, 192, 192)); // Light gray background
+        panel.setLayout(new BorderLayout());
+
+        Font customFont = new Font("Arial", Font.PLAIN, 16);
+
+        JLabel messageLabel = new JLabel(message);
+        messageLabel.setFont(customFont);
+        messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        panel.add(messageLabel, BorderLayout.CENTER);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        JButton resetButton = new JButton("Try Again");
+        resetButton.setFont(customFont);
+        resetButton.setBackground(new Color(192, 0, 0));
+        resetButton.setForeground(Color.WHITE);
+        resetButton.setFocusable(false);
+        buttonPanel.add(resetButton);
+
+        JButton exitButton = new JButton("Exit");
+        exitButton.setFont(customFont);
+        exitButton.setBackground(new Color(50, 50, 50));
+        exitButton.setForeground(Color.WHITE);
+        exitButton.setFocusable(true);
+        buttonPanel.add(exitButton);
+
+        resetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                endGameDialog.dispose();
+                DiamondHeist.resetGame();
+            }
+        });
+
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
+        panel.add(buttonPanel, BorderLayout.SOUTH);
+
+        endGameDialog.add(panel);
+        endGameDialog.setVisible(true);
+    }
+
     /**
      * Displays an end-game dialog with stars collected and an option to reset the game.
-     * @throws MalformedURLException to indicate that a malformed URL has occurred.
      */
-    public static void showEndGameDialog() {
-
+    public static void showEndGameDialog(int stars) {
         JDialog endGameDialog = new JDialog();
         endGameDialog.setTitle("Congratulations!");
         endGameDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -44,13 +122,20 @@ public class Ending {
         messageLabel.setAlignmentX(Component.CENTER_ALIGNMENT); 
         messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(messageLabel);
-        
-        ImageIcon starIcon = new ImageIcon("img/three_stars.png");
-        if (starIcon != null) {
-            JLabel starLabel = new JLabel(starIcon);
-            starLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-            panel.add(starLabel);
+
+        ImageIcon starIcon = new ImageIcon("img/zero_stars.png");
+        if (stars == 1) {
+            starIcon = new ImageIcon("img/one_star.png");
+        } else if (stars == 2) {
+            starIcon = new ImageIcon("img/two_stars.png");
+        } else if (stars == 3) {
+            starIcon = new ImageIcon("img/three_stars.png");
         }
+
+        JLabel starLabel = new JLabel(starIcon);
+        starLabel.setAlignmentY(Component.TOP_ALIGNMENT);
+        starLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.add(starLabel);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -86,129 +171,6 @@ public class Ending {
             }
         });
 
-        endGameDialog.setVisible(true);
-    }
-
-    /**
-     * Displays a message when the thief is caught by a guard.
-     * Allows the player to try again or exit the game.
-     */
-    public static void showGuardCaughtMessage() {
-        JDialog endGameDialog = new JDialog();
-        endGameDialog.setTitle("Guard Alert!");
-        endGameDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        endGameDialog.setSize(400, 200);
-        endGameDialog.setLocationRelativeTo(null); 
-        endGameDialog.setResizable(false);
-
-        JPanel panel = new JPanel();
-        panel.setBackground(new Color(192, 192, 192)); // Light gray background
-        panel.setLayout(new BorderLayout());
-
-        Font customFont = new Font("Arial", Font.PLAIN, 16);
-
-        JLabel messageLabel = new JLabel("Oh no, you've been caught by a guard!");
-        messageLabel.setFont(customFont);
-        messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-        panel.add(messageLabel, BorderLayout.CENTER);
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        JButton resetButton = new JButton("Try Again");
-        resetButton.setFont(customFont);
-        resetButton.setBackground(new Color(192, 0, 0)); // A dark red button
-        resetButton.setForeground(Color.WHITE);
-        resetButton.setFocusable(false);
-        buttonPanel.add(resetButton);
-
-        JButton exitButton = new JButton("Exit");
-        exitButton.setFont(customFont);
-        exitButton.setBackground(new Color(50, 50, 50)); // A dark gray button
-        exitButton.setForeground(Color.WHITE);
-        exitButton.setFocusable(false);
-        buttonPanel.add(exitButton);
-
-        resetButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                endGameDialog.dispose();
-                DiamondHeist.resetGame();
-            }
-        });
-
-        exitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
-
-        panel.add(buttonPanel, BorderLayout.SOUTH);
-
-        endGameDialog.add(panel);
-        endGameDialog.setVisible(true);
-    }
-
-
-    /**
-     * Displays a message when the thief is caught by a guard dog.
-     * Allows the player to try again or exit the game.
-     */
-    public static void showDogCaughtMessage() {
-        JDialog endGameDialog = new JDialog();
-        endGameDialog.setTitle("Guard Dog Alert!");
-        endGameDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        endGameDialog.setSize(400, 200);
-        endGameDialog.setLocationRelativeTo(null);
-        endGameDialog.setResizable(false);
-
-        JPanel panel = new JPanel();
-        panel.setBackground(new Color(192, 192, 192)); // Light gray background
-        panel.setLayout(new BorderLayout());
-
-        Font customFont = new Font("Arial", Font.PLAIN, 16);
-
-        JLabel messageLabel = new JLabel("Oops! You've been bitten by a guard dog!");
-        messageLabel.setFont(customFont);
-        messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-        panel.add(messageLabel, BorderLayout.CENTER);
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        JButton resetButton = new JButton("Try Again");
-        resetButton.setFont(customFont);
-        resetButton.setBackground(new Color(192, 0, 0)); // A dark red button
-        resetButton.setForeground(Color.WHITE);
-        buttonPanel.add(resetButton);
-
-        JButton exitButton = new JButton("Exit");
-        exitButton.setFont(customFont);
-        exitButton.setBackground(new Color(50, 50, 50)); // A dark gray button
-        exitButton.setForeground(Color.WHITE);
-        buttonPanel.add(exitButton);
-
-        resetButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                endGameDialog.dispose();
-                DiamondHeist.resetGame();
-            }
-        });
-
-        exitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
-
-        panel.add(buttonPanel, BorderLayout.SOUTH); // Add the button panel to the bottom
-
-        endGameDialog.add(panel);
         endGameDialog.setVisible(true);
     }
 }

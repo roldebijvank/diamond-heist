@@ -1,27 +1,19 @@
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 /**
  * Creates a camera button that will temporarily turn the camera off.
  */
-public class CameraButton extends JPanel implements ActionListener {
-    private int x;
-    private int y;
-    private int width;
-    private int height;
-    private Thief thief;
-    private Camera camera;
-    private Room currentRoom;
-    private Timer timer;
+public class CameraButton extends JPanel {
+    private final int x;
+    private final int y;
+    private final int width;
+    private final int height;
+    private final Room currentRoom;
     private ImageIcon buttonIcon;
-    private JLabel buttonLabel;
-    private CameraButton relatedButton;
-    private boolean pressed = false;
+    private final JLabel buttonLabel;
 
     /**
      * Creates an instance of CameraButton.
@@ -30,14 +22,11 @@ public class CameraButton extends JPanel implements ActionListener {
      * @param width is the width of the button
      * @param height is the height of the button
      */
-    public CameraButton(int x, int y, int width, int height,
-                        Camera camera, CameraButton relatedButton, Room currentRoom) {
+    public CameraButton(int x, int y, int width, int height, Room currentRoom) {
         this.x = x;
         this.y = y;
         this.width = width;
-        this.height = width;      
-        this.camera = camera;
-        this.relatedButton = relatedButton;
+        this.height = height;
         this.currentRoom = currentRoom;
         
         
@@ -50,47 +39,6 @@ public class CameraButton extends JPanel implements ActionListener {
         buttonLabel.setBounds(0, 0, width, height);
         this.add(buttonLabel);
         this.setOpaque(false);
-
-        timer = new Timer(4000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                camera.turnOn();
-                pressed = false;
-                timer.stop();
-            }
-        });
-    }
-
-    /**
-     * Checks if the thief has collided with the camera button.
-     * @param thief is the thief
-     */
-    public void checkCollision(Thief thief) {
-        Timer timer = new Timer(10, this);
-        this.thief = thief;
-        timer.start();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (this.getBounds().intersects(thief.getBounds())
-            && thief.getCurrentRoom() == currentRoom) {
-            thief.onButton = true;
-
-            if (thief.buttonPressed) {
-                timer.stop();
-                pressed = true;
-                changeImage("img/button_pressed.png");
-                if (relatedButton.getPressed()) {
-                    relatedButton.timer.stop();
-                    timer.stop();
-                }
-                camera.turnOff();
-                timer.start();
-            } else {
-                changeImage("img/button.png");
-            }
-        }
     }
 
     /**
@@ -120,11 +68,7 @@ public class CameraButton extends JPanel implements ActionListener {
         return height;
     }
 
-    public boolean getPressed() {
-        return pressed;
-    }
-
-    public void setRelatedButton(CameraButton relatedButton) {
-        this.relatedButton = relatedButton;
+    public Room getCurrentRoom() {
+        return currentRoom;
     }
 }

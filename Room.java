@@ -7,9 +7,9 @@ import javax.swing.JPanel;
  * Room is a class that creates a JPanel with a given width and height.
  */
 public class Room extends JPanel {
-    private int width;
-    private int height;
-    private Image backgroundImage;
+    private final int width;
+    private final int height;
+    private final Image backgroundImage;
 
 
     /**
@@ -32,7 +32,6 @@ public class Room extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
     
-        // Draw the background image.
         g.drawImage(backgroundImage, 0, 0, this);
     }
 

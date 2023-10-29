@@ -1,13 +1,10 @@
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 /**
  * The Dog class represents a dog in the game.
@@ -16,11 +13,11 @@ import javax.swing.Timer;
 public class Dog extends JPanel {
     private int x;
     private int direction;
-    private Thief thief;
+    private final Thief thief;
     private boolean gameEnded;
-    private JLabel dogLabel;
-    private int width = 80;
-    private int height = 50;
+    private final JLabel dogLabel;
+    private final int width = 80;
+    private final int height = 50;
 
     /**
      * Initializes a new Dog object.
@@ -37,17 +34,6 @@ public class Dog extends JPanel {
         dogLabel = new JLabel(dogIcon);
         this.add(dogLabel);
         this.setOpaque(false);
-
-        Timer timer = new Timer(10, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!gameEnded) {
-                    move();
-                    checkForThief();
-                }
-            }
-        });
-        timer.start();
     }
 
     /**
@@ -69,7 +55,6 @@ public class Dog extends JPanel {
                 dogLabel.setIcon(flipImageVertically(dogLabel.getIcon()));
             }
         }
-
         this.setBounds(x, this.getY(), width, height);
     }
 
@@ -91,8 +76,7 @@ public class Dog extends JPanel {
      */
 
     private ImageIcon flipImageVertically(Icon icon) {
-        if (icon instanceof ImageIcon) {
-            ImageIcon imageIcon = (ImageIcon) icon;
+        if (icon instanceof ImageIcon imageIcon) {
             Image image = imageIcon.getImage();
             int width = image.getWidth(null);
             int height = image.getHeight(null);
@@ -111,9 +95,9 @@ public class Dog extends JPanel {
      * Create a game-over message.
      */
     public void endGame() {
-        thief.timer.stop();
         gameEnded = true;
-        Ending.showDogCaughtMessage();
+        Ending.showCaughtDialog(Ending.DOG);
+        TimerManager.globalTimer.stop();
     }
 
     public int getWidth() {
@@ -122,5 +106,9 @@ public class Dog extends JPanel {
 
     public int getHeight() {
         return height;
+    }
+
+    public boolean getGameEnded() {
+        return gameEnded;
     }
 }

@@ -15,15 +15,13 @@ import javax.swing.Timer;
  *
  */
 public class Hatch extends JPanel implements ActionListener {
-    int x; 
-    int y;
-    int width = 100;
-    int height = 50;
-    Thief thief;
-    Room sendToRoom;
-    Room currentRoom;
-    boolean spacePressed = false;
-    Image image;
+    private final int x;
+    private final int y;
+    private final int width = 100;
+    private final int height = 50;
+    private Thief thief;
+    private final Room sendToRoom;
+    private final Room currentRoom;
 
 
     /**
@@ -93,5 +91,13 @@ public class Hatch extends JPanel implements ActionListener {
 
     public int getHeight() {
         return height;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

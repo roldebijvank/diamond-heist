@@ -1,25 +1,19 @@
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 /**
  * Creates a camera that will detect the thief when inside the radius of the camera.
  * The camera will turn off when the thief clicks the corresponding buttons.
  */
-public class Camera extends JPanel implements ActionListener {
-    private int x;
-    private int y;
-    private int width;
-    private int height;
-    private Room currentRoom;
+public class Camera extends JPanel {
+    private final int x;
+    private final int y;
+    private final int width;
+    private final int height;
+    private final Room currentRoom;
     private boolean isOn = true;
-    private Thief thief;
-    private Timer timer;
 
     /**
      * Creates an instance of Camera.
@@ -51,39 +45,11 @@ public class Camera extends JPanel implements ActionListener {
     }
 
     /**
-     * Checks if the thief has collided with the camera.
-     * @param thief is the thief
-     */
-    public void checkCollision(Thief thief) {
-        timer = new Timer(10, this);
-        this.thief = thief;
-        timer.start();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (this.getBounds().intersects(thief.getBounds())
-            && thief.getCurrentRoom() == currentRoom) {
-            endGame();
-        }
-    }
-
-    /**
-     * Ends the game if the thief gets detected by the camera.
-     */
-    private void endGame() {
-        JOptionPane.showMessageDialog(null, "Game Over! You've been caught!");
-        System.exit(0);
-    }
-
-    /**
      * Turns the camera on.
      */
     public void turnOn() {
         isOn = true;
-
         this.getComponent(1).setVisible(true);
-        timer.start();
     }
 
     /**
@@ -91,9 +57,7 @@ public class Camera extends JPanel implements ActionListener {
      */
     public void turnOff() {
         isOn = false;
-
         this.getComponent(1).setVisible(false);
-        timer.stop();
     }
 
     public boolean getOn() {
@@ -114,5 +78,9 @@ public class Camera extends JPanel implements ActionListener {
 
     public int getHeight() {
         return height;
+    }
+
+    public Room getCurrentRoom() {
+        return currentRoom;
     }
 }
