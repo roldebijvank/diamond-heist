@@ -1,10 +1,7 @@
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 /**
  * Creates a camera button that will temporarily turn the camera off.
@@ -17,7 +14,6 @@ public class CameraButton extends JPanel {
     private final Room currentRoom;
     private ImageIcon buttonIcon;
     private final JLabel buttonLabel;
-    private CameraButton relatedButton;
 
     /**
      * Creates an instance of CameraButton.
@@ -26,12 +22,11 @@ public class CameraButton extends JPanel {
      * @param width is the width of the button
      * @param height is the height of the button
      */
-    public CameraButton(int x, int y, int width, int height, CameraButton relatedButton, Room currentRoom) {
+    public CameraButton(int x, int y, int width, int height, Room currentRoom) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.relatedButton = relatedButton;
         this.currentRoom = currentRoom;
         
         
@@ -71,10 +66,6 @@ public class CameraButton extends JPanel {
 
     public int getHeight() {
         return height;
-    }
-
-    public void setRelatedButton(CameraButton relatedButton) {
-        this.relatedButton = relatedButton;
     }
 
     public Room getCurrentRoom() {

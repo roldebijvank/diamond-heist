@@ -64,7 +64,7 @@ public class TimerManager implements ActionListener {
                 thief.moveUp();
                 thief.moveUp();
                 thiefIndex++;
-            } else if (thiefIndex >= 40 && thiefIndex < 80) {
+            } else if (thiefIndex < 80) {
                 thief.moveDown();
                 thief.moveDown();
                 thief.moveDown();

@@ -112,8 +112,7 @@ public class DiamondHeist {
     private static void setupHatch() {
         Hatch hatch = new Hatch(10, 180, bottomRoom1, middleRoom1);
         hatch.checkCollision(thief);
-        hatch.setBounds(hatch.x, hatch.y,
-                                  hatch.width, hatch.height);
+        hatch.setBounds(hatch.getX(), hatch.getY(), hatch.getWidth(), hatch.getHeight());
         middleRoom1.add(hatch);
     }
 
@@ -122,12 +121,10 @@ public class DiamondHeist {
      */
     private static void setupLadders() {
         ladderBottomRoom2 = new Ladder(bottomRoom2, middleRoom2, new Point(100, 105));
-        ladderBottomRoom2.setThief(thief);
         ladderBottomRoom2.setBounds(350, 1,
                                     ladderBottomRoom2.getWidth(), ladderBottomRoom2.getHeight());
 
         ladderMiddleRoom1 = new Ladder(middleRoom1, topRoom, new Point(200, 105));
-        ladderMiddleRoom1.setThief(thief);
         ladderMiddleRoom1.setBounds(200, 1,
                                     ladderMiddleRoom1.getWidth(), ladderMiddleRoom1.getHeight());
 
@@ -137,11 +134,13 @@ public class DiamondHeist {
 
     private static void setupGuards() {
         guardBottomRoom2 = new Guard(thief);
-        guardBottomRoom2.setBounds(0, 80, guardBottomRoom2.getWidth(), guardBottomRoom2.getHeight());
+        guardBottomRoom2.setBounds(0, 80,
+                                   guardBottomRoom2.getWidth(), guardBottomRoom2.getHeight());
         bottomRoom2.add(guardBottomRoom2);
 
         guardMiddleRoom1 = new Guard(thief);
-        guardMiddleRoom1.setBounds(0, 80, guardMiddleRoom1.getWidth(), guardMiddleRoom1.getHeight());
+        guardMiddleRoom1.setBounds(0, 80,
+                                   guardMiddleRoom1.getWidth(), guardMiddleRoom1.getHeight());
         middleRoom1.add(guardMiddleRoom1);
     }
 
@@ -155,17 +154,14 @@ public class DiamondHeist {
         camera = new Camera(250, 0, middleRoom2);
         camera.setBounds(camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight());
 
-        cameraButton1 = new CameraButton(140, 100, 60, 60,
-                                                          null, middleRoom2);
+        cameraButton1 = new CameraButton(140, 100, 60, 60, middleRoom2);
         cameraButton1.setBounds(cameraButton1.getX(), cameraButton1.getY(),
                                    cameraButton1.getWidth(), cameraButton1.getHeight());
 
-        cameraButton2 = new CameraButton(450, 100, 60, 60,
-                                                          cameraButton1, middleRoom2);
+        cameraButton2 = new CameraButton(450, 100, 60, 60, middleRoom2);
         cameraButton2.setBounds(cameraButton2.getX(), cameraButton2.getY(),
                                     cameraButton2.getWidth(), cameraButton2.getHeight());
 
-        cameraButton1.setRelatedButton(cameraButton2);
         middleRoom2.add(cameraButton1);
         middleRoom2.add(cameraButton2);
         middleRoom2.add(camera);

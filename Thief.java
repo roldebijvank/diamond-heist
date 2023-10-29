@@ -13,13 +13,12 @@ import javax.swing.JPanel;
  */
 
 public class Thief extends JPanel implements KeyListener {
-    private ArrayList<CollectableItem> collectedItems = new ArrayList<>();
+    private final ArrayList<CollectableItem> collectedItems = new ArrayList<>();
     private int x;
     private int y;
-    private static int coinsCollected = 0;
-    private int width = 70;
-    private int height = 120;
-    private JLabel thiefLabel;
+    private final int width = 70;
+    private final int height = 120;
+    private final JLabel thiefLabel;
     private Room currentRoom;
     public boolean onDoor = false;
     public boolean onLadder = false;
@@ -174,9 +173,8 @@ public class Thief extends JPanel implements KeyListener {
 
     /**
      * Checks if the thief is on a diamond in the same room.
-     * @return true if the thief is on a diamond, false otherwise.
      */
-    public boolean onDiamond() {
+    public void onDiamond() {
         Room currentRoom = getCurrentRoom();
 
         if (this.getParent() == currentRoom) {
@@ -184,19 +182,17 @@ public class Thief extends JPanel implements KeyListener {
                 if (component instanceof Diamond 
                     && this.getBounds().intersects(component.getBounds())) {
                     collectDiamond((Diamond) component);
-                    return true; 
+                    return;
                 }
             }
         }
 
-        return false;
     }
 
     /**
      * Checks if the thief is on a key in the same room.
-     * @return true if the thief is on a key, false otherwise.
      */
-    public boolean onKey() {
+    public void onKey() {
         Room currentRoom = getCurrentRoom();
 
         if (this.getParent() == currentRoom) {
@@ -204,11 +200,10 @@ public class Thief extends JPanel implements KeyListener {
                 if (component instanceof Key 
                     && this.getBounds().intersects(component.getBounds())) {
                     collectKey((Key) component);
-                    return true; // Thief is on a coin in the same room
+                    return; // Thief is on a coin in the same room
                 }
             }
         }
-        return false;
     }
 
     /**
@@ -222,12 +217,6 @@ public class Thief extends JPanel implements KeyListener {
         currentRoom.remove(coin); 
         currentRoom.updateRoom();
         numCollectedCoins++;
-        coinsCollected++;
-        
-    }
-
-    public static int getNumberOfCoins() {
-        return coinsCollected;
     }
 
     /**
@@ -325,18 +314,6 @@ public class Thief extends JPanel implements KeyListener {
 
     public boolean getRight() {
         return right;
-    }
-
-    public boolean getUp() {
-        return up;
-    }
-
-    public boolean getDown() {
-        return down;
-    }
-
-    public boolean getOnLadder() {
-        return onLadder;
     }
 
     public boolean getJumps() {
