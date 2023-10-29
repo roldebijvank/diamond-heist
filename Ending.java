@@ -120,12 +120,14 @@ public class Ending {
         resetButton.setFont(customFont);
         resetButton.setBackground(new Color(192, 0, 0)); // A dark red button
         resetButton.setForeground(Color.WHITE);
+        resetButton.setFocusable(false);
         buttonPanel.add(resetButton);
 
         JButton exitButton = new JButton("Exit");
         exitButton.setFont(customFont);
         exitButton.setBackground(new Color(50, 50, 50)); // A dark gray button
         exitButton.setForeground(Color.WHITE);
+        exitButton.setFocusable(false);
         buttonPanel.add(exitButton);
 
         resetButton.addActionListener(new ActionListener() {

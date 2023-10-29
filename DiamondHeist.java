@@ -3,6 +3,8 @@ import java.awt.Dimension;
 import java.awt.Point;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  * DiamondHeist is the main class of the game. It creates the frame and adds the
@@ -197,7 +199,7 @@ public class DiamondHeist {
      * Resets the game by disposing the current game window and starting a new game.
      */
     public static void resetGame() {
-        frame.dispose(); // Close the current game window
+        frame.dispose();
     
         frame = new JFrame("Diamond Heist");
         frame.setLayout(null);
@@ -224,6 +226,9 @@ public class DiamondHeist {
     
 
     public static void main(String[] args) {
+        if (System.getProperty("os.name").contains("Windows")) {
+            System.setProperty("sun.java2d.noddraw", Boolean.TRUE.toString());
+        }
         diamondHeist = new DiamondHeist();
         frame = new JFrame("Diamond Heist");
         frame.setLayout(null);
@@ -242,6 +247,12 @@ public class DiamondHeist {
         setupKey();
         setupWelcomeScreen();
 
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException
+                | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setResizable(false);
