@@ -99,9 +99,9 @@ public class Guard extends JPanel {
      * Create a game-over message.
      */
     public void endGame() {
-        TimerManager.globalTimer.stop();
         gameEnded = true;
         Ending.showCaughtDialog(Ending.GUARD);
+        TimerManager.globalTimer.stop();
     }
 
     public int getWidth() {
