@@ -82,10 +82,10 @@ public class Ladder extends JPanel implements ActionListener {
                     thief.down = false;
                     timer.stop();
                 }
-            } else {
-                this.setFocusable(false);
-                thief.setFocusable(true);
             }
+        } else {
+            this.setFocusable(false);
+            thief.setFocusable(true);
         }
     }
 
