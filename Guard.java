@@ -33,7 +33,8 @@ public class Guard extends JPanel {
         this.gameEnded = false;
 
         ImageIcon guardIcon = new ImageIcon("img/guard.png");
-        Image scaledImage = guardIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        Image scaledImage = guardIcon.getImage().getScaledInstance(width, height,
+                                                                   Image.SCALE_SMOOTH);
         guardIcon = new ImageIcon(scaledImage);
         guardLabel = new JLabel(guardIcon);
         this.add(guardLabel);
@@ -114,6 +115,7 @@ public class Guard extends JPanel {
      * Create a game-over message.
      */
     public void endGame() {
+        thief.timer.stop();
         gameEnded = true;
         JOptionPane.showMessageDialog(null, "Game Over! You've been caught!");
         System.exit(0);

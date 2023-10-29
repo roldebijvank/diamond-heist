@@ -123,7 +123,7 @@ public class DiamondHeist {
 
     private static void setupDog() {    
         Dog dog = new Dog(thief);
-        dog.setBounds(0, 153, dog.getWidth(), dog.getHeight());
+        dog.setBounds(0, 183, dog.getWidth(), dog.getHeight());
         topRoom.add(dog);
     }
 
