@@ -150,16 +150,19 @@ public class DiamondHeist {
         camera.checkCollision(thief);
         camera.setBounds(camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight());
 
-        CameraButton cameraButtonLeft = new CameraButton(140, 100, 60, 60, camera, middleRoom2);
+        CameraButton cameraButtonLeft = new CameraButton(140, 100, 60, 60,
+                                                         camera, null, middleRoom2);
         cameraButtonLeft.checkCollision(thief);
         cameraButtonLeft.setBounds(cameraButtonLeft.getX(), cameraButtonLeft.getY(),
                                    cameraButtonLeft.getWidth(), cameraButtonLeft.getHeight());
 
-        CameraButton cameraButtonRight = new CameraButton(450, 100, 60, 60, camera, middleRoom2);
+        CameraButton cameraButtonRight = new CameraButton(450, 100, 60, 60,
+                                                          camera, cameraButtonLeft, middleRoom2);
         cameraButtonRight.checkCollision(thief);
         cameraButtonRight.setBounds(cameraButtonRight.getX(), cameraButtonRight.getY(),
                                     cameraButtonRight.getWidth(), cameraButtonRight.getHeight());
 
+        cameraButtonLeft.setRelatedButton(cameraButtonRight);
         middleRoom2.add(cameraButtonLeft);
         middleRoom2.add(cameraButtonRight);
         middleRoom2.add(camera);
