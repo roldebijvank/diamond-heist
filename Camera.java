@@ -1,8 +1,6 @@
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.MalformedURLException;
-import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,8 +18,6 @@ public class Camera extends JPanel implements ActionListener {
     private int height;
     private Room currentRoom;
     private boolean isOn = true;
-    private URL cameraImageUrl;
-    private URL lightImageUrl;
     private Thief thief;
     private Timer timer;
 
@@ -29,35 +25,25 @@ public class Camera extends JPanel implements ActionListener {
      * Creates an instance of Camera.
      * @param x is the x coordinate of the camera
      * @param y is the y coordinate of the camera
-     * @param width is the width of the camera
-     * @param height is the height of the camera
-     * @throws MalformedURLException if the URL is invalid
      */
-    public Camera(int x, int y, int width, int height, Room currentRoom)
-                                                throws MalformedURLException {
+    public Camera(int x, int y, Room currentRoom) {
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = width;
+        this.width = 150;
+        this.height = 233;
         this.currentRoom = currentRoom;
-        this.cameraImageUrl = new URL("https://images.freeimages.com/vhq/images/previews/6ae/cctv-dome-camera-118135.png");
-        this.lightImageUrl = new URL("https://png.pngtree.com/png-clipart/20230619/original/pngtree-illumination-stage-blue-lightning-spotlight-effect-vector-transparent-png-image_9190676.png");
 
-        ImageIcon cameraIcon = new ImageIcon(cameraImageUrl);
-        Image scaledCameraImage = cameraIcon.getImage().getScaledInstance(width - 200,
-                                                                    height - 200,
-                                                                    Image.SCALE_SMOOTH);
+        ImageIcon cameraIcon = new ImageIcon("img/camera.png");
+        Image scaledCameraImage = cameraIcon.getImage().getScaledInstance(30, 30,
+                                                                          Image.SCALE_SMOOTH);
         cameraIcon = new ImageIcon(scaledCameraImage);
         JLabel cameraLabel = new JLabel(cameraIcon);
-        cameraLabel.setBounds(0, 0, width, height);
 
-        ImageIcon lightIcon = new ImageIcon(lightImageUrl);
-        Image scaledLightImage = lightIcon.getImage().getScaledInstance(width,
-                                                                    height,
-                                                                    Image.SCALE_SMOOTH);
-        lightIcon = new ImageIcon(scaledLightImage);
-        JLabel lightLabel = new JLabel(lightIcon);
-        lightLabel.setBounds(0, 0, width, height);
+        ImageIcon sightIcon = new ImageIcon("img/camera_sight.png");
+        Image scaledLightImage = sightIcon.getImage().getScaledInstance(width, height,
+                                                                        Image.SCALE_SMOOTH);
+        sightIcon = new ImageIcon(scaledLightImage);
+        JLabel lightLabel = new JLabel(sightIcon);
 
         this.setOpaque(false);
         this.add(cameraLabel);

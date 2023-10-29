@@ -1,7 +1,7 @@
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -30,18 +30,17 @@ public class Hatch extends JPanel implements ActionListener {
      * Creates a new Hatch object.
      * @param x is the x coordinate of the hatch
      * @param y is the y coordinate of the hatch
-     * @param imageUrl is the URL of the image of the hatch
      * @param sendToRoom is the room that the hatch sends the thief to
      */
-    public Hatch(int x, int y,
-                URL imageUrl, Room sendToRoom, Room currentRoom) {
+    public Hatch(int x, int y, Room sendToRoom, Room currentRoom) {
         this.x = x;
         this.y = y;
         this.sendToRoom = sendToRoom;
         this.currentRoom = currentRoom;
 
-        ImageIcon hatchIcon = new ImageIcon(imageUrl);
-        Image scaledImage = hatchIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        ImageIcon hatchIcon = new ImageIcon("img/hatch.png");
+        Image scaledImage = hatchIcon.getImage().getScaledInstance(width, height,
+                                                                   Image.SCALE_SMOOTH);
         hatchIcon = new ImageIcon(scaledImage);
         JLabel hatchLabel = new JLabel(hatchIcon);
         this.add(hatchLabel);
@@ -81,7 +80,7 @@ public class Hatch extends JPanel implements ActionListener {
         thief.getCurrentRoom().updateRoom();
         thief.setCurrentRoom(sendToRoom);
         sendToRoom.add(thief);
-        sendToRoom.setThiefToStartingPoint(thief);
+        thief.setCurrentPoint(new Point(0, 105));
         thief.repaint();
         sendToRoom.updateRoom();
         thief.requestFocus(true);

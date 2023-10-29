@@ -3,7 +3,6 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.net.URL;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -27,15 +26,15 @@ public class Guard extends JPanel {
     /**
      * Initializes a new Guard object.
      * @param thief is the thief in the game.
-     * @param guardImageUrl is the guard's image url.
      */
-    public Guard(Thief thief, URL guardImageUrl) {
+    public Guard(Thief thief) {
         this.thief = thief;
         this.direction = 1; //starts by going right
         this.gameEnded = false;
 
-        ImageIcon guardIcon = new ImageIcon(guardImageUrl);
-        Image scaledImage = guardIcon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+        ImageIcon guardIcon = new ImageIcon("img/guard.png");
+        Image scaledImage = guardIcon.getImage().getScaledInstance(width, height,
+                                                                   Image.SCALE_SMOOTH);
         guardIcon = new ImageIcon(scaledImage);
         guardLabel = new JLabel(guardIcon);
         this.add(guardLabel);
@@ -59,13 +58,13 @@ public class Guard extends JPanel {
      */
     public void move() {
         if (direction == 1) {
-            x += 2;
+            x += 1;
             if (x >= getParent().getWidth() - 100) {
                 direction = -1;
                 guardLabel.setIcon(flipImageVertically(guardLabel.getIcon()));
             }
         } else {
-            x -= 2;
+            x -= 1;
             if (x <= 0) {
                 direction = 1;
                 guardLabel.setIcon(flipImageVertically(guardLabel.getIcon()));
@@ -116,6 +115,7 @@ public class Guard extends JPanel {
      * Create a game-over message.
      */
     public void endGame() {
+        thief.timer.stop();
         gameEnded = true;
         JOptionPane.showMessageDialog(null, "Game Over! You've been caught!");
         System.exit(0);
