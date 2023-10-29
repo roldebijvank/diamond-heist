@@ -28,7 +28,6 @@ public class Ending {
      * @param type is the type of alert that ended the game.
      */
     public static void showCaughtDialog(int type) {
-
         String title = "";
         String message = "";
         if (type == DOG) {
@@ -95,6 +94,7 @@ public class Ending {
 
         panel.add(buttonPanel, BorderLayout.SOUTH);
 
+        endGameDialog.setFocusable(true);
         endGameDialog.add(panel);
         endGameDialog.setVisible(true);
     }
@@ -172,6 +172,7 @@ public class Ending {
             }
         });
 
+        endGameDialog.setFocusable(true);
         endGameDialog.setVisible(true);
     }
 }
